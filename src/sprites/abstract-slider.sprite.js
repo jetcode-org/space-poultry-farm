@@ -5,7 +5,11 @@ export class AbstractSliderSprite extends Sprite {
     maxSize = 500;
     onClickCallback;
 
-    active = false
+    active = false;
+    canMove = true;
+
+    lessColor = 'white';
+    moreColor = 'white';
 
     currentValue = 0;
     minValue = 0;
@@ -16,6 +20,21 @@ export class AbstractSliderSprite extends Sprite {
 
     init() {
         this.forever(this.control);
+        this.stage.pen((context, stage)=>{
+            context.lineWidth = 3;
+
+            context.strokeStyle = this.lessColor;
+            context.beginPath();
+            context.moveTo(this.x, this.y);
+            context.lineTo(this.minX, this.y);
+            context.stroke();
+
+            context.strokeStyle = this.moreColor;
+            context.beginPath();
+            context.moveTo(this.x, this.y);
+            context.lineTo(this.maxX, this.y);
+            context.stroke();
+        }, 3);
         this.pen(this.setLabel, 4);
     }
 
@@ -29,7 +48,8 @@ export class AbstractSliderSprite extends Sprite {
             this.active = false;
         }
         if (this.active) {
-            this.x = this.game.getMousePoint().x;
+            if (this.canMove)
+                this.x = this.game.getMousePoint().x;
             if (this.x > this.maxX)
                 this.x = this.maxX;
             if (this.x < this.minX)
@@ -37,8 +57,10 @@ export class AbstractSliderSprite extends Sprite {
             this.setCurrentValue();
         }
 
-    }
+        if (this.maxValue < this.minValue)
+            this.maxValue = this.minValue;
 
+    }
 
     setLabel(context, sprite) {
         context.font = '10px Arial';
@@ -48,12 +70,22 @@ export class AbstractSliderSprite extends Sprite {
     }
 
     setWidth(width) {
-        this.currentValue = (this.maxValue - this.minValue) / 2;
         this.minX = this.x - width / 2;
         this.maxX = this.x + width / 2
+        this.currentValue = (this.maxValue - this.minValue) / 2;
     }
 
     setCurrentValue() {
-        this.currentValue = Math.round(((this.x - this.minX) / (this.maxX - this.minX)) * this.maxValue);
+        if (this.currentValue > this.maxValue)
+            this.currentValue = this.maxValue;
+        if (this.currentValue < this.minValue)
+            this.currentValue = this.minValue;
+
+        if (this.canMove)
+            this.currentValue = Math.round(((this.x - this.minX) / (this.maxX - this.minX)) * this.maxValue);
+        else {
+            const addX = this.maxValue == this.minValue ? 0 : (this.currentValue - this.minValue) / (this.maxValue - this.minValue) * (this.maxX - this.minX);
+            this.x = Math.round(this.minX + addX);
+        }
     }
 }

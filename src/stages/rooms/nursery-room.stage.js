@@ -1,16 +1,16 @@
-import {AbstractRootStage} from "./abstract-room.stage";
-import {CoopRoomStage} from "./coop-room.stage";
+import { AbstractRootStage } from "./abstract-room.stage";
+import { CoopRoomStage } from "./coop-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
 
 export class NurseryRoomStage extends AbstractRootStage {
     static NURSEY_CYCLE_TIMER = 10;
     static NURSEY_READY_LIMIT = 10;
-    
+
     inProgress = false;
-    currentQuantity = 0;
     currentProgress = 0;
     currentReadyProgress = 0;
-    
+    tickMaxCount = 0;
+
     init() {
         super.init();
 
@@ -20,18 +20,17 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
         this.nextButton.y = 500;
-        this.nextButton.onReady(()=>{
+        this.nextButton.onReady(() => {
             this.nextButton.setLabel('Куриц в загон', undefined, 5)
         });
-        this.nextButton.onClick(()=>{
-            for (let i = 0; i < this.monitorStage.rooms.length; i++){
-                console.log(this.monitorStage.rooms[i].getLabel());
+        this.nextButton.onClick(() => {
+            for (let i = 0; i < this.monitorStage.rooms.length; i++) {
                 if (this.monitorStage.rooms[i].getLabel() == 'Стадо') {
                     const potentialCoop = this.monitorStage.rooms[i];
-                    if (potentialCoop.active && potentialCoop.currentQuantity != CoopRoomStage.COOP_MAX_QUANTITY) {
-                        if (CoopRoomStage.COOP_MAX_QUANTITY - potentialCoop.currentQuantity < this.currentQuantity) {
-                            potentialCoop.currentQuantity += CoopRoomStage.COOP_MAX_QUANTITY - potentialCoop.currentQuantity;
-                            this.currentQuantity -= CoopRoomStage.COOP_MAX_QUANTITY - potentialCoop.currentQuantity;
+                    if (potentialCoop.active && potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
+                        if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
+                            potentialCoop.currentQuantity += potentialCoop.maxQuantity - potentialCoop.currentQuantity;
+                            this.currentQuantity -= potentialCoop.maxQuantity - potentialCoop.currentQuantity;
                             continue;
                         }
                         else {
@@ -43,7 +42,7 @@ export class NurseryRoomStage extends AbstractRootStage {
                     }
                 }
             }
-            alert ('Не получитлось перевести всех куриц');
+            alert('Не получитлось перевести всех куриц');
             this.failRoom();
             return false;
         })
@@ -87,16 +86,38 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.isRoomReady = false;
     }
 
-    roomTick () {
+    roomTick() {
+        super.roomTick();
         if (this.inProgress) {
-            console.log('NurseryRoomStage tick');
-            this.currentProgress += 1;
-            if (this.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
-                this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
-                this.isRoomReady = true;
+            this.tickCount += 1
+            if (this.tickCount > this.tickMaxCount) {
+                this.tickCount = 0;
+
+                this.pollution += Math.floor(0.3 * this.currentQuantity);
+
+                if (this.gameState.food >= this.currentQuantity * 0.5) {
+                    this.gameState.food -= this.currentQuantity * 0.5;
+                }
+                else {
+                    this.currentQuantity = this.gameState.food * 2;
+                    this.gameState.food = 0;
+                    if (this.currentQuantity <= 0) {
+                        this.failRoom();
+                    } 
+                }
+
+                let chickenMultiplayer = this.pollution >= 100 ? 0.75 : 1;
+                this.currentProgress += chickenMultiplayer;
+                if (this.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
+                    this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
+                    this.isRoomReady = true;
+                }
+            }
+            if (this.isRoomReady) {
                 this.currentReadyProgress += 1;
-                if (this.currentReadyProgress > NurseryRoomStage.NURSEY_READY_LIMIT)
-                    this.failRoom();
+                if (this.currentReadyProgress > NurseryRoomStage.NURSEY_READY_LIMIT) {
+                    this.pollution += Math.round(this.currentQuantity * 0.4);
+                }
             }
         }
     }
@@ -106,12 +127,12 @@ export class NurseryRoomStage extends AbstractRootStage {
             context.font = '18px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
-    
+
             context.fillText('Работает: ' + nursery.inProgress, 615, 200);
             context.fillText('Сколько циплят: ' + nursery.currentQuantity, 615, 225);
             context.fillText('Загрязненность: ' + nursery.pollution + '%', 615, 250);
             context.fillText('Готовность: ' + nursery.currentProgress, 615, 275);
-            if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER){
+            if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
                 context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
             }
         }

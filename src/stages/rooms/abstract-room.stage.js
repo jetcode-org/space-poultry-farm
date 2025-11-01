@@ -8,8 +8,11 @@ export class AbstractRootStage extends AbstractStage {
    active = false;
    thumbnail;
    pollution = 0;
-   nextStage = '';
    isRoomReady = false;
+   tickMaxCount = 5;
+   tickCount = 0;
+   maxQuantity = 20;
+   currentQuantity = 0;
 
    init() {
       this.gameState = GameState.getInstance();
@@ -29,12 +32,36 @@ export class AbstractRootStage extends AbstractStage {
 
       this.createBackButton();
       this.createActivateButton();
+      this.createGetManureButton();
 
       this.forever(this.gameTickAllRooms, 1000);
 
       this.pen(this.drawTextBlock.bind(this), 3);
    }
 
+
+   createGetManureButton() {
+      const getManureButton = new ButtonSprite();
+      getManureButton.layer = 3;
+      getManureButton.x = 690;
+      getManureButton.y = 400;
+
+      getManureButton.onReady(()=>{
+         getManureButton.setLabel('Собрать помет', undefined, 6);
+      });
+
+      getManureButton.onClick(() => {
+         this.gameState.manure += Math.floor(this.pollution * 0.5);
+         this.pollution = 0;
+      });
+
+      getManureButton.forever(() => {
+         if (this.pollution >= 1)
+            getManureButton.hidden = false;
+         else
+            getManureButton.hidden = true;
+      })
+   }
    createBackButton() {
       const backButton = new ButtonSprite();
       backButton.layer = 3;
@@ -82,6 +109,8 @@ export class AbstractRootStage extends AbstractStage {
    }
 
    roomTick () {
+      if (this.pollution >= 100) 
+         this.pollution = 100;
    }
 
    setThumbnail(thumbnailSprite) {

@@ -2,13 +2,11 @@ import {AbstractRootStage} from "./abstract-room.stage";
 import {ThumbnailRoomSprite} from "../../sprites/thumbnail-room.sprite";
 import { ButtonSprite } from "../../sprites/button.sprite";
 import { SliderSprite } from "../../sprites/slider.sprite";
-import { MonitorStage } from "../monitor.stage";
 import { IncubatorRoomStage } from "./incubator-room.stage";
 
 export class SortingRoomStage extends AbstractRootStage {
-    static SORTING_MAX_QUANTITY = 100;
 
-    currentEggs = 0;
+    maxQuantity = 100;
 
     init() {
         super.init();
@@ -25,6 +23,9 @@ export class SortingRoomStage extends AbstractRootStage {
         this.quantitySlider.x = 300;
         this.quantitySlider.y = 200;
         this.quantitySlider.setWidth(200);
+        this.quantitySlider.canMove = false
+        this.quantitySlider.currentValue = 15;
+        this.quantitySlider.setCurrentValue();
         
         //Холодильник
         this.coolerButton = new ButtonSprite();
@@ -32,9 +33,9 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.maxSize = 650;
         this.coolerButton.onClick(()=>{
             const moveQuantity = this.quantitySlider.currentValue;
-            this.gameState.cooledEggs += moveQuantity;
-            this.currentEggs -= moveQuantity;
-            this.quantitySlider.maxValue = this.currentEggs;
+            this.gameState.cooledEggs += Math.floor(moveQuantity * 0.9);
+            this.currentQuantity -= moveQuantity;
+            this.quantitySlider.maxValue = this.currentQuantity;
             this.quantitySlider.setCurrentValue()
         });
         this.coolerButton.x = 300;
@@ -53,14 +54,13 @@ export class SortingRoomStage extends AbstractRootStage {
             if (moveQuantity == 0) 
                 return;
             for (let i = 0; i < this.monitorStage.rooms.length; i++){
-                console.log(this.monitorStage.rooms[i].getLabel());
                 if (this.monitorStage.rooms[i].getLabel() == 'Инкубатор') {
                     const potentialIncubator = this.monitorStage.rooms[i];
                     if (!potentialIncubator.inProgress && potentialIncubator.active) {
                         potentialIncubator.inProgress = true;
-                        potentialIncubator.currentQuantity = moveQuantity;
-                        this.currentEggs -= moveQuantity;
-                        this.quantitySlider.maxValue = this.currentEggs;
+                        potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.9);
+                        this.currentQuantity -= moveQuantity;
+                        this.quantitySlider.maxValue = this.currentQuantity;
                         this.quantitySlider.setCurrentValue()
                         return true;
                     }
@@ -107,10 +107,15 @@ export class SortingRoomStage extends AbstractRootStage {
     }
 
     roomTick () {
+        super.roomTick();
         // console.log('SortingRoomStage tick');
-        if (this.currentEggs > SortingRoomStage.SORTING_MAX_QUANTITY)
-                this.currentEggs = SortingRoomStage.SORTING_MAX_QUANTITY;
-        this.quantitySlider.maxValue = this.currentEggs;
+        this.tickCount += 1;
+        if (this.tickCount > this.tickMaxCount) {
+            this.tickCount = 0;
+        }
+        if (this.currentQuantity > this.maxQuantity)
+                this.currentQuantity = this.maxQuantity;
+        this.quantitySlider.maxValue = this.currentQuantity;
         this.quantitySlider.setCurrentValue();
     }
 
@@ -128,7 +133,7 @@ export class SortingRoomStage extends AbstractRootStage {
             context.fillStyle = 'white';
             context.textAlign = 'start';
             
-            context.fillText('Количество яиц: ' + sorting.currentEggs, 600, 200);
+            context.fillText('Количество яиц: ' + sorting.currentQuantity, 600, 200);
             context.fillText('Загрязненность: ' + sorting.pollution + '%', 600, 225);
         }
     }

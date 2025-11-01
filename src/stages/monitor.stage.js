@@ -1,4 +1,5 @@
 import {Stage} from 'jetcode-scrubjs';
+import {Sprite} from 'jetcode-scrubjs';
 import {SortingRoomStage} from "./rooms/sorting-room.stage";
 import {ThumbnailRoomFactory} from "../services/thumbnail-room.factory";
 import {IncubatorRoomStage} from "./rooms/incubator-room.stage";
@@ -29,9 +30,16 @@ export class MonitorStage extends AbstractStage {
     init() {
         this.addBackground('public/images/background_main_monitor.png');
 
+        this.readySprite = new Sprite();
+        this.readySprite.drawCostume((ctx)=>{
+            ctx.fillStyle = 'red';
+            ctx.fillRect(0, 0, 50, 50);
+        }, {width: 50, height: 50})
+        this.readySprite.hidden = true;
+
         const sortingRoom1 = new SortingRoomStage();
         sortingRoom1.activate();
-        sortingRoom1.currentEggs = 20;
+        sortingRoom1.currentQuantity = 20;
 
         const incubatorRoom1 = new IncubatorRoomStage();
         incubatorRoom1.activate();
@@ -41,7 +49,7 @@ export class MonitorStage extends AbstractStage {
 
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
-        coopRoom1.currentQuantity = 85;
+        coopRoom1.currentQuantity = 20;
 
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
@@ -160,6 +168,22 @@ export class MonitorStage extends AbstractStage {
         context.fillText('Прошло время: ' + this.gameState.passedTime, 50, 525);
         context.fillText('Лимит времени: ' + this.gameState.limitTime, 50, 550);
         context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 50, 575);
+        context.fillText('Еда: ' + this.gameState.food, 400, 500);
+        context.fillText('Скорлупа: ' + this.gameState.eggshell, 400, 525);
+        context.fillText('Удолбрение: ' + this.gameState.manure, 400, 550);
+    }
+
+    drawReadyRooms() {
+        this.readySprite.deleteClones()
+        for (const room of this.rooms) {
+            if (room.isRoomReady) {
+                const clone = this.readySprite.createClone();
+                clone.x = room.thumbnail.x + 35;
+                clone.y = room.thumbnail.y - 35;
+                clone.hidden = false;
+                clone.layer = 4;
+            }
+        }
     }
 
     gameTick() {
@@ -182,5 +206,7 @@ export class MonitorStage extends AbstractStage {
                 room.roomTick();
             }
         }
+
+        this.drawReadyRooms();
     }
 }

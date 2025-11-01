@@ -31,5 +31,14 @@ export class FarmRoomStage extends AbstractRootStage {
 
     roomTick () {
         // console.log('FarmRoomStage tick');
+        this.tickCount += 1;
+        if (this.tickCount > this.tickMaxCount) {
+            this.tickCount = 0;
+            if (this.gameState.manure > 10 && this.gameState.eggshell > 5) {
+                this.gameState.manure -= 10;
+                this.gameState.eggshell -= 5;
+                this.gameState.food += 15;
+            }
+        }
     }
 }

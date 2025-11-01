@@ -9,6 +9,10 @@ export class GameState {
     chargeValue = 0;
     cooledEggs = 0;
 
+    eggshell = 0;
+    manure = 0;
+    food = 1000;
+
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');
@@ -27,6 +31,11 @@ export class GameState {
         this.passedTime = 0;
         this.limitTime = 100;
         this.chargeValue = 0;
+        this.cooledEggs = 0;
+
+        this.manure = 0;
+        this.eggshell = 0;
+        this.food = 100;
     }
 
     isEnoughCharge() {
