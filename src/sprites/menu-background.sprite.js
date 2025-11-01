@@ -1,6 +1,6 @@
 import {Sprite} from "jetcode-scrubjs";
 
-export class MenubackgroundSprite extends Sprite {
+export class MenuBackgroundSprite extends Sprite {
     static instance;
 
     constructor(stage) {
@@ -14,13 +14,13 @@ export class MenubackgroundSprite extends Sprite {
     }
 
     static getInstance(layer, image) {
-        MenubackgroundSprite.instance = new MenubackgroundSprite();
+        MenuBackgroundSprite.instance = new MenuBackgroundSprite();
 
-        MenubackgroundSprite.instance.addCostume("public/images/menu/" + image + ".png");
-        MenubackgroundSprite.instance.layer = layer;
-        MenubackgroundSprite.instance.bg = 10 - layer * 2;
+        MenuBackgroundSprite.instance.addCostume("public/images/menu/" + image + ".png");
+        MenuBackgroundSprite.instance.layer = layer;
+        MenuBackgroundSprite.instance.bg = 10 - layer * 2;
 
-        return MenubackgroundSprite.instance;
+        return MenuBackgroundSprite.instance;
 
     }
 

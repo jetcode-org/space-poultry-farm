@@ -5,12 +5,14 @@ import {OutroStage} from "./stages/outro.stage";
 import {MonitorStage} from "./stages/monitor.stage";
 
 export const game = new Game(800, 600);
+// game.debugCollider = true;
 
 MenuStage.getInstance();
 IntroStage.getInstance();
 OutroStage.getInstance();
 MonitorStage.getInstance();
 
-game.run(MenuStage.getInstance());
+game.run(MonitorStage.getInstance());
+// game.run(MenuStage.getInstance());
 // game.run(IntroStage.getInstance());
 // game.run(OutroStage.getInstance());

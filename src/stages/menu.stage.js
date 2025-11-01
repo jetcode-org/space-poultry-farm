@@ -1,6 +1,6 @@
 import {Stage} from 'jetcode-scrubjs';
 
-import {MenubackgroundSprite} from '../sprites/menubackground.sprite.js';
+import {MenuBackgroundSprite} from '../sprites/menu-background.sprite.js';
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {IntroStage} from "./intro.stage";
 
@@ -16,10 +16,10 @@ export class MenuStage extends Stage {
     }
 
     init() {
-        MenubackgroundSprite.getInstance(0, 1);
-        MenubackgroundSprite.getInstance(1, 2);
-        MenubackgroundSprite.getInstance(2, 3);
-        MenubackgroundSprite.getInstance(3, 4);
+        MenuBackgroundSprite.getInstance(0, 1);
+        MenuBackgroundSprite.getInstance(1, 2);
+        MenuBackgroundSprite.getInstance(2, 3);
+        MenuBackgroundSprite.getInstance(3, 4);
 
         const startButton = new ButtonSprite();
         startButton.layer = 4;
