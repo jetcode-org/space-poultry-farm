@@ -30,6 +30,6 @@ export class FarmRoomStage extends AbstractRootStage {
     }
 
     roomTick () {
-        console.log('FarmRoomStage tick');
+        // console.log('FarmRoomStage tick');
     }
 }

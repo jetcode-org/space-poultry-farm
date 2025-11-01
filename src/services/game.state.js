@@ -7,7 +7,7 @@ export class GameState {
     passedTime = 0;
     limitTime = 100;
     chargeValue = 0;
-
+    cooledEggs = 0;
 
     constructor() {
         if (GameState.instance) {

@@ -5,6 +5,7 @@ import {OutroStage} from "./stages/outro.stage";
 import {MonitorStage} from "./stages/monitor.stage";
 
 export const game = new Game(800, 600);
+game.context.imageSmoothingEnabled = false;
 // game.debugCollider = true;
 
 MenuStage.getInstance();

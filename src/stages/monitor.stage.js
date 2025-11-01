@@ -31,6 +31,7 @@ export class MonitorStage extends AbstractStage {
 
         const sortingRoom1 = new SortingRoomStage();
         sortingRoom1.activate();
+        sortingRoom1.currentEggs = 20;
 
         const incubatorRoom1 = new IncubatorRoomStage();
         incubatorRoom1.activate();
@@ -40,6 +41,7 @@ export class MonitorStage extends AbstractStage {
 
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
+        coopRoom1.currentQuantity = 85;
 
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
@@ -152,11 +154,12 @@ export class MonitorStage extends AbstractStage {
     drawParameters(context) {
         context.font = '18px Arial';
         context.fillStyle = 'white';
+        context.textAlign = 'start';
 
         context.fillText('Зарядка: ' + this.gameState.chargeValue, 50, 500);
         context.fillText('Прошло время: ' + this.gameState.passedTime, 50, 525);
         context.fillText('Лимит времени: ' + this.gameState.limitTime, 50, 550);
-
+        context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 50, 575);
     }
 
     gameTick() {

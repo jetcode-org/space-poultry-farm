@@ -7,9 +7,16 @@ import {GameState} from "../../services/game.state";
 export class AbstractRootStage extends AbstractStage {
    active = false;
    thumbnail;
+   pollution = 0;
+   nextStage = '';
+   isRoomReady = false;
 
    init() {
       this.gameState = GameState.getInstance();
+      
+      this.onReady(()=>{
+         this.monitorStage = MonitorStage.getInstance();
+      })
 
       this.addBackground('public/images/background_main_monitor.png');
 
@@ -118,6 +125,8 @@ export class AbstractRootStage extends AbstractStage {
 
       context.font = '18px Arial';
       context.fillStyle = 'white';
+      context.textAlign = 'start';
+
       const text = 'В данный момент отсек обесточен. Он не работает';
 
       this.drawMultilineText(context, text, 120, 200, 350, 30);
