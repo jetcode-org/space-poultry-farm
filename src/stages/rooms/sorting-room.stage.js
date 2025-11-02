@@ -23,9 +23,6 @@ export class SortingRoomStage extends AbstractRootStage {
         this.quantitySlider.x = 300;
         this.quantitySlider.y = 200;
         this.quantitySlider.setWidth(200);
-        this.quantitySlider.canMove = false
-        this.quantitySlider.currentValue = 15;
-        this.quantitySlider.setCurrentValue();
         
         //Холодильник
         this.coolerButton = new ButtonSprite();
