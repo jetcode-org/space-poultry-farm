@@ -29,7 +29,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
                 if (this.monitorStage.rooms[i].getLabel() == 'Ясли') {
                     const potentialNursery = this.monitorStage.rooms[i];
-                    if (!potentialNursery.inProgress && potentialNursery.active) {
+					if (!potentialNursery.inProgress && potentialNursery.active) {
+
                         potentialNursery.inProgress = true;
                         potentialNursery.currentQuantity = quantityToMove;
                         this.gameState.eggshell += Math.floor(quantityToMove / 2);
@@ -101,7 +102,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
         }
     }
 
-    drawParameters(context, incubator) {
+	drawParameters(context, incubator) {
+		super.drawParameters(context)
         if (incubator.active) {
             context.font = '18px Arial';
             context.fillStyle = 'white';

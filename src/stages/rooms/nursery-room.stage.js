@@ -40,7 +40,7 @@ export class NurseryRoomStage extends AbstractRootStage {
                         this.failRoom();
                         return true;
                     }
-                }
+				}
             }
             alert('Не получитлось перевести всех куриц');
             this.failRoom();
@@ -83,7 +83,8 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.currentProgress = 0;
         this.currentReadyProgress = 0;
         this.currentQuantity = 0;
-        this.isRoomReady = false;
+		this.isRoomReady = false;
+		this.visualizerSpawn();
     }
 
     roomTick() {
@@ -99,7 +100,8 @@ export class NurseryRoomStage extends AbstractRootStage {
                     this.gameState.food -= this.currentQuantity * 0.5;
                 }
                 else {
-                    this.currentQuantity = this.gameState.food * 2;
+					this.currentQuantity = this.gameState.food * 2;
+					this.visualizerSpawn();
                     this.gameState.food = 0;
                     if (this.currentQuantity <= 0) {
                         this.failRoom();
@@ -122,7 +124,8 @@ export class NurseryRoomStage extends AbstractRootStage {
         }
     }
 
-    drawParameters(context, nursery) {
+	drawParameters(context, nursery) {
+		super.drawParameters(context)
         if (nursery.active) {
             context.font = '18px Arial';
             context.fillStyle = 'white';

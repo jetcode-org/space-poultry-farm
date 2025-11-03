@@ -78,7 +78,8 @@ export class CoopRoomStage extends AbstractRootStage {
         }
     }
 
-    drawParameters(context, coop) {
+	drawParameters(context, coop) {
+		super.drawParameters(context)
         if (coop.active) {
             context.font = '18px Arial';
             context.fillStyle = 'white';

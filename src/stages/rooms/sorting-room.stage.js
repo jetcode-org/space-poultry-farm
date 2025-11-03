@@ -55,7 +55,7 @@ export class SortingRoomStage extends AbstractRootStage {
                     const potentialIncubator = this.monitorStage.rooms[i];
                     if (!potentialIncubator.inProgress && potentialIncubator.active) {
                         potentialIncubator.inProgress = true;
-                        potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.9);
+                        potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.95);
                         this.currentQuantity -= moveQuantity;
                         this.quantitySlider.maxValue = this.currentQuantity;
                         this.quantitySlider.setCurrentValue()
@@ -124,7 +124,8 @@ export class SortingRoomStage extends AbstractRootStage {
         this.incubatorButton.hidden = false; 
     }
 
-    drawParameters(context, sorting) {
+	drawParameters(context, sorting) {
+		super.drawParameters(context)
         if (sorting.active) {
             context.font = '18px Arial';
             context.fillStyle = 'white';

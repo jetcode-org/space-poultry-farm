@@ -15,6 +15,7 @@ export class AbstractRootStage extends AbstractStage {
 	currentQuantity = 0;
 
 	init() {
+		super.init()
 		this.gameState = GameState.getInstance();
       
 		this.onReady(()=>{
@@ -174,6 +175,7 @@ export class AbstractRootStage extends AbstractStage {
 
 	}
 
+	//Создает спрайты, которые задаются в SetVisCostumes() в соответствии с текущим количеством
 	visualizerSpawn() {
 		this.visualiser.deleteClones();
 
@@ -220,7 +222,9 @@ export class AbstractRootStage extends AbstractStage {
 		}
 	}
 
+	//Перезаписать в классе комнаты, чтобы задать нужные костюмы в спрайт Visualiser
 	setVisCostumes() {
 
 	}
+
 }
