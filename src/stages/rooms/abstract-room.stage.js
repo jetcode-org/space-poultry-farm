@@ -23,6 +23,10 @@ export class AbstractRootStage extends AbstractStage {
 
       this.addBackground('public/images/background_main_monitor.png');
 
+      //let shipSchemeSprite = new Sprite()
+      //shipSchemeSprite.addCostume('public/images/menu/main_screen.jpg')
+
+
       this.backgroundSprite = new Sprite();
       this.backgroundSprite.addCostume(this.getBackgroundImage());
       this.backgroundSprite.layer = 1;
@@ -37,6 +41,8 @@ export class AbstractRootStage extends AbstractStage {
       this.forever(this.gameTickAllRooms, 1000);
 
       this.pen(this.drawTextBlock.bind(this), 3);
+
+
    }
 
 

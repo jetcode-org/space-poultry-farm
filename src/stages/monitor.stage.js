@@ -27,10 +27,19 @@ export class MonitorStage extends AbstractStage {
         this.gameState = GameState.getInstance();
     }
 
+    // главный монитор.меню выбора комнат
     init() {
         this.addBackground('public/images/background_main_monitor.png');
 
+        // слой с схемой-космическим кораблем
+        this.bgShipSprite = new Sprite();
+        this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg')
+        this.bgShipSprite.leftX = 300
+        this.bgShipSprite.setAlpha = 0.5
+
+
         this.readySprite = new Sprite();
+        //this.readySprite = 
         this.readySprite.drawCostume((ctx)=>{
             ctx.fillStyle = 'red';
             ctx.fillRect(0, 0, 50, 50);
@@ -76,71 +85,71 @@ export class MonitorStage extends AbstractStage {
         ThumbnailRoomFactory.build(
             this,
             sortingRoom1,
-            100,
-            80
+            206,
+            152
         );
 
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom1,
-            200,
-            80
+            292,
+            152
         );
 
         ThumbnailRoomFactory.build(
             this,
             nurseryRoom1,
-            300,
-            80
+            377,
+            152
         );
 
         ThumbnailRoomFactory.build(
             this,
             coopRoom1,
-            400,
-            80
+            477,
+            200
         );
 
         ThumbnailRoomFactory.build(
             this,
             farmRoom1,
-            500,
-            80
+            477,
+            357
         );
 
         ThumbnailRoomFactory.build(
             this,
             sortingRoom2,
-            100,
-            180
+            206,
+            198
         );
 
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom2,
             200,
-            180
+            198
         );
 
         ThumbnailRoomFactory.build(
             this,
             nurseryRoom2,
-            300,
-            180
+            292,
+            198
         );
 
         ThumbnailRoomFactory.build(
             this,
             coopRoom2,
-            400,
-            180
+            378,
+            198
         );
 
         ThumbnailRoomFactory.build(
             this,
             farmRoom2,
-            500,
-            180
+            377,
+            357
         );
 
         this.forever(this.gameTick, 1000);
