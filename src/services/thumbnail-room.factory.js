@@ -18,7 +18,7 @@ export class ThumbnailRoomFactory {
         }
 
         thumbnail.onReady(() => {
-            thumbnail.setLabel(label, 'white', 15);
+            //thumbnail.setLabel(label, 'white', 15);
         });
 
         thumbnail.onClick(() => {

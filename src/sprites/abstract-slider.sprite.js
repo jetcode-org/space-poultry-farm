@@ -11,6 +11,9 @@ export class AbstractSliderSprite extends Sprite {
     lessColor = 'white';
     moreColor = 'white';
 
+    drawLine = true;
+    drawValue = true;
+
     currentValue = 0;
     minValue = 0;
     maxValue = 100;
@@ -21,19 +24,21 @@ export class AbstractSliderSprite extends Sprite {
     init() {
         this.forever(this.control);
         this.stage.pen((context, stage)=>{
-            context.lineWidth = 3;
-
-            context.strokeStyle = this.lessColor;
-            context.beginPath();
-            context.moveTo(this.x, this.y);
-            context.lineTo(this.minX, this.y);
-            context.stroke();
-
-            context.strokeStyle = this.moreColor;
-            context.beginPath();
-            context.moveTo(this.x, this.y);
-            context.lineTo(this.maxX, this.y);
-            context.stroke();
+            if (this.drawLine) {
+                context.lineWidth = 3;
+                
+                context.strokeStyle = this.lessColor;
+                context.beginPath();
+                context.moveTo(this.x, this.y);
+                context.lineTo(this.minX, this.y);
+                context.stroke();
+                
+                context.strokeStyle = this.moreColor;
+                context.beginPath();
+                context.moveTo(this.x, this.y);
+                context.lineTo(this.maxX, this.y);
+                context.stroke();
+            }
         }, 3);
         this.pen(this.setLabel, 4);
     }
@@ -63,10 +68,12 @@ export class AbstractSliderSprite extends Sprite {
     }
 
     setLabel(context, sprite) {
-        context.font = '10px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'center';
-        context.fillText(sprite.currentValue, sprite.x, sprite.y + 3);
+        if (sprite.drawValue) {
+            context.font = '10px Arial';
+            context.fillStyle = 'white';
+            context.textAlign = 'center';
+            context.fillText(sprite.currentValue, sprite.x, sprite.y + 3);
+        }
     }
 
     setWidth(width) {

@@ -9,6 +9,7 @@ import {FarmRoomStage} from "./rooms/farm-room.stage";
 import {GameState} from "../services/game.state";
 import {AbstractStage} from "./abstract.stage";
 import {MenuStage} from "./menu.stage";
+import { SliderSprite } from "../sprites/slider.sprite";
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -36,7 +37,19 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg')
         this.bgShipSprite.leftX = 300
         this.bgShipSprite.setAlpha = 0.5
-
+        
+        this.progressSlider = new SliderSprite();
+        this.progressSlider.x = 290;
+        this.progressSlider.y = 500;
+        this.progressSlider.size = 100;
+        this.progressSlider.layer = 4;
+        this.progressSlider.currentValue = 50;
+        this.progressSlider.lessColor = 'red';
+        this.progressSlider.moreColor = 'red';
+        this.progressSlider.setWidth(470);
+        // this.progressSlider.canMove = false;
+        // this.progressSlider.drawLine = false;
+        // this.progressSlider.drawValue = false;
 
         this.readySprite = new Sprite();
         //this.readySprite = 
@@ -59,6 +72,7 @@ export class MonitorStage extends AbstractStage {
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
         coopRoom1.currentQuantity = 20;
+        
 
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
@@ -152,6 +166,7 @@ export class MonitorStage extends AbstractStage {
             357
         );
 
+
         this.forever(this.gameTick, 1000);
         this.pen(this.drawParameters.bind(this), 3);
     }
@@ -173,13 +188,13 @@ export class MonitorStage extends AbstractStage {
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Зарядка: ' + this.gameState.chargeValue, 50, 500);
-        context.fillText('Прошло время: ' + this.gameState.passedTime, 50, 525);
-        context.fillText('Лимит времени: ' + this.gameState.limitTime, 50, 550);
-        context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 50, 575);
-        context.fillText('Еда: ' + this.gameState.food, 400, 500);
-        context.fillText('Скорлупа: ' + this.gameState.eggshell, 400, 525);
-        context.fillText('Удолбрение: ' + this.gameState.manure, 400, 550);
+        context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 500);
+        context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 525);
+        context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 550);
+        context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 575);
+        context.fillText('Еда: ' + this.gameState.food, 600, 400);
+        context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 425);
+        context.fillText('Удолбрение: ' + this.gameState.manure, 600, 450);
     }
 
     drawReadyRooms() {
