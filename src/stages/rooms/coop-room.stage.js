@@ -38,7 +38,7 @@ export class CoopRoomStage extends AbstractRootStage {
             chicken.size = 150
             let randCos = this.game.getRandom(0, 3)
 
-            //chicken.onReady(randCostume())
+            chicken.onReady(randCostume)
             //chicken.nextCostume()
 
             function randCostume() {
