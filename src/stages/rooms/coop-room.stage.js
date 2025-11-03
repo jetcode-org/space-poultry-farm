@@ -7,74 +7,65 @@ export class CoopRoomStage extends AbstractRootStage {
         super.init();
 
         this.forever(this.control());
-        this.pen(this.drawParameters, 4);
-        this.chickenSpawn();
-        
+		this.pen(this.drawParameters, 4);
 
-        // this.chickenCritter = new Sprite()
-        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
-        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
-        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
+		this.chicken = new Sprite();
+		this.chicken.addCostume('public/images/chicken_sprite_1.png')
+		this.chicken.addCostume('public/images/chicken_sprite_2.png')
+		this.chicken.addCostume('public/images/chicken_sprite_3.png')
+		this.chicken.hidden = true
 
-
+		this.onStart(() => {
+			this.chickenSpawn();
+		})
     }
 
-     chickenSpawn() {
-         for (let i = 0; i < 20; i++) {
-            let chicken = new Sprite();
-            chicken.addCostume('public/images/chicken_sprite_1.png')
-            chicken.addCostume('public/images/chicken_sprite_2.png')
-            chicken.addCostume('public/images/chicken_sprite_3.png')
+	chickenSpawn() {
+		this.chicken.deleteClones();
 
-            //
+		for (let i = 0; i < this.currentQuantity; i++) {
+			let chickenClone = this.chicken.createClone();
+			chickenClone.hidden = false;
+            chickenClone.x = this.game.getRandom(200, 400)
+			chickenClone.y = this.game.getRandom(200, 400)
+			chickenClone.layer = 10
+			chickenClone.rotateStyle = 'leftRight'
+			// chicken.direction = this.game.getRandom(0, 360)
+			chickenClone.xSpeed = this.game.getRandom(-10, 10) / 10
+			chickenClone.ySpeed = this.game.getRandom(-10, 10) / 10
+			chickenClone.size = 150
 
-            chicken.x = this.game.getRandom(200, 400)
-            chicken.y = this.game.getRandom(200, 400)
-            chicken.layer = 10
-            chicken.rotateStyle = 'leftRight'
-            chicken.direction = this.game.getRandom(0, 360)
-            chicken.xSpeed = 0.5
-            chicken.ySpeed = 0.5
-            chicken.size = 150
-            let randCos = this.game.getRandom(0, 3)
+			let randCos = this.game.getRandom(0, 3)
+			chickenClone.switchCostume(randCos)
+			
+			chickenClone.forever(function() {
+				chickenClone.x += chickenClone.xSpeed
+				chickenClone.y += chickenClone.ySpeed
 
-            chicken.onReady(randCostume)
-            //chicken.nextCostume()
-
-            function randCostume() {
-                chicken.switchCostume(randCos)
-            }
-
-            chicken.forever(function() {
-                chicken.x += chicken.xSpeed
-                chicken.y += chicken.ySpeed
-
-                if (chicken.xSpeed > 0) {
-                    chicken.direction = -90;
+				if (chickenClone.xSpeed > 0) {
+					chickenClone.direction = -90;
                 } else {
-                     chicken.direction = 90;
+					chickenClone.direction = 90;
                 }
 
-                if (chicken.x > 400) {
-                    chicken.xSpeed *= -1
+				if (chickenClone.x > 400) {
+					chickenClone.xSpeed *= -1
                 }
 
-                if (chicken.x < 100) {
-                    chicken.xSpeed *= -1
+				if (chickenClone.x < 100) {
+					chickenClone.xSpeed *= -1
                 }
 
-                if (chicken.y > 400) {
-                    chicken.ySpeed *= -1
+				if (chickenClone.y > 400) {
+					chickenClone.ySpeed *= -1
                 }
 
-                if (chicken.y < 200) {
-                    chicken.ySpeed *= -1
+				if (chickenClone.y < 200) {
+					chickenClone.ySpeed *= -1
                 }
             })
         }
-    }
-
-    
+	}
 
     control() {
         return () => {
@@ -113,31 +104,32 @@ export class CoopRoomStage extends AbstractRootStage {
                 }
                 else {
                     this.currentQuantity = this.gameState.food;
-                    this.gameState.food = 0;
+					this.gameState.food = 0;
+					this.chickenSpawn();
                 }
 
                 let eggMultiplayer = 0.8 * this.pollution > 50 ? this.pollution >= 100 ? 0.4 : 0.75 : 1;
                 let eggsToSort = Math.round(this.currentQuantity * eggMultiplayer);
                 for (let i = 0; i < this.monitorStage.rooms.length; i++){
-                if (this.monitorStage.rooms[i].getLabel() == 'Сортировка') {
-                    const potentialSort = this.monitorStage.rooms[i];
-                    if (potentialSort.active && potentialSort.currentQuantity != potentialSort.maxQuantity) {
-                        if (potentialSort.maxQuantity - potentialSort.currentQuantity < eggsToSort) {
-                            potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
-                            eggsToSort -= potentialSort.maxQuantity - potentialSort.currentQuantity;
-                            potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
-                            potentialSort.quantitySlider.setCurrentValue();
-                            continue;
-                        }
-                        else {
-                            potentialSort.currentQuantity += eggsToSort;
-                            potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
-                            potentialSort.quantitySlider.setCurrentValue();
-                            return true;
-                        }
-                    }
-                }
-            }
+					if (this.monitorStage.rooms[i].getLabel() == 'Сортировка') {
+						const potentialSort = this.monitorStage.rooms[i];
+						if (potentialSort.active && potentialSort.currentQuantity != potentialSort.maxQuantity) {
+							if (potentialSort.maxQuantity - potentialSort.currentQuantity < eggsToSort) {
+								potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
+								eggsToSort -= potentialSort.maxQuantity - potentialSort.currentQuantity;
+								potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
+								potentialSort.quantitySlider.setCurrentValue();
+								continue;
+							}
+							else {
+								potentialSort.currentQuantity += eggsToSort;
+								potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
+								potentialSort.quantitySlider.setCurrentValue();
+								return true;
+							}
+						}
+					}
+				}
             }
         }
     }
@@ -153,6 +145,4 @@ export class CoopRoomStage extends AbstractRootStage {
         }
        
     }
-
-   
 }
