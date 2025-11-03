@@ -246,8 +246,8 @@ export class MonitorStage extends AbstractStage {
         context.fillText(this.gameState.chick, 140, 555);
         context.fillText(this.gameState.chicken, 210, 555);
         context.fillText(this.gameState.food, 280, 555);
-        context.fillText(this.gameState.shit, 350, 555);
-        context.fillText(this.gameState.crash, 420, 555);
+        context.fillText(this.gameState.manure, 350, 555);
+        context.fillText(this.gameState.eggshell, 420, 555);
 
     }
 

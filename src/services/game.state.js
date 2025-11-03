@@ -14,8 +14,7 @@ export class GameState {
     food = 1000;
     chick = 0;
     chicken = 0;
-    shit = 0;
-    crash = 0;
+   
 
     constructor() {
         if (GameState.instance) {
