@@ -1,3 +1,4 @@
+import { Sprite } from "jetcode-scrubjs";
 import {AbstractRootStage} from "./abstract-room.stage";
 import { SortingRoomStage } from "./sorting-room.stage";
 
@@ -7,7 +8,73 @@ export class CoopRoomStage extends AbstractRootStage {
 
         this.forever(this.control());
         this.pen(this.drawParameters, 4);
+        this.chickenSpawn();
+        
+
+        // this.chickenCritter = new Sprite()
+        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
+        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
+        // this.chickenCritter.addCostume('public/images/chicken_sprite_1.png')
+
+
     }
+
+     chickenSpawn() {
+         for (let i = 0; i < 20; i++) {
+            let chicken = new Sprite();
+            chicken.addCostume('public/images/chicken_sprite_1.png')
+            chicken.addCostume('public/images/chicken_sprite_2.png')
+            chicken.addCostume('public/images/chicken_sprite_3.png')
+
+            //
+
+            chicken.x = this.game.getRandom(200, 400)
+            chicken.y = this.game.getRandom(200, 400)
+            chicken.layer = 10
+            chicken.rotateStyle = 'leftRight'
+            chicken.direction = this.game.getRandom(0, 360)
+            chicken.xSpeed = 0.5
+            chicken.ySpeed = 0.5
+            chicken.size = 150
+            let randCos = this.game.getRandom(0, 3)
+
+            //chicken.onReady(randCostume())
+            //chicken.nextCostume()
+
+            function randCostume() {
+                chicken.switchCostume(randCos)
+            }
+
+            chicken.forever(function() {
+                chicken.x += chicken.xSpeed
+                chicken.y += chicken.ySpeed
+
+                if (chicken.xSpeed > 0) {
+                    chicken.direction = -90;
+                } else {
+                     chicken.direction = 90;
+                }
+
+                if (chicken.x > 400) {
+                    chicken.xSpeed *= -1
+                }
+
+                if (chicken.x < 100) {
+                    chicken.xSpeed *= -1
+                }
+
+                if (chicken.y > 400) {
+                    chicken.ySpeed *= -1
+                }
+
+                if (chicken.y < 200) {
+                    chicken.ySpeed *= -1
+                }
+            })
+        }
+    }
+
+    
 
     control() {
         return () => {
@@ -84,5 +151,8 @@ export class CoopRoomStage extends AbstractRootStage {
             context.fillText('Сколько куриц: ' + coop.currentQuantity, 615, 200);
             context.fillText('Загрязненность: ' + coop.pollution + '%', 615, 225);
         }
+       
     }
+
+   
 }
