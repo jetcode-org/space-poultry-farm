@@ -47,9 +47,9 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.currentValue = 50;
         this.progressSlider.lessColor = 'red';
         this.progressSlider.moreColor = 'red';
-        this.progressSlider.setWidth(470);
-        // this.progressSlider.canMove = false;
-        // this.progressSlider.drawLine = false;
+		this.progressSlider.setWidth(470);
+        this.progressSlider.canMove = false;
+        this.progressSlider.drawLine = false;
         // this.progressSlider.drawValue = false;
 
         // панель для ресурсов
@@ -282,7 +282,9 @@ export class MonitorStage extends AbstractStage {
             if (room.active) {
                 room.roomTick();
             }
-        }
+		}
+
+		this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
         this.drawReadyRooms();
     }

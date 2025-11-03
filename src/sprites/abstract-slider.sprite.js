@@ -82,7 +82,8 @@ export class AbstractSliderSprite extends Sprite {
         this.currentValue = (this.maxValue - this.minValue) / 2;
     }
 
-    setCurrentValue() {
+	setCurrentValue(newValue = this.currentValue) {
+		this.currentValue = newValue;
         if (this.currentValue > this.maxValue)
             this.currentValue = this.maxValue;
         if (this.currentValue < this.minValue)
@@ -93,6 +94,6 @@ export class AbstractSliderSprite extends Sprite {
         else {
             const addX = this.maxValue == this.minValue ? 0 : (this.currentValue - this.minValue) / (this.maxValue - this.minValue) * (this.maxX - this.minX);
             this.x = Math.round(this.minX + addX);
-        }
+		}
     }
 }
