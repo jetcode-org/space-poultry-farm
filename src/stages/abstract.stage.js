@@ -8,7 +8,8 @@ export class AbstractStage extends Stage {
         let line = '';
         let testLine = '';
         let lineArray = [];
-
+        
+        
         for (let n = 0; n < words.length; n++) {
             testLine = line + words[n] + ' ';
             const metrics = context.measureText(testLine);
@@ -26,5 +27,10 @@ export class AbstractStage extends Stage {
         for (let i = 0; i < lineArray.length; i++) {
             context.fillText(lineArray[i], x, y + i * lineHeight);
         }
+    }
+    // хз как это вызывать, отсюда напишу пока в монитор стрейжд
+    drawResoursesPanel() {
+        let mainResPanel = new Sprite()
+        mainResPanel.addCostume('public/images/top_panel_base.png')
     }
 }
