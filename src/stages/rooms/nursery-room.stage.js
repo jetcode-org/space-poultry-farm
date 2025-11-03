@@ -136,5 +136,12 @@ export class NurseryRoomStage extends AbstractRootStage {
                 context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
             }
         }
-    }
+	}
+
+	setVisCostumes() {
+		super.setVisCostumes()
+
+		this.visualiser.addCostume('public/images/chick_sprite_1.png')
+		this.visualiser.addCostume('public/images/chick_sprite_2.png')
+	}
 }

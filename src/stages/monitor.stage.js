@@ -112,7 +112,7 @@ export class MonitorStage extends AbstractStage {
         incubatorRoom1.activate();
 
         const nurseryRoom1 = new NurseryRoomStage();
-        nurseryRoom1.activate();
+		nurseryRoom1.activate();
 
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
@@ -210,7 +210,6 @@ export class MonitorStage extends AbstractStage {
             377,
             357
         );
-
 
         this.forever(this.gameTick, 1000);
         this.pen(this.drawParameters.bind(this), 3);
