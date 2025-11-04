@@ -42,6 +42,7 @@ export class AbstractRootStage extends AbstractStage {
 		this.forever(this.gameTickAllRooms, 1000);
 
 		this.pen(this.drawTextBlock.bind(this), 3);
+		
 
 		this.visualiser = new Sprite();
 		this.setVisCostumes();

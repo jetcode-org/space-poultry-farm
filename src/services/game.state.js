@@ -14,8 +14,10 @@ export class GameState {
     food = 1000;
     chick = 0;
     chicken = 0;
-	
 
+    quotas = [20, 50, 100, 200];
+    currentQuota = 0;
+	
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');

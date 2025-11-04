@@ -58,7 +58,7 @@ export class SortingRoomStage extends AbstractRootStage {
                         potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.95);
                         this.currentQuantity -= moveQuantity;
                         this.quantitySlider.maxValue = this.currentQuantity;
-                        this.quantitySlider.setCurrentValue()
+                        this.quantitySlider.setCurrentValue();
                         return true;
                     }
                 }
@@ -110,8 +110,10 @@ export class SortingRoomStage extends AbstractRootStage {
         if (this.tickCount > this.tickMaxCount) {
             this.tickCount = 0;
         }
-        if (this.currentQuantity > this.maxQuantity)
-                this.currentQuantity = this.maxQuantity;
+        if (this.currentQuantity > this.maxQuantity) {
+            this.currentQuantity = this.maxQuantity;
+        }
+        this.isRoomReady = this.currentQuantity >= this.maxQuantity;
         this.quantitySlider.maxValue = this.currentQuantity;
         this.quantitySlider.setCurrentValue();
     }

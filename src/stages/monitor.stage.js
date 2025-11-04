@@ -10,6 +10,7 @@ import {GameState} from "../services/game.state";
 import {AbstractStage} from "./abstract.stage";
 import {MenuStage} from "./menu.stage";
 import { SliderSprite } from "../sprites/slider.sprite";
+import { RobotSprite } from "../sprites/robot.sprite";
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -56,16 +57,17 @@ export class MonitorStage extends AbstractStage {
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
 
+        // спрайт готовности
         this.readySprite = new Sprite();
         this.readySprite.addCostume('public/images/room_is_ready.png') 
         this.readySprite.size = 50
-        // this.readySprite.drawCostume((ctx)=>{
-        //     //ctx.fillStyle = 'red';
-        //     //ctx.fillRect(0, 0, 50, 50);
-
-
-        // }, {width: 50, height: 50})
         this.readySprite.hidden = true;
+
+        // робот
+        this.cleaningRobot = new RobotSprite();
+        this.cleaningRobot.layer = 8;
+        this.cleaningRobot.size = 75;
+        
 
         const sortingRoom1 = new SortingRoomStage();
         sortingRoom1.activate();
@@ -217,9 +219,18 @@ export class MonitorStage extends AbstractStage {
             this.game.run(MenuStage.getInstance());
         }
 
+        this.gameState.chick = 0;
+        this.gameState.chicken = 0;
+
         for (const room of this.rooms) {
             if (room.active) {
                 room.roomTick();
+                if (room.getLabel() == 'Ясли') {
+                    this.gameState.chick += room.currentQuantity;
+                }
+                if (room.getLabel() == 'Стадо') {
+                    this.gameState.chicken += room.currentQuantity;
+                }
             }
 		}
 
