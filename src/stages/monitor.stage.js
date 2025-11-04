@@ -53,14 +53,18 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
+        // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
 
         this.readySprite = new Sprite();
-        //this.readySprite = 
-        this.readySprite.drawCostume((ctx)=>{
-            ctx.fillStyle = 'red';
-            ctx.fillRect(0, 0, 50, 50);
-        }, {width: 50, height: 50})
+        this.readySprite.addCostume('public/images/room_is_ready.png') 
+        this.readySprite.size = 50
+        // this.readySprite.drawCostume((ctx)=>{
+        //     //ctx.fillStyle = 'red';
+        //     //ctx.fillRect(0, 0, 50, 50);
+
+
+        // }, {width: 50, height: 50})
         this.readySprite.hidden = true;
 
         const sortingRoom1 = new SortingRoomStage();
@@ -191,7 +195,7 @@ export class MonitorStage extends AbstractStage {
             if (room.isRoomReady) {
                 const clone = this.readySprite.createClone();
                 clone.x = room.thumbnail.x + 35;
-                clone.y = room.thumbnail.y - 35;
+                clone.y = room.thumbnail.y - 20;
                 clone.hidden = false;
                 clone.layer = 4;
             }
