@@ -46,6 +46,7 @@ export class AbstractRootStage extends AbstractStage {
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
 		this.visualiser.hidden = true;
+		this.visualiser.moving = true;
 
 		this.onStart(() => {
 			this.visualizerSpawn();
@@ -176,7 +177,9 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	//Создает спрайты, которые задаются в SetVisCostumes() в соответствии с текущим количеством
+	// параметр moving должен определять двигаются обьекты или нет (для яиц не нужно)
 	visualizerSpawn() {
+
 		this.visualiser.deleteClones();
 
 		for (let i = 0; i < this.currentQuantity; i++) {
@@ -186,39 +189,46 @@ export class AbstractRootStage extends AbstractStage {
 			visClone.y = this.game.getRandom(200, 400)
 			visClone.layer = 10
 			visClone.rotateStyle = 'leftRight'
+			visClone.size = 150
 			visClone.xSpeed = this.game.getRandom(-10, 10) / 10
 			visClone.ySpeed = this.game.getRandom(-10, 10) / 10
-			visClone.size = 150
-
+			
 			let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
 			visClone.switchCostume(randCos)
+			
+			
+			if (this.visualiser.moving) {
 
-			visClone.forever(function () {
-				visClone.x += visClone.xSpeed
-				visClone.y += visClone.ySpeed
+					visClone.forever(function () {
 
-				if (visClone.xSpeed > 0) {
-					visClone.direction = -90;
-				} else {
-					visClone.direction = 90;
-				}
-
-				if (visClone.x > 400) {
-					visClone.xSpeed *= -1
-				}
-
-				if (visClone.x < 100) {
-					visClone.xSpeed *= -1
-				}
-
-				if (visClone.y > 400) {
-					visClone.ySpeed *= -1
-				}
-
-				if (visClone.y < 200) {
-					visClone.ySpeed *= -1
-				}
-			})
+					visClone.x += visClone.xSpeed
+					visClone.y += visClone.ySpeed
+	
+					if (visClone.xSpeed > 0) {
+						visClone.direction = -90;
+					} else {
+						visClone.direction = 90;
+					}
+	
+					if (visClone.x > 400) {
+						visClone.xSpeed *= -1
+					}
+	
+					if (visClone.x < 100) {
+						visClone.xSpeed *= -1
+					}
+	
+					if (visClone.y > 400) {
+						visClone.ySpeed *= -1
+					}
+	
+					if (visClone.y < 200) {
+						visClone.ySpeed *= -1
+					}
+			
+				})
+			}
+			
 		}
 	}
 

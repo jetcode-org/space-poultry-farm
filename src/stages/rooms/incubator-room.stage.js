@@ -20,6 +20,11 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
         this.nextButton.y = 500;
+
+        
+        this.visualiser.moving = false;
+
+
         this.nextButton.onReady(() => {
             this.nextButton.setLabel('Перевести циплят', undefined, 5)
         });
@@ -97,6 +102,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 this.currentReadyProgress += 1;
                 if (this.currentReadyProgress > IncubatorRoomStage.INCUBATOR_READY_LIMIT) {
                     this.pollution += Math.round(this.currentQuantity * 0.4);
+                    this.visualizerSpawn();
                 }
             }
         }
@@ -122,4 +128,12 @@ export class IncubatorRoomStage extends AbstractRootStage {
     activate() {
         super.activate();
     }
+
+    setVisCostumes() {
+		super.setVisCostumes()
+
+		this.visualiser.addCostume('public/images/egg_sprite_1.png')
+		this.visualiser.addCostume('public/images/egg_sprite_2.png')
+		this.visualiser.addCostume('public/images/egg_sprite_3.png')
+	}
 }
