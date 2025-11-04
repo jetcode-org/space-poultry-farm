@@ -1,4 +1,5 @@
 import {Sprite} from "jetcode-scrubjs";
+import { GameState } from "../services/game.state";
 
 export class AbstractButtonSprite extends Sprite {
     minSize = 400;
@@ -13,7 +14,7 @@ export class AbstractButtonSprite extends Sprite {
         if (this.touchMouse()) {
             this.size = (this.maxSize - this.size) / 3;
 
-            if (this.game.mouseDownOnce() && this.onClickCallback) {
+            if (this.game.mouseDown() && this.onClickCallback && !GameState.getInstance().isDraggableObjectActive) {
                 this.onClickCallback();
             }
 

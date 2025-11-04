@@ -14,6 +14,12 @@ export class AbstractRootStage extends AbstractStage {
 	maxQuantity = 20;
 	currentQuantity = 0;
 
+	cleaningValue = 5;
+	robot = null;
+	robotChargeDif = 0;
+
+	isCleaningByRobot = false;
+
 	init() {
 		super.init()
 		this.gameState = GameState.getInstance();
@@ -42,7 +48,7 @@ export class AbstractRootStage extends AbstractStage {
 		this.forever(this.gameTickAllRooms, 1000);
 
 		this.pen(this.drawTextBlock.bind(this), 3);
-		
+
 
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
@@ -124,8 +130,19 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	roomTick () {
-		if (this.pollution >= 100) 
+		if (this.robot) {
+			this.pollution -= this.cleaningValue;
+			this.robot.charge -= this.robotChargeDif;
+			if (this.robot.charge <= 0) {
+				this.robot = null;
+			}
+			if (this.pollution <= 0) {
+				this.pollution = 0;
+			}
+		}
+		if (this.pollution >= 100) {
 			this.pollution = 100;
+		}
 	}
 
 	setThumbnail(thumbnailSprite) {

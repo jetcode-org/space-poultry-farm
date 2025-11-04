@@ -12,6 +12,7 @@ import {MenuStage} from "./menu.stage";
 import { SliderSprite } from "../sprites/slider.sprite";
 import { RobotSprite } from "../sprites/robot.sprite";
 
+
 export class MonitorStage extends AbstractStage {
     static instance;
 
@@ -62,12 +63,9 @@ export class MonitorStage extends AbstractStage {
         this.readySprite.addCostume('public/images/room_is_ready.png') 
         this.readySprite.size = 50
         this.readySprite.hidden = true;
-
-        // робот
-        this.cleaningRobot = new RobotSprite();
-        this.cleaningRobot.layer = 8;
-        this.cleaningRobot.size = 75;
         
+        //создание роботов
+        this.robots = this.createDrones(6);
 
         const sortingRoom1 = new SortingRoomStage();
         sortingRoom1.activate();
@@ -83,7 +81,6 @@ export class MonitorStage extends AbstractStage {
         coopRoom1.activate();
         coopRoom1.currentQuantity = 10;
         
-
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
 
@@ -110,70 +107,80 @@ export class MonitorStage extends AbstractStage {
             this,
             sortingRoom1,
             206,
-            152
+            152,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom1,
             292,
-            152
+            152,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             nurseryRoom1,
             377,
-            152
+            152,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             coopRoom1,
             477,
-            200
+            200,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             farmRoom1,
             477,
-            357
+            357,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             sortingRoom2,
             206,
-            198
+            198,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom2,
             206,
-            244
+            244,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             nurseryRoom2,
             292,
-            198
+            198,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             coopRoom2,
             378,
-            198
+            198,
+            5
         );
 
         ThumbnailRoomFactory.build(
             this,
             farmRoom2,
             377,
-            357
+            357,
+            5
         );
 
         this.forever(this.gameTick, 1000);
@@ -202,6 +209,20 @@ export class MonitorStage extends AbstractStage {
                 clone.layer = 4;
             }
         }
+    }
+
+    createDrones(count) {
+        const robots = [];
+        for (let i = 0; i < count; i++) {
+            const robot = new RobotSprite(this);
+            robot.layer = 8;
+            robot.x = 650 + (i % 2 * 75);
+            robot.y = 120 + Math.floor(i / 2) * 75;
+            robot.setStartPos();
+            robot.hidden = false;
+            robots.push(robot);
+        }
+        return robots;
     }
 
     gameTick() {
@@ -234,6 +255,12 @@ export class MonitorStage extends AbstractStage {
             }
 		}
 
+        for (const robot of this.robots) {
+            if (robot.isCharging) {
+                robot.charge += 5;
+            }
+        }
+
 		this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
         this.drawReadyRooms();
@@ -241,6 +268,10 @@ export class MonitorStage extends AbstractStage {
 
 	drawParameters(context) {
 		super.drawParameters(context)
+
+        context.font = '18px Arial';
+		context.fillStyle = '#fff';
+		context.textAlign = 'start';
 
 		context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 300);
 		context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 325);

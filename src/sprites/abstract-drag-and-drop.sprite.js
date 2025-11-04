@@ -1,4 +1,5 @@
 import { Sprite } from "jetcode-scrubjs";
+import { GameState } from "../services/game.state";
 
 export class AbstractDragAndDropSprite extends Sprite {
     minSize = 400;
@@ -21,10 +22,12 @@ export class AbstractDragAndDropSprite extends Sprite {
         if (this.touchMouse()) {
             if (this.game.mouseDown()) {
                 this.active = true;
+                GameState.getInstance().isDraggableObjectActive = true;
             }
         }
         if (!this.game.mouseDown()) {
             this.active = false;
+            GameState.getInstance().isDraggableObjectActive = false;
         }
         if (this.active) {
             if (this.canMove) {

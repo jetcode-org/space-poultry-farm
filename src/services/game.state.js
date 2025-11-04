@@ -17,6 +17,8 @@ export class GameState {
 
     quotas = [20, 50, 100, 200];
     currentQuota = 0;
+
+    isDraggableObjectActive = false;
 	
     constructor() {
         if (GameState.instance) {

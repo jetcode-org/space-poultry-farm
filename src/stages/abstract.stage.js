@@ -91,7 +91,7 @@ export class AbstractStage extends Stage {
 
 	drawParameters(context) {
 		context.font = '18px Arial';
-		context.fillStyle = 'white';
+		context.fillStyle = '#4444ff';
 		context.textAlign = 'start';
 
 		// показатели на панели ресурсов у иконок
