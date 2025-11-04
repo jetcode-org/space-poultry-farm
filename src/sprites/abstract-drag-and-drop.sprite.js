@@ -20,7 +20,7 @@ export class AbstractDragAndDropSprite extends Sprite {
 
     control() {
         if (this.touchMouse()) {
-            if (this.game.mouseDown()) {
+            if (this.game.mouseDown() && !GameState.getInstance().isDraggableObjectActive) {
                 this.active = true;
                 GameState.getInstance().isDraggableObjectActive = true;
             }
