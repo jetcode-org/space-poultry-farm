@@ -53,6 +53,7 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
+        this.progressSlider.maxValue = GameState.getInstance().limitTime;
 
         this.readySprite = new Sprite();
         //this.readySprite = 
@@ -144,8 +145,8 @@ export class MonitorStage extends AbstractStage {
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom2,
-            200,
-            198
+            206,
+            244
         );
 
         ThumbnailRoomFactory.build(

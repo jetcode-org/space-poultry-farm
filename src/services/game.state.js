@@ -5,7 +5,7 @@ export class GameState {
     static CHARGE_VALUE_FULL = 1;
 
     passedTime = 0;
-    limitTime = 100;
+    limitTime = 1000;
     chargeValue = 0;
     cooledEggs = 0;
 
