@@ -103,7 +103,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 this.currentReadyProgress += 1;
                 if (this.currentReadyProgress > IncubatorRoomStage.INCUBATOR_READY_LIMIT) {
                     this.pollution += Math.round(this.currentQuantity * 0.4);
-                    this.visualizerSpawn();
+                    //this.visualizerSpawn();
                 }
             }
         }
