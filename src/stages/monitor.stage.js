@@ -243,11 +243,13 @@ export class MonitorStage extends AbstractStage {
                 alert('УСПЕХ! Квота 1 достингнута, теперь летим до второй планеты!');
                 this.gameState.quota_1 = true;
                 this.gameState.quotas_complete += 1;
+                this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
                 this.gameState.currentQuota += 1;
             } else {
                 alert('ПРОВАЛ! квота 1 не достингнута, время не ждет, летим дальше!');
                 this.gameState.quota_1 = true;
                 this.gameState.currentQuota += 1;
+                this.gameState.cooledEggs = 0;
             }
         }
 
@@ -256,11 +258,13 @@ export class MonitorStage extends AbstractStage {
                 alert('УСПЕХ! Квота 2 достингнута, теперь летим до третьей планеты!')
                 this.gameState.quotas_complete += 1;
                 this.gameState.quota_2 = true
+                this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
                 this.gameState.currentQuota += 1;
             } else {
                 alert('ПРОВАЛ! квота 2 не достингнута, время не ждет, летим дальше!')
                 this.gameState.quota_2 = true
                 this.gameState.currentQuota += 1;
+                this.gameState.cooledEggs = 0;
             }
         }
 
@@ -269,11 +273,13 @@ export class MonitorStage extends AbstractStage {
                 alert('УСПЕХ! Квота 3 достингнута, теперь летим до третьей планеты!')
                 this.gameState.quotas_complete += 1;
                 this.gameState.quota_3 = true
+                this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
                 this.gameState.currentQuota += 1;
             } else {
                 alert('ПРОВАЛ! квота 3 не достингнута, время не ждет, летим дальше!')
                 this.gameState.quota_3 = true
                 this.gameState.currentQuota += 1;
+                this.gameState.cooledEggs = 0;
             }
         }
 
@@ -347,6 +353,9 @@ export class MonitorStage extends AbstractStage {
 		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
 		context.fillText('Еда: ' + this.gameState.food, 600, 405);
 		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
-		context.fillText('Удолбрение: ' + this.gameState.manure, 600, 455);
+		context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
+        context.fillText('----------------------------', 600, 465);
+        context.fillText('Текущая квота: ' + this.gameState.quotas[this.gameState.currentQuota], 600, 490)
+        context.fillText('Планета: ' + this.gameState.distance_planet[this.gameState.currentQuota] + 'св. лет', 600, 510)
 	}
 }
