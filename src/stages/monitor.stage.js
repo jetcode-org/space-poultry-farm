@@ -339,12 +339,12 @@ export class MonitorStage extends AbstractStage {
 		context.fillStyle = '#fff';
 		context.textAlign = 'start';
 
-		context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 300);
-		context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 325);
-		context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 350);
-		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 375);
-		context.fillText('Еда: ' + this.gameState.food, 600, 400);
-		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 425);
-		context.fillText('Удолбрение: ' + this.gameState.manure, 600, 450);
+		context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 320);
+		context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 345);
+		context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 365);
+		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
+		context.fillText('Еда: ' + this.gameState.food, 600, 405);
+		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
+		context.fillText('Удолбрение: ' + this.gameState.manure, 600, 455);
 	}
 }
