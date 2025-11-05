@@ -34,6 +34,9 @@ export class MonitorStage extends AbstractStage {
 	init() {
 		super.init();
 
+       
+       
+
         this.addBackground('public/images/background_main_monitor.png');
 
         // слой с схемой-космическим кораблем
@@ -41,6 +44,14 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg')
         this.bgShipSprite.leftX = 300
         this.bgShipSprite.setAlpha = 0.5
+
+
+        //this.music = new Sprite();
+        //this.music.addSound('public/sounds/ChickenTABPOC.mp3');
+
+        // this.music.onReady(function() {
+        //     //this.music.playSound(0)
+        // })
         
         // слайдер для кораблика
         this.progressSlider = new SliderSprite();
@@ -226,6 +237,61 @@ export class MonitorStage extends AbstractStage {
     }
 
     gameTick() {
+        // логика получения квот
+        if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_1 == false) {
+            if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
+                alert('УСПЕХ! Квота 1 достингнута, теперь летим до второй планеты!');
+                this.gameState.quota_1 = true;
+                this.gameState.quotas_complete += 1;
+                this.gameState.currentQuota += 1;
+            } else {
+                alert('ПРОВАЛ! квота 1 не достингнута, время не ждет, летим дальше!');
+                this.gameState.quota_1 = true;
+                this.gameState.currentQuota += 1;
+            }
+        }
+
+        if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_2 == false) {
+            if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
+                alert('УСПЕХ! Квота 2 достингнута, теперь летим до третьей планеты!')
+                this.gameState.quotas_complete += 1;
+                this.gameState.quota_2 = true
+                this.gameState.currentQuota += 1;
+            } else {
+                alert('ПРОВАЛ! квота 2 не достингнута, время не ждет, летим дальше!')
+                this.gameState.quota_2 = true
+                this.gameState.currentQuota += 1;
+            }
+        }
+
+        if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_3 == false) {
+            if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
+                alert('УСПЕХ! Квота 3 достингнута, теперь летим до третьей планеты!')
+                this.gameState.quotas_complete += 1;
+                this.gameState.quota_3 = true
+                this.gameState.currentQuota += 1;
+            } else {
+                alert('ПРОВАЛ! квота 3 не достингнута, время не ждет, летим дальше!')
+                this.gameState.quota_3 = true
+                this.gameState.currentQuota += 1;
+            }
+        }
+
+        if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_4 == false) {
+            if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
+                alert('УСПЕХ! Квота 4 достингнута, вы завершили свою миссию');
+                this.gameState.quotas_complete += 1;
+                this.gameState.quota_4 = true;
+            } else {
+                alert('ПРОВАЛ! Квота 4 не достингнута, вы завершили свою миссию');
+                this.gameState.quota_4 = true;
+            }
+
+            alert('Общий отчет: вы выполнили ' + this.gameState.quotas_complete + ' заказов из 4 возможных.');
+        }
+
+        //
+
         this.gameState.chargeValue += 0.2;
         this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
 

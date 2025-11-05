@@ -13,6 +13,10 @@ IntroStage.getInstance();
 OutroStage.getInstance();
 MonitorStage.getInstance();
 
+
+
+
+
 game.run(MonitorStage.getInstance());
 //game.run(MenuStage.getInstance());
 // game.run(IntroStage.getInstance());

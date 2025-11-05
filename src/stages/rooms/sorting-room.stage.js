@@ -18,7 +18,7 @@ export class SortingRoomStage extends AbstractRootStage {
         // })
 
         this.quantitySlider = new SliderSprite();
-        this.quantitySlider.layer = 4;
+        this.quantitySlider.layer = 10;
         this.quantitySlider.size = 150;
         this.quantitySlider.x = 300;
         this.quantitySlider.y = 200;
@@ -37,7 +37,7 @@ export class SortingRoomStage extends AbstractRootStage {
         });
         this.coolerButton.x = 300;
         this.coolerButton.y = 300;
-        this.coolerButton.layer = 4;
+        this.coolerButton.layer = 10;
         this.coolerButton.onReady(()=>{
             this.coolerButton.setLabel('Холодильник', undefined, 7);
         })
@@ -68,7 +68,7 @@ export class SortingRoomStage extends AbstractRootStage {
         });
         this.incubatorButton.x = 500;
         this.incubatorButton.y = 200;
-        this.incubatorButton.layer = 4;
+        this.incubatorButton.layer = 10;
         this.incubatorButton.onReady(()=>{
             this.incubatorButton.setLabel('Инкубатор', undefined, 7);
         })
@@ -78,7 +78,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.incubatorButton.hidden = true;
 
         this.forever(this.control());
-        this.pen(this.drawParameters, 4)
+        this.pen(this.drawParameters, 10)
     }
     
     control() {

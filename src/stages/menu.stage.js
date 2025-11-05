@@ -31,6 +31,7 @@ export class MenuStage extends Stage {
         startButton.onClick(() => {
             this.game.run(IntroStage.getInstance());
         });
+        
     }
 
 }

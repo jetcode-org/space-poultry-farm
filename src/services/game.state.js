@@ -15,8 +15,17 @@ export class GameState {
     chick = 0;
     chicken = 0;
 
-    quotas = [20, 50, 100, 200];
+    quotas = [5, 7, 10, 15];
     currentQuota = 0;
+
+    quota_1 = false
+    quota_2 = false
+    quota_3 = false
+    quota_4 = false
+
+    quotas_complete = 0
+
+    distance_planet = [10, 15, 20, 25]
 
     isDraggableObjectActive = false;
 	

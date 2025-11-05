@@ -52,7 +52,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.forever(this.gameTickAllRooms, 1000);
 
-		this.pen(this.drawTextBlock.bind(this), 3);
+		this.pen(this.drawTextBlock.bind(this), 10);
 
 
 		this.visualiser = new Sprite();
@@ -93,7 +93,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 	createBackButton() {
 		const backButton = new ButtonSprite();
-		backButton.layer = 3;
+		backButton.layer = 10;
 		backButton.x = 690;
 		backButton.y = 130;
 
@@ -108,7 +108,7 @@ export class AbstractRootStage extends AbstractStage {
 
 	createActivateButton() {
 		this.activateButton = new ButtonSprite();
-		this.activateButton.layer = 3;
+		this.activateButton.layer = 10;
 		this.activateButton.x = 250;
 		this.activateButton.y = 400;
 
