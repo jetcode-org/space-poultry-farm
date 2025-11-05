@@ -62,7 +62,7 @@ export class NurseryRoomStage extends AbstractRootStage {
     }
 
     getBackgroundImage() {
-        return 'public/images/rooms/background_nursery.png';
+        return 'public/images/rooms/background_nursery_space.png';
     }
 
     getThumbnailImage() {

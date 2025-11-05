@@ -63,7 +63,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
     }
 
     getBackgroundImage() {
-        return 'public/images/rooms/background_incubator.png';
+        return 'public/images/rooms/background_incubator_space.png';
     }
 
     getThumbnailImage() {
