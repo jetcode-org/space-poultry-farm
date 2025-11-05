@@ -5,7 +5,7 @@ export class GameState {
     static CHARGE_VALUE_FULL = 1;
 
     passedTime = 0;
-    limitTime = 100;
+    limitTime = 200;
     chargeValue = 0;
     cooledEggs = 0;
 
@@ -29,7 +29,7 @@ export class GameState {
     quotas_complete = 0
 
     // дистанция до планет
-    distance_planet = [25, 50, 75, 100]
+    distance_planet = [50, 100, 150, 200]
 
     isDraggableObjectActive = false;
 	

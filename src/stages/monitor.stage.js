@@ -288,6 +288,8 @@ export class MonitorStage extends AbstractStage {
             }
 
             alert('Общий отчет: вы выполнили ' + this.gameState.quotas_complete + ' заказов из 4 возможных.');
+            this.restartGame();
+            this.game.run(MenuStage.getInstance());
         }
 
         //
@@ -302,8 +304,8 @@ export class MonitorStage extends AbstractStage {
         this.gameState.passedTime += 1;
 
         if (this.gameState.passedTime >= this.gameState.limitTime) {
-            this.restartGame();
-            this.game.run(MenuStage.getInstance());
+            //this.restartGame();
+            //this.game.run(MenuStage.getInstance());
         }
 
         this.gameState.chick = 0;
