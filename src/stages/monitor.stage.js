@@ -353,7 +353,7 @@ export class MonitorStage extends AbstractStage {
 		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
         context.fillText('----------------------------', 600, 395);
 		context.fillText('Еда: ' + this.gameState.food, 600, 410);
-		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 435);
+		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
 		context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
         context.fillText('----------------------------', 600, 465);
         context.fillStyle = '#f1f1f1ff';
