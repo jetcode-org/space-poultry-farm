@@ -12,10 +12,13 @@ export class AbstractButtonSprite extends Sprite {
 
     control(){
         if (this.touchMouse()) {
-            this.size = (this.maxSize - this.size) / 3;
+            if (!GameState.getInstance().isDraggableObjectActive) {
 
-            if (this.game.mouseDown() && this.onClickCallback && !GameState.getInstance().isDraggableObjectActive) {
-                this.onClickCallback();
+                this.size = (this.maxSize - this.size) / 3;
+                
+                if (this.game.mouseDownOnce() && this.onClickCallback) {
+                    this.onClickCallback();
+                }
             }
 
         } else {
