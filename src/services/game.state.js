@@ -5,7 +5,7 @@ export class GameState {
     static CHARGE_VALUE_FULL = 1;
 
     passedTime = 0;
-    limitTime = 1000;
+    limitTime = 100;
     chargeValue = 0;
     cooledEggs = 0;
 
@@ -15,17 +15,21 @@ export class GameState {
     chick = 0;
     chicken = 0;
 
-    quotas = [5, 7, 10, 15];
+    // сколько нужно набрать 
+    quotas = [25, 50, 100, 150];
     currentQuota = 0;
 
+    // для переключателей
     quota_1 = false
     quota_2 = false
     quota_3 = false
     quota_4 = false
 
+    // общее количество выполненных квот
     quotas_complete = 0
 
-    distance_planet = [10, 15, 20, 25]
+    // дистанция до планет
+    distance_planet = [25, 50, 75, 100]
 
     isDraggableObjectActive = false;
 	
