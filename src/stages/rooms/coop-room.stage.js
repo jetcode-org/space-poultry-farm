@@ -22,7 +22,7 @@ export class CoopRoomStage extends AbstractRootStage {
     }
 
     getBackgroundImage() {
-        return 'public/images/rooms/background_coop.png';
+        return 'public/images/rooms/background_coop_space.png';
     }
 
     getThumbnailImage() {

@@ -30,13 +30,18 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.addBackground('public/images/background_main_monitor.png');
 
-		//let shipSchemeSprite = new Sprite()
-		//shipSchemeSprite.addCostume('public/images/menu/main_screen.jpg')
+		this.bgSpace = new Sprite()
+		this.bgSpace.addCostume('public/images/rooms/background_space.png')
+		this.bgSpace.leftX = 300;
+		this.bgSpace.layer = 3;
 
+		this.bgStar = new Sprite();
+		this.bgStar.addCostume('public/images/rooms/star.png');
+		this.bgStar.hidden = true;
 
 		this.backgroundSprite = new Sprite();
 		this.backgroundSprite.addCostume(this.getBackgroundImage());
-		this.backgroundSprite.layer = 1;
+		this.backgroundSprite.layer = 5;
 		this.backgroundSprite.x = 300;
 		this.backgroundSprite.y = 300
 		this.backgroundSprite.filter = 'grayscale(100%)';
@@ -55,8 +60,11 @@ export class AbstractRootStage extends AbstractStage {
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
 
+		this.forever(this.spawStars, 2)
+
 		this.onStart(() => {
 			this.visualizerSpawn();
+			
 		})
 	}
 
@@ -254,5 +262,23 @@ export class AbstractRootStage extends AbstractStage {
 	setVisCostumes() {
 
 	}
+
+	spawStars() {
+		let c = this.bgStar.createClone();
+		c.x =  575;
+		c.y = this.game.getRandom(30, 570);
+		c.layer = 4;
+		c.size = this.game.getRandom(50, 100);
+		c.hidden = false
+
+		c.forever(function() {
+			c.x -= c.size / 20
+
+			if(c.x < 30) {
+				c.delete()
+			}
+		})
+
+	}	
 
 }
