@@ -52,7 +52,7 @@ export class MissionStage extends AbstractSlideStageStage {
     }
 
     setMissionSlides(missionIndex, resultText, finishText = null) {
-        this.currentSlide = 0;
+        this.reset();
 
         if (finishText !== null) {
             this.missions.push(finishText);
