@@ -15,7 +15,7 @@ export class GameState {
     chick = 0;
     chicken = 0;
 
-    // сколько нужно набрать 
+    // сколько нужно набрать
     quotas = [25, 50, 100, 150];
     currentQuota = 0;
 
@@ -30,9 +30,10 @@ export class GameState {
 
     // дистанция до планет
     distance_planet = [100, 200, 350, 400]
+    quotasLimitTime = [100, 200, 300, 400]
 
     isDraggableObjectActive = false;
-	
+
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');
