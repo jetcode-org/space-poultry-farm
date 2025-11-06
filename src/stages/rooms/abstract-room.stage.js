@@ -160,7 +160,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.activateButton.onClick(() => {
 			this.activate();
-			this.playSound('activation');
+			this.playSound('activation', 0.5);
 		});
 	}
 
