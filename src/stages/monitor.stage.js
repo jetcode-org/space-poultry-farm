@@ -315,12 +315,13 @@ export class MonitorStage extends AbstractStage {
     }
 
     drawReadyRooms() {
-        this.readySprite.deleteClones()
+        this.readySprite.deleteClones();
+
         for (const room of this.rooms) {
             if (room.isRoomReady) {
                 const clone = this.readySprite.createClone();
-                clone.x = room.thumbnail.x + 35;
-                clone.y = room.thumbnail.y - 20;
+                clone.x = room.thumbnail.x + 27;
+                clone.y = room.thumbnail.y - 16;
                 clone.hidden = false;
                 clone.layer = 4;
             }
@@ -403,8 +404,6 @@ export class MonitorStage extends AbstractStage {
             this.game.run(MenuStage.getInstance());
         }
 
-        //
-
         this.gameState.chargeValue += 0.2;
         this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
 
@@ -439,8 +438,6 @@ export class MonitorStage extends AbstractStage {
                 robot.charge += 5;
             }
         }
-
-
 
 		this.progressSlider.setCurrentValue(this.gameState.passedTime);
 

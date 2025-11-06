@@ -116,13 +116,13 @@ export class IncubatorRoomStage extends AbstractRootStage {
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Работает: ' + incubator.inProgress, 615, 200);
             context.fillText('Сколько яиц: ' + incubator.currentQuantity, 615, 225);
             context.fillText('Загрязненность: ' + incubator.pollution + '%', 615, 250);
             context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 615, 275);
-            if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
-                context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
-            }
+
+            // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
+            //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
+            // }
         }
     }
 
