@@ -154,13 +154,13 @@ export class MonitorStage extends AbstractStage {
             5
         );
 
-        ThumbnailRoomFactory.build(
-            this,
-            sortingRoom2,
-            206,
-            198,
-            5
-        );
+        // ThumbnailRoomFactory.build(
+        //     this,
+        //     sortingRoom2,
+        //     206,
+        //     198,
+        //     5
+        // );
 
         ThumbnailRoomFactory.build(
             this,
@@ -347,14 +347,14 @@ export class MonitorStage extends AbstractStage {
 		context.fillStyle = '#a8e2c0ff';
 		context.textAlign = 'start';
 
-		context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 320);
+		//context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 320);
 		context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 345);
 		context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 365);
 		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
         context.fillText('----------------------------', 600, 395);
-		context.fillText('Еда: ' + this.gameState.food, 600, 410);
-		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
-		context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
+		//context.fillText('Еда: ' + this.gameState.food, 600, 410);
+		//context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
+		//context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
         context.fillText('----------------------------', 600, 465);
         context.fillStyle = '#f1f1f1ff';
         context.fillText('Текущая квота: ' + this.gameState.quotas[this.gameState.currentQuota], 600, 490)
