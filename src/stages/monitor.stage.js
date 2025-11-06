@@ -351,11 +351,12 @@ export class MonitorStage extends AbstractStage {
             const robot = new RobotSprite(this);
             robot.layer = 8;
             robot.x = 650 + (i % 2 * 75);
-            robot.y = 120 + Math.floor(i / 2) * 75;
+            robot.y = 145 + Math.floor(i / 2) * 75;
             robot.setStartPos();
             robot.hidden = false;
             robots.push(robot);
         }
+
         return robots;
     }
 
@@ -529,6 +530,10 @@ export class MonitorStage extends AbstractStage {
 	drawParameters(context) {
 		super.drawParameters(context)
 
+        context.font = 'bold 18px Arial';
+        context.fillStyle = '#fff';
+        context.fillText('Дроны-уборщики:', 610, 100)
+
         context.font = '18px Arial';
 		context.fillStyle = '#a8e2c0ff';
 		context.textAlign = 'start';
@@ -544,7 +549,6 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.br = Math.sin(this.bgShipSprite.time) * 20
         //this.bgShipSprite.filter = 'brightness('+ this.bgShipSprite.br +')';
         this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
-
 	}
 
     showMission(currentQuota, resultText, finishText = null) {
