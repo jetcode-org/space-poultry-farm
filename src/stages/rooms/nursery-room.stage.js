@@ -157,4 +157,8 @@ export class NurseryRoomStage extends AbstractRootStage {
 		this.visualiser.addCostume('public/images/chick_sprite_1.png')
 		this.visualiser.addCostume('public/images/chick_sprite_2.png')
 	}
+
+    drawHelp(context) {
+		super.drawHelp(context);
+	}
 }

@@ -145,4 +145,8 @@ export class SortingRoomStage extends AbstractRootStage {
             context.fillText('Загрязненность: ' + sorting.pollution + '%', 600, 225);
         }
     }
+    
+    drawHelp(context) {
+		super.drawHelp(context);
+	}
 }

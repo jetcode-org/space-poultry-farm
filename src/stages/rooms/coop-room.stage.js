@@ -128,4 +128,8 @@ export class CoopRoomStage extends AbstractRootStage {
 		this.visualiser.addCostume('public/images/chicken_sprite_2.png')
 		this.visualiser.addCostume('public/images/chicken_sprite_3.png')
 	}
+
+    drawHelp(context) {
+		super.drawHelp(context);
+	}
 }

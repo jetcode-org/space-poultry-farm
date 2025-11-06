@@ -51,21 +51,25 @@ export class AbstractRootStage extends AbstractStage {
 		this.backgroundSprite.filter = 'grayscale(100%)';
 
 		//Пока не работает 👇
-		// this.firstUseSprite = new Sprite();
-		// this.firstUseSprite.drawCostume((context)=>{
-		// 	context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-		// 	context.fillRect(0, 0, 800, 200);
-		// }, {width: 800, height: 200});
-		// this.firstUseSprite.layer = 11;
+		this.firstUseSprite = new Sprite();
+		this.firstUseSprite.drawCostume(this.drawHelp, {width: 800, height: 200});
+		this.firstUseSprite.layer = 11;
 		
-		// this.firstUseButton = new Sprite();
-		// this.firstUseButton.addCostume('public/images/button.png')
-		// this.firstUseButton.setParent(this.firstUseSprite);
-		// this.firstUseButton.size = 200;
-		// this.firstUseButton.x = 150;
-		// this.firstUseButton.y = 25;
+		this.firstUseButton = new ButtonSprite();
+		this.firstUseButton.addCostume('public/images/button.png')
+		this.firstUseButton.setParent(this.firstUseSprite);
+		this.firstUseButton.minSize = 100;
+		this.firstUseButton.maxSize = 100;
+		this.firstUseButton.x = 1200;
+		this.firstUseButton.y = 200;
+		this.firstUseButton.onReady(()=>{
+			this.firstUseButton.setLabel('Ок', 'white', 70)
+		})
+		this.firstUseButton.onClick(()=>{
+			this.isFirstUse = false;
+		})
 
-		// this.firstUseSprite.y = this.height + 100;
+		this.firstUseSprite.y = this.height + 100;
 		//Пока не работает 👆
 
 		this.createBackButton();
@@ -83,6 +87,19 @@ export class AbstractRootStage extends AbstractStage {
 		this.visualiser.moving = true;
 		
 		this.forever(this.spawStars, 2)
+
+		this.forever(()=>{
+			if (this.isFirstUse) {
+				if (this.firstUseSprite.y > this.height - 100) {
+					this.firstUseSprite.y -= 1;
+				}
+			}
+			else {
+				if (this.firstUseSprite.y < this.height + 100) {
+					this.firstUseSprite.y += 1;
+				}
+			}
+		})
 		
 		this.onStart(() => {
 			this.visualizerSpawn();
@@ -308,6 +325,11 @@ export class AbstractRootStage extends AbstractStage {
 			}
 		})
 
+	}
+
+	drawHelp(context) {
+		context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+		context.fillRect(0, 0, 800, 200);
 	}
 
 }
