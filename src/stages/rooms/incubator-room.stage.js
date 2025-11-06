@@ -21,12 +21,12 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.nextButton.x = 690;
         this.nextButton.y = 500;
 
-        
+
         this.visualiser.moving = false;
 
 
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Перевести циплят', undefined, 5)
+            this.nextButton.setLabel('Цыплят в ясли', undefined, 70)
         });
         this.nextButton.onClick(() => {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);

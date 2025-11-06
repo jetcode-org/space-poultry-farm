@@ -21,7 +21,7 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.nextButton.x = 690;
         this.nextButton.y = 500;
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Куриц в загон', undefined, 5)
+            this.nextButton.setLabel('Куриц в загон', undefined, 70)
         });
         this.nextButton.onClick(() => {
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
@@ -105,7 +105,7 @@ export class NurseryRoomStage extends AbstractRootStage {
                     this.gameState.food = 0;
                     if (this.currentQuantity <= 0) {
                         this.failRoom();
-                    } 
+                    }
                 }
 
                 let chickenMultiplayer = this.pollution >= 100 ? 0.75 : 1;

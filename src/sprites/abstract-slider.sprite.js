@@ -2,8 +2,8 @@ import { Sprite } from "jetcode-scrubjs";
 import { GameState } from "../services/game.state";
 
 export class AbstractSliderSprite extends Sprite {
-    minSize = 400;
-    maxSize = 500;
+    minSize = 18;
+    maxSize = 20;
     onClickCallback;
 
     active = false;
@@ -27,13 +27,13 @@ export class AbstractSliderSprite extends Sprite {
         this.stage.pen((context, stage)=>{
             if (this.drawLine) {
                 context.lineWidth = 3;
-                
+
                 context.strokeStyle = this.lessColor;
                 context.beginPath();
                 context.moveTo(this.x, this.y);
                 context.lineTo(this.minX, this.y);
                 context.stroke();
-                
+
                 context.strokeStyle = this.moreColor;
                 context.beginPath();
                 context.moveTo(this.x, this.y);
