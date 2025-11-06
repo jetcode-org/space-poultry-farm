@@ -108,6 +108,7 @@ export class MonitorStage extends AbstractStage {
         this.robots = this.createDrones(6);
 
         const sortingRoom1 = new SortingRoomStage();
+        sortingRoom1.isFirstUse = true;
         sortingRoom1.activate();
         sortingRoom1.currentQuantity = 20;
 
