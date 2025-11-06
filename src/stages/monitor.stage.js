@@ -95,11 +95,21 @@ export class MonitorStage extends AbstractStage {
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
 
-        const sortingRoom2 = new SortingRoomStage();
+        //const sortingRoom2 = new SortingRoomStage();
         const incubatorRoom2 = new IncubatorRoomStage();
         const nurseryRoom2 = new NurseryRoomStage();
         const coopRoom2 = new CoopRoomStage();
         const farmRoom2 = new FarmRoomStage();
+
+        const incubatorRoom3 = new IncubatorRoomStage();
+        const nurseryRoom3 = new NurseryRoomStage();
+        const coopRoom3 = new CoopRoomStage();
+        const farmRoom3 = new FarmRoomStage();
+
+        const incubatorRoom4 = new IncubatorRoomStage();
+        const nurseryRoom4 = new NurseryRoomStage();
+        const coopRoom4 = new CoopRoomStage();
+        const farmRoom4 = new FarmRoomStage();
 
         this.rooms = [];
         this.rooms.push(sortingRoom1);
@@ -108,11 +118,21 @@ export class MonitorStage extends AbstractStage {
         this.rooms.push(coopRoom1);
         this.rooms.push(farmRoom1);
 
-        this.rooms.push(sortingRoom2);
+        //this.rooms.push(sortingRoom2);
         this.rooms.push(incubatorRoom2);
         this.rooms.push(nurseryRoom2);
         this.rooms.push(coopRoom2);
         this.rooms.push(farmRoom2);
+
+        this.rooms.push(incubatorRoom3);
+        this.rooms.push(nurseryRoom3);
+        this.rooms.push(coopRoom3);
+        this.rooms.push(farmRoom3);
+
+        this.rooms.push(incubatorRoom4);
+        this.rooms.push(nurseryRoom4);
+        this.rooms.push(coopRoom4);
+        this.rooms.push(farmRoom4);
 
         ThumbnailRoomFactory.build(
             this,
@@ -154,13 +174,7 @@ export class MonitorStage extends AbstractStage {
             5
         );
 
-        // ThumbnailRoomFactory.build(
-        //     this,
-        //     sortingRoom2,
-        //     206,
-        //     198,
-        //     5
-        // );
+        
 
         ThumbnailRoomFactory.build(
             this,
@@ -193,6 +207,71 @@ export class MonitorStage extends AbstractStage {
             357,
             5
         );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom3,
+            206,
+            198,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom3,
+            206,
+            198,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            nurseryRoom3,
+            292,
+            244,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            coopRoom3,
+            377,
+            244,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            farmRoom3,
+            476,
+            244,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom4,
+            206,
+            288,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            nurseryRoom4,
+            330,
+            291,
+            5
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            coopRoom4,
+            422,
+            291,
+            5
+        );
+
 
         this.forever(this.gameTick, 1000);
     }
