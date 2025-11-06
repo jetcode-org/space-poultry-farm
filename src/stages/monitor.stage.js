@@ -41,9 +41,12 @@ export class MonitorStage extends AbstractStage {
 
         // слой с схемой-космическим кораблем
         this.bgShipSprite = new Sprite();
-        this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg')
-        this.bgShipSprite.leftX = 300
-        this.bgShipSprite.setAlpha = 0.5
+        this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg');
+        this.bgShipSprite.leftX = 300;
+        this.bgShipSprite.setAlpha = 0.5;
+        this.bgShipSprite.br = 0;
+        this.bgShipSprite.time = 0.9;
+        //this.bgShipSprite.filter = 'brightness(0.9)';
 
 
         //this.music = new Sprite();
@@ -414,11 +417,14 @@ export class MonitorStage extends AbstractStage {
             }
         }
 
+        
+
 		this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
         this.drawReadyRooms();
 	}
 
+    
 	drawParameters(context) {
 		super.drawParameters(context)
 
@@ -438,5 +444,16 @@ export class MonitorStage extends AbstractStage {
         context.fillStyle = '#f1f1f1ff';
         context.fillText('Текущая квота: ' + this.gameState.quotas[this.gameState.currentQuota], 600, 490)
         context.fillText('Планета: ' + this.gameState.distance_planet[this.gameState.currentQuota] + 'св. лет', 600, 510)
+
+
+        // для монитора декор
+        this.bgShipSprite.time += 0.01
+        this.bgShipSprite.br = Math.sin(this.bgShipSprite.time) * 20
+        //this.bgShipSprite.filter = 'brightness('+ this.bgShipSprite.br +')';
+        this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
+
 	}
+
+   
+
 }
