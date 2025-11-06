@@ -95,6 +95,10 @@ export class SortingRoomStage extends AbstractRootStage {
         return 'Сортировка';
     }
 
+    getHelpText() {
+        return 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_sorting.png';
     }

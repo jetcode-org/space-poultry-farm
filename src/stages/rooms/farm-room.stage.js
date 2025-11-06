@@ -17,6 +17,10 @@ export class FarmRoomStage extends AbstractRootStage {
         return 'Ферма';
     }
 
+    getHelpText() {
+        return 'Ферма - гидропонный комплекс производства кормовых культур.';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_farm.png';
     }

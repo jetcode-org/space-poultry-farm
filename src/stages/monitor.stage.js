@@ -15,6 +15,8 @@ import { RobotSprite } from "../sprites/robot.sprite";
 
 export class MonitorStage extends AbstractStage {
     static instance;
+    helpText = null;
+    helpTextLifetime = 0;
 
     static getInstance() {
         if (!MonitorStage.instance) {
@@ -166,7 +168,8 @@ export class MonitorStage extends AbstractStage {
             sortingRoom1,
             206,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -174,7 +177,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom1,
             292,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -182,7 +186,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom1,
             377,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -190,7 +195,8 @@ export class MonitorStage extends AbstractStage {
             coopRoom1,
             477,
             200,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -198,7 +204,8 @@ export class MonitorStage extends AbstractStage {
             farmRoom1,
             477,
             357,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -206,7 +213,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom2,
             206,
             244,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -214,7 +222,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom2,
             292,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -222,7 +231,8 @@ export class MonitorStage extends AbstractStage {
             coopRoom2,
             378,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -230,7 +240,8 @@ export class MonitorStage extends AbstractStage {
             farmRoom2,
             377,
             357,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -238,7 +249,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom3,
             206,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -246,7 +258,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom3,
             206,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -254,7 +267,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom3,
             292,
             244,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -262,7 +276,8 @@ export class MonitorStage extends AbstractStage {
             coopRoom3,
             377,
             244,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -270,7 +285,8 @@ export class MonitorStage extends AbstractStage {
             farmRoom3,
             476,
             244,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -278,7 +294,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom4,
             206,
             288,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -286,7 +303,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom4,
             330,
             291,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -294,10 +312,12 @@ export class MonitorStage extends AbstractStage {
             coopRoom4,
             422,
             291,
-            5
+            5,
+            this
         );
 
         this.forever(this.gameTick, 1000);
+        this.pen(this.drawHelpBlock.bind(this));
     }
 
     restartGame() {
@@ -473,6 +493,28 @@ export class MonitorStage extends AbstractStage {
 
 	}
 
+    showHelp(text, lifetime = 10) {
+        this.helpText = text;
+        this.helpTextLifetime = lifetime;
+    }
 
+    drawHelpBlock(context) {
+        if (!this.helpText) {
+            return;
+        }
+
+        this.helpTextLifetime--;
+        if (this.helpTextLifetime <= 0) {
+            this.helpText = null;
+            return;
+        }
+
+        context.font = 'bold 18px Arial';
+        context.fillStyle = '#a8e2c0ff';
+        context.fillText('Справка:', 610, 370)
+
+        context.font = '14px Arial';
+        this.drawMultilineText(context, this.helpText, 610, 400, 165, 20);
+    }
 
 }

@@ -63,6 +63,10 @@ export class NurseryRoomStage extends AbstractRootStage {
         return 'Ясли';
     }
 
+    getHelpText() {
+        return 'Ясли - модуль для выращивания молодняка до взрослых особей.';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_nursery_space.png';
     }

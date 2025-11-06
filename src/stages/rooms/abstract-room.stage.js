@@ -128,6 +128,10 @@ export class AbstractRootStage extends AbstractStage {
 		console.error('Метод не определен.');
 	}
 
+	getHelpText() {
+		console.error('Метод не определен.');
+	}
+
 	getBackgroundImage() {
 		console.error('Метод не определен.');
 	}

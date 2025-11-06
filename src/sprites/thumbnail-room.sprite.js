@@ -25,8 +25,4 @@ export class ThumbnailRoomSprite extends AbstractButtonSprite {
         this.filter = 'grayscale(100%)';
         this.active = false;
     }
-
-    // control() {
-
-    // }
 }

@@ -62,6 +62,10 @@ export class IncubatorRoomStage extends AbstractRootStage {
         return 'Инкубатор';
     }
 
+    getHelpText() {
+        return 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_incubator_space.png';
     }
