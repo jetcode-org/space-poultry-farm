@@ -26,7 +26,12 @@ export class FarmRoomStage extends AbstractRootStage {
 
     control() {
         return () => {
+            if (this.isRoomReady) {
+                this.nextButton.hidden = false;
 
+            } else {
+                this.nextButton.hidden = true;
+            }
         }
     }
 
