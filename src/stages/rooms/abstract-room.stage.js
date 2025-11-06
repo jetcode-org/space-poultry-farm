@@ -52,10 +52,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		//Пока не работает 👇
 		this.firstUseSprite = new Sprite();
-		this.firstUseSprite.drawCostume((context)=>{
-			context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-			context.fillRect(0, 0, 800, 200);
-		}, {width: 800, height: 200});
+		this.firstUseSprite.drawCostume(this.drawHelp, {width: 800, height: 200});
 		this.firstUseSprite.layer = 11;
 		
 		this.firstUseButton = new ButtonSprite();
@@ -328,6 +325,11 @@ export class AbstractRootStage extends AbstractStage {
 			}
 		})
 
+	}
+
+	drawHelp(context) {
+		context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+		context.fillRect(0, 0, 800, 200);
 	}
 
 }

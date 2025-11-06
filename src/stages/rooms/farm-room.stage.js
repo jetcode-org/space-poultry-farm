@@ -80,4 +80,8 @@ export class FarmRoomStage extends AbstractRootStage {
         }
     }
 
+    drawHelp(context) {
+		super.drawHelp(context);
+	}
+
 }

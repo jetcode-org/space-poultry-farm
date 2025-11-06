@@ -148,4 +148,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
 		this.visualiser.addCostume('public/images/egg_sprite_2.png')
 		this.visualiser.addCostume('public/images/egg_sprite_3.png')
 	}
+
+    drawHelp(context) {
+		super.drawHelp(context);
+	}
 }
