@@ -10,6 +10,7 @@ export class NurseryRoomStage extends AbstractRootStage {
     currentProgress = 0;
     currentReadyProgress = 0;
     tickMaxCount = 0;
+    foodConsumption = 0.25;
 
     init() {
         super.init();
@@ -106,10 +107,10 @@ export class NurseryRoomStage extends AbstractRootStage {
 
                 this.pollution += Math.floor(0.3 * this.currentQuantity);
 
-                if (this.gameState.food >= this.currentQuantity * 0.5) {
-                    this.gameState.food -= this.currentQuantity * 0.5;
+                if (this.gameState.food >= this.currentQuantity * this.foodConsumption) {
+                    this.gameState.food -= this.currentQuantity * this.foodConsumption;
                 } else {
-					this.currentQuantity = this.gameState.food * 2;
+					this.currentQuantity = this.gameState.food * (1 / this.foodConsumption);
 					this.visualizerSpawn();
                     this.gameState.food = 0;
                     if (this.currentQuantity <= 0) {

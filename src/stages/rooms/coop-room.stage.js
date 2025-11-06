@@ -5,7 +5,8 @@ import { ButtonSprite } from "../../sprites/button.sprite";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
-    maxEggsAmount = 50
+    maxEggsAmount = 50;
+    foodConsumption = 0.5;
 
     init() {
         super.init();
@@ -93,11 +94,11 @@ export class CoopRoomStage extends AbstractRootStage {
 
                 this.pollution += Math.floor(0.7 * this.currentQuantity);
 
-                if (this.gameState.food >= this.currentQuantity) {
-                    this.gameState.food -= this.currentQuantity;
+                if (this.gameState.food >= this.currentQuantity * this.foodConsumption) {
+                    this.gameState.food -= this.currentQuantity * this.foodConsumption;
                 }
                 else {
-                    this.currentQuantity = this.gameState.food;
+                    this.currentQuantity = this.gameState.food * (1 / this.foodConsumption);
 					this.gameState.food = 0;
 					this.visualizerSpawn();
                 }
