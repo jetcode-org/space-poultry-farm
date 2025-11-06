@@ -14,6 +14,8 @@ export class AbstractRootStage extends AbstractStage {
 	maxQuantity = 20;
 	currentQuantity = 0;
 
+	isFirstUse = false;
+
 	cleaningValue = 5;
 	robot = null;
 	robotChargeDif = 0;
@@ -46,22 +48,39 @@ export class AbstractRootStage extends AbstractStage {
 		this.backgroundSprite.y = 300
 		this.backgroundSprite.filter = 'grayscale(100%)';
 
+		//Пока не работает
+		this.firstUseSprite = new Sprite();
+		this.firstUseSprite.drawCostume((context)=>{
+			context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+			context.fillRect(0, 0, 800, 200);
+		}, {width: 800, height: 200});
+		this.firstUseSprite.layer = 11;
+		
+		this.firstUseButton = new Sprite();
+		this.firstUseButton.addCostume('public/images/button.png')
+		this.firstUseButton.setParent(this.firstUseSprite);
+		this.firstUseButton.size = 200;
+		this.firstUseButton.x = 150;
+		this.firstUseButton.y = 25;
+
+		this.firstUseSprite.y = this.height + 100;
+
 		this.createBackButton();
 		this.createActivateButton();
 		this.createGetManureButton();
 
 		this.forever(this.gameTickAllRooms, 1000);
-
+		
 		this.pen(this.drawTextBlock.bind(this), 10);
-
-
+		
+		
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
-
+		
 		this.forever(this.spawStars, 2)
-
+		
 		this.onStart(() => {
 			this.visualizerSpawn();
 			
@@ -174,7 +193,9 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	gameTickAllRooms () {
-		MonitorStage.getInstance().gameTick();
+		if (this.isFirstUse) {	
+			MonitorStage.getInstance().gameTick();
+		}
 	}
 
 	drawTextBlock(context) {
