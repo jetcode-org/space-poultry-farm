@@ -41,7 +41,7 @@ export class MonitorStage extends AbstractStage {
 
         // слой с схемой-космическим кораблем
         this.bgShipSprite = new Sprite();
-        this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg');
+        this.bgShipSprite.addCostume('public/images/menu/main_screeen_2.png');
         this.bgShipSprite.leftX = 300;
         this.bgShipSprite.setAlpha = 0.5;
         this.bgShipSprite.br = 0;
