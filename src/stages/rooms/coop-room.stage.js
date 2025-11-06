@@ -1,19 +1,59 @@
 import { Sprite } from "jetcode-scrubjs";
 import {AbstractRootStage} from "./abstract-room.stage";
 import { SortingRoomStage } from "./sorting-room.stage";
+import { ButtonSprite } from "../../sprites/button.sprite";
 
 export class CoopRoomStage extends AbstractRootStage {
+    eggsAmount = 0;
+    maxEggsAmount = 50
+
     init() {
         super.init();
 
         this.forever(this.control());
 		this.pen(this.drawParameters, 4);
 
+        this.nextButton = new ButtonSprite();
+        this.nextButton.x = 690;
+        this.nextButton.y = 500;
+        this.nextButton.onReady(() => {
+            this.nextButton.setLabel('Яйца -> сортировка', undefined, 50)
+        });
+        this.nextButton.onClick(() => {
+            for (let i = 0; i < this.monitorStage.rooms.length; i++) {
+                if (this.monitorStage.rooms[i].getLabel() === 'Сортировка') {
+                    const potentialSort = this.monitorStage.rooms[i];
+                    if (potentialSort.active && potentialSort.currentQuantity != potentialSort.maxQuantity) {
+                        if (potentialSort.maxQuantity - potentialSort.currentQuantity < this.eggsAmount) {
+                            potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
+                            this.eggsAmount -= potentialSort.maxQuantity - potentialSort.currentQuantity;
+                            continue;
+                        }
+                        else {
+                            potentialSort.currentQuantity += this.eggsAmount;
+                            this.eggsAmount = 0;
+                        }
+
+                        return true;
+                    }
+                }
+            }
+
+            showModal('Недостаточно места в сортировке, не все яйца удалось перенести', () => this.stop(), () => this.run());
+
+            return false;
+        })
+
     }
 
     control() {
         return () => {
-
+            if (this.eggsAmount > 0) {
+                this.nextButton.hidden = false;
+            }
+            else {
+                this.nextButton.hidden = true;
+            }
         }
     }
 
@@ -39,8 +79,9 @@ export class CoopRoomStage extends AbstractRootStage {
 
     roomTick () {
         super.roomTick();
-        // console.log('CoopRoomStage tick');
+        console.log('CoopRoomStage tick');
         if (this.active) {
+            this.isRoomReady = false;
             this.tickCount += 1;
             if (this.tickCount > this.tickMaxCount) {
                 this.tickCount = 0;
@@ -57,27 +98,11 @@ export class CoopRoomStage extends AbstractRootStage {
                 }
 
                 let eggMultiplayer = 0.8 * this.pollution > 50 ? this.pollution >= 100 ? 0.4 : 0.75 : 1;
-                let eggsToSort = Math.round(this.currentQuantity * eggMultiplayer);
-                for (let i = 0; i < this.monitorStage.rooms.length; i++){
-					if (this.monitorStage.rooms[i].getLabel() == 'Сортировка') {
-						const potentialSort = this.monitorStage.rooms[i];
-						if (potentialSort.active && potentialSort.currentQuantity != potentialSort.maxQuantity) {
-							if (potentialSort.maxQuantity - potentialSort.currentQuantity < eggsToSort) {
-								potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
-								eggsToSort -= potentialSort.maxQuantity - potentialSort.currentQuantity;
-								potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
-								potentialSort.quantitySlider.setCurrentValue();
-								continue;
-							}
-							else {
-								potentialSort.currentQuantity += eggsToSort;
-								potentialSort.quantitySlider.maxValue = potentialSort.currentQuantity;
-								potentialSort.quantitySlider.setCurrentValue();
-								return true;
-							}
-						}
-					}
-				}
+                this.eggsAmount += Math.round(this.currentQuantity * eggMultiplayer);
+                if (this.eggsAmount > this.maxEggsAmount) {
+                    this.eggsAmount = this.maxEggsAmount;
+                    this.isRoomReady = true;
+                }
             }
         }
     }
@@ -90,7 +115,8 @@ export class CoopRoomStage extends AbstractRootStage {
             context.textAlign = 'start';
 
             context.fillText('Сколько куриц: ' + coop.currentQuantity, 615, 200);
-            context.fillText('Загрязненность: ' + coop.pollution + '%', 615, 225);
+            context.fillText('Сколько яиц: ' + coop.eggsAmount, 615, 225);
+            context.fillText('Загрязненность: ' + coop.pollution + '%', 615, 250);
         }
 
 	}

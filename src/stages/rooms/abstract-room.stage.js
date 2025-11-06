@@ -50,22 +50,23 @@ export class AbstractRootStage extends AbstractStage {
 		this.backgroundSprite.y = 300
 		this.backgroundSprite.filter = 'grayscale(100%)';
 
-		//Пока не работает
-		this.firstUseSprite = new Sprite();
-		this.firstUseSprite.drawCostume((context)=>{
-			context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-			context.fillRect(0, 0, 800, 200);
-		}, {width: 800, height: 200});
-		this.firstUseSprite.layer = 11;
+		//Пока не работает 👇
+		// this.firstUseSprite = new Sprite();
+		// this.firstUseSprite.drawCostume((context)=>{
+		// 	context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+		// 	context.fillRect(0, 0, 800, 200);
+		// }, {width: 800, height: 200});
+		// this.firstUseSprite.layer = 11;
 		
-		this.firstUseButton = new Sprite();
-		this.firstUseButton.addCostume('public/images/button.png')
-		this.firstUseButton.setParent(this.firstUseSprite);
-		this.firstUseButton.size = 200;
-		this.firstUseButton.x = 150;
-		this.firstUseButton.y = 25;
+		// this.firstUseButton = new Sprite();
+		// this.firstUseButton.addCostume('public/images/button.png')
+		// this.firstUseButton.setParent(this.firstUseSprite);
+		// this.firstUseButton.size = 200;
+		// this.firstUseButton.x = 150;
+		// this.firstUseButton.y = 25;
 
-		this.firstUseSprite.y = this.height + 100;
+		// this.firstUseSprite.y = this.height + 100;
+		//Пока не работает 👆
 
 		this.createBackButton();
 		this.createActivateButton();
@@ -200,7 +201,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	gameTickAllRooms () {
-		if (this.isFirstUse) {	
+		if (!this.isFirstUse) {	
 			MonitorStage.getInstance().gameTick();
 		}
 	}
