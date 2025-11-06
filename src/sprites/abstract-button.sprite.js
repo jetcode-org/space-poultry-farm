@@ -5,8 +5,11 @@ export class AbstractButtonSprite extends Sprite {
     minSize = 100;
     maxSize = 125;
     onClickCallback;
+    clickSound = 'public/sounds/click.mp3';
 
     init(){
+        this.onReady(this.onReadyCallback.bind(this));
+
         this.forever(this.control);
     }
 
@@ -17,12 +20,24 @@ export class AbstractButtonSprite extends Sprite {
                 this.size = (this.maxSize - this.size) / 3;
 
                 if (this.game.mouseDownOnce() && this.onClickCallback) {
+                    if (this.clickSound) {
+                        this.playSound('click', {
+                            volume: 0.05
+                        });
+                    }
+
                     this.onClickCallback();
                 }
             }
 
         } else {
             this.size = (this.minSize - this.size) / 3;
+        }
+    }
+
+    onReadyCallback() {
+        if (this.clickSound) {
+            this.addSound(this.clickSound, 'click');
         }
     }
 

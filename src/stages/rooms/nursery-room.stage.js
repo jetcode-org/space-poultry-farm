@@ -98,8 +98,7 @@ export class NurseryRoomStage extends AbstractRootStage {
 
                 if (this.gameState.food >= this.currentQuantity * 0.5) {
                     this.gameState.food -= this.currentQuantity * 0.5;
-                }
-                else {
+                } else {
 					this.currentQuantity = this.gameState.food * 2;
 					this.visualizerSpawn();
                     this.gameState.food = 0;
@@ -112,6 +111,11 @@ export class NurseryRoomStage extends AbstractRootStage {
                 this.currentProgress += chickenMultiplayer;
                 if (this.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
                     this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
+
+                    if (!this.isRoomReady) {
+                        this.playSound('ready');
+                    }
+
                     this.isRoomReady = true;
                 }
             }

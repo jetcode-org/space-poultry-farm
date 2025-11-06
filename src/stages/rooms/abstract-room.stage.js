@@ -29,6 +29,7 @@ export class AbstractRootStage extends AbstractStage {
 		})
 
 		this.addBackground('public/images/background_main_monitor.png');
+		this.addSound('public/sounds/ready.mp3', 'ready');
 
 		this.bgSpace = new Sprite()
 		this.bgSpace.addCostume('public/images/rooms/background_space.png')

@@ -91,14 +91,21 @@ export class IncubatorRoomStage extends AbstractRootStage {
         super.roomTick();
         if (this.inProgress) {
             this.tickCount += 1;
+
             if (this.tickCount > this.tickMaxCount) {
                 this.tickCount = 0
                 this.currentProgress += 1;
                 if (this.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
                     this.currentProgress = IncubatorRoomStage.INCUBATOR_CYCLE_TIMER
+
+                    if (!this.isRoomReady) {
+                        this.playSound('ready');
+                    }
+
                     this.isRoomReady = true;
                 }
             }
+
             if (this.isRoomReady) {
                 this.currentReadyProgress += 1;
                 if (this.currentReadyProgress > IncubatorRoomStage.INCUBATOR_READY_LIMIT) {

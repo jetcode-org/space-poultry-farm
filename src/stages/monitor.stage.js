@@ -35,6 +35,7 @@ export class MonitorStage extends AbstractStage {
 		super.init();
 
         this.addBackground('public/images/background_main_monitor.png');
+        this.addSound('public/sounds/background_music.mp3', 'background_music');
 
         // слой с схемой-космическим кораблем
         this.bgShipSprite = new Sprite();
@@ -67,12 +68,12 @@ export class MonitorStage extends AbstractStage {
         this.sliderPlanet4.y = 505;
         this.sliderPlanet4.size = 200;
 
-        //this.music = new Sprite();
-        //this.music.addSound('public/sounds/ChickenTABPOC.mp3');
 
-        // this.music.onReady(function() {
-        //     //this.music.playSound(0)
-        // })
+        this.game.onUserInteracted(() => {
+            this.playSound('background_music', {
+                loop: true
+            });
+        })
 
         // слайдер для кораблика
         this.progressSlider = new SliderSprite();
@@ -200,8 +201,6 @@ export class MonitorStage extends AbstractStage {
             5
         );
 
-
-
         ThumbnailRoomFactory.build(
             this,
             incubatorRoom2,
@@ -297,7 +296,6 @@ export class MonitorStage extends AbstractStage {
             291,
             5
         );
-
 
         this.forever(this.gameTick, 1000);
     }
