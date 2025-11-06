@@ -119,7 +119,7 @@ export class NurseryRoomStage extends AbstractRootStage {
                     this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
 
                     if (!this.isRoomReady) {
-                        this.playSound('ready');
+                        this.playSound('ready', 0.5);
                     }
 
                     this.isRoomReady = true;

@@ -103,7 +103,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                     this.currentProgress = IncubatorRoomStage.INCUBATOR_CYCLE_TIMER
 
                     if (!this.isRoomReady) {
-                        this.playSound('ready');
+                        this.playSound('ready', 0.5);
                     }
 
                     this.isRoomReady = true;
