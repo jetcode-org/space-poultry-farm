@@ -48,6 +48,29 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.time = 0.9;
         //this.bgShipSprite.filter = 'brightness(0.9)';
 
+        // Картинки для прогресса миссии на слайдер
+        this.sliderPlanet1 = new Sprite();
+        this.sliderPlanet1.addCostume('public/images/sliderSprites/slider_planet_1.png');
+        this.sliderPlanet1.x = 170;
+        this.sliderPlanet1.y = 500;
+
+        this.sliderPlanet2 = new Sprite();
+        this.sliderPlanet2.addCostume('public/images/sliderSprites/slider_planet_2.png');
+        this.sliderPlanet2.x = 300;
+        this.sliderPlanet2.y = 500;
+
+        this.sliderPlanet3 = new Sprite();
+        this.sliderPlanet3.addCostume('public/images/sliderSprites/slider_planet_3.png');
+        this.sliderPlanet3.x = 420;
+        this.sliderPlanet3.y = 500;
+
+        this.sliderPlanet4 = new Sprite();
+        this.sliderPlanet4.addCostume('public/images/sliderSprites/slider_planet_4.png');
+        this.sliderPlanet4.x = 515;
+        this.sliderPlanet4.y = 505;
+        this.sliderPlanet4.size = 200;
+
+
 
         //this.music = new Sprite();
         //this.music.addSound('public/sounds/ChickenTABPOC.mp3');
