@@ -2,7 +2,7 @@
 export class GameState {
     static instance;
 
-    static CHARGE_VALUE_FULL = 1;
+    static CHARGE_VALUE_FULL = 100;
 
     passedTime = 0;
     limitTime = 400;

@@ -135,11 +135,11 @@ export class AbstractRootStage extends AbstractStage {
 	createActivateButton() {
 		this.activateButton = new ButtonSprite();
 		this.activateButton.layer = 10;
-		this.activateButton.x = 250;
+		this.activateButton.x = 190;
 		this.activateButton.y = 400;
 
 		this.activateButton.onReady(()=>{
-			this.activateButton.setLabel('Актив.');
+			this.activateButton.setLabel('Активировать');
 		});
 
 		this.activateButton.onClick(() => {
@@ -233,7 +233,7 @@ export class AbstractRootStage extends AbstractStage {
 		context.fillStyle = 'white';
 		context.textAlign = 'start';
 
-		const text = 'В данный момент отсек обесточен. Он не работает';
+		const text = 'Модуль временно не работает. Требуется полная зарядка корабля. Текущий уровень энергии: ' + this.gameState.chargeValue + '%';
 
 		this.drawMultilineText(context, text, 120, 200, 350, 30);
 
