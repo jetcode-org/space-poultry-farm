@@ -23,7 +23,7 @@ export class AbstractRootStage extends AbstractStage {
 	init() {
 		super.init()
 		this.gameState = GameState.getInstance();
-      
+
 		this.onReady(()=>{
 			this.monitorStage = MonitorStage.getInstance();
 		})
@@ -64,7 +64,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.onStart(() => {
 			this.visualizerSpawn();
-			
+
 		})
 	}
 
@@ -76,7 +76,7 @@ export class AbstractRootStage extends AbstractStage {
 		getManureButton.y = 400;
 
 		getManureButton.onReady(()=>{
-			getManureButton.setLabel('Собрать помет', undefined, 6);
+			getManureButton.setLabel('Собрать помет', undefined, 70);
 		});
 
 		getManureButton.onClick(() => {
@@ -218,43 +218,43 @@ export class AbstractRootStage extends AbstractStage {
 			visClone.size = 150
 			visClone.xSpeed = this.game.getRandom(-10, 10) / 10
 			visClone.ySpeed = this.game.getRandom(-10, 10) / 10
-			
+
 			let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
 			visClone.switchCostume(randCos)
-			
-			
+
+
 			if (this.visualiser.moving) {
 
 					visClone.forever(function () {
 
 					visClone.x += visClone.xSpeed
 					visClone.y += visClone.ySpeed
-	
+
 					if (visClone.xSpeed > 0) {
 						visClone.direction = -90;
 					} else {
 						visClone.direction = 90;
 					}
-	
+
 					if (visClone.x > 400) {
 						visClone.xSpeed *= -1
 					}
-	
+
 					if (visClone.x < 100) {
 						visClone.xSpeed *= -1
 					}
-	
+
 					if (visClone.y > 400) {
 						visClone.ySpeed *= -1
 					}
-	
+
 					if (visClone.y < 200) {
 						visClone.ySpeed *= -1
 					}
-			
+
 				})
 			}
-			
+
 		}
 	}
 
@@ -279,6 +279,6 @@ export class AbstractRootStage extends AbstractStage {
 			}
 		})
 
-	}	
+	}
 
 }

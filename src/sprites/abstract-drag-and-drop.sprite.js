@@ -2,8 +2,8 @@ import { Sprite } from "jetcode-scrubjs";
 import { GameState } from "../services/game.state";
 
 export class AbstractDragAndDropSprite extends Sprite {
-    minSize = 400;
-    maxSize = 500;
+    minSize = 18;
+    maxSize = 20;
     onClickCallback;
 
     active = false;

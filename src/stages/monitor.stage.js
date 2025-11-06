@@ -34,9 +34,6 @@ export class MonitorStage extends AbstractStage {
 	init() {
 		super.init();
 
-       
-       
-
         this.addBackground('public/images/background_main_monitor.png');
 
         // слой с схемой-космическим кораблем
@@ -70,15 +67,13 @@ export class MonitorStage extends AbstractStage {
         this.sliderPlanet4.y = 505;
         this.sliderPlanet4.size = 200;
 
-
-
         //this.music = new Sprite();
         //this.music.addSound('public/sounds/ChickenTABPOC.mp3');
 
         // this.music.onReady(function() {
         //     //this.music.playSound(0)
         // })
-        
+
         // слайдер для кораблика
         this.progressSlider = new SliderSprite();
         this.progressSlider.x = 290;
@@ -93,7 +88,6 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
 
-
         this.progressSlider.onReady(()=>{
 		    this.progressSlider.nextCostume()
 		});
@@ -103,10 +97,10 @@ export class MonitorStage extends AbstractStage {
 
         // спрайт готовности
         this.readySprite = new Sprite();
-        this.readySprite.addCostume('public/images/room_is_ready.png') 
+        this.readySprite.addCostume('public/images/room_is_ready.png')
         this.readySprite.size = 50
         this.readySprite.hidden = true;
-        
+
         //создание роботов
         this.robots = this.createDrones(6);
 
@@ -123,7 +117,7 @@ export class MonitorStage extends AbstractStage {
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
         coopRoom1.currentQuantity = 10;
-        
+
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
 
@@ -206,7 +200,7 @@ export class MonitorStage extends AbstractStage {
             5
         );
 
-        
+
 
         ThumbnailRoomFactory.build(
             this,
@@ -446,14 +440,14 @@ export class MonitorStage extends AbstractStage {
             }
         }
 
-        
+
 
 		this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
         this.drawReadyRooms();
 	}
 
-    
+
 	drawParameters(context) {
 		super.drawParameters(context)
 
@@ -483,6 +477,6 @@ export class MonitorStage extends AbstractStage {
 
 	}
 
-   
+
 
 }

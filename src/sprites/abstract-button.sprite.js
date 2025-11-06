@@ -2,8 +2,8 @@ import {Sprite} from "jetcode-scrubjs";
 import { GameState } from "../services/game.state";
 
 export class AbstractButtonSprite extends Sprite {
-    minSize = 400;
-    maxSize = 500;
+    minSize = 100;
+    maxSize = 125;
     onClickCallback;
 
     init(){
@@ -15,7 +15,7 @@ export class AbstractButtonSprite extends Sprite {
             if (!GameState.getInstance().isDraggableObjectActive) {
 
                 this.size = (this.maxSize - this.size) / 3;
-                
+
                 if (this.game.mouseDownOnce() && this.onClickCallback) {
                     this.onClickCallback();
                 }
@@ -30,12 +30,12 @@ export class AbstractButtonSprite extends Sprite {
         this.onClickCallback = callback.bind(callback.context);
     }
 
-    setLabel(text, color = 'white', fontSize = 10) {
+    setLabel(text, color = 'white', fontSize = 72) {
         const context = this.getCostume().image.getContext('2d');
 
         context.font = fontSize + 'px Arial';
         context.fillStyle = color;
         context.textAlign = 'center';
-        context.fillText(text, 0, 2);
+        context.fillText(text, 0, 15);
     }
 }

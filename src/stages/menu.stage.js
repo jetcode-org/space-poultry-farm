@@ -25,13 +25,13 @@ export class MenuStage extends Stage {
         startButton.layer = 4;
 
         startButton.onReady(()=>{
-            startButton.setLabel('start');
+            startButton.setLabel('Играть');
         });
 
         startButton.onClick(() => {
             this.game.run(IntroStage.getInstance());
         });
-        
+
     }
 
 }

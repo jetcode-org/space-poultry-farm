@@ -11,19 +11,18 @@ export class AbstractSlideStageStage extends AbstractStage {
     currentTextBlockHeight = 0;
     slideTimer = 0;
 
-
     init() {
         this.nextButton = new ButtonSprite();
         this.nextButton.layer = 4;
-        this.nextButton.minSize = 900;
-        this.nextButton.maxSize = 1050;
+        this.nextButton.minSize = 90;
+        this.nextButton.maxSize = 110;
         this.nextButton.x = this.width - 80;
         this.nextButton.y = this.height - 30;
         this.nextButton.hidden = true;
         this.nextButton.onClick(this.nextSlide.bind(this));
 
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Далее', 'white', 9);
+            this.nextButton.setLabel('Далее', 'white', 64);
         });
 
         this.pen(this.drawTextBlock.bind(this));
