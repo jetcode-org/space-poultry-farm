@@ -30,7 +30,7 @@ export class GameState {
     quotas_complete = 0;
 
     // дистанция до планет
-    distance_planet = [100, 200, 350, 400];
+    distance_planet = [100, 200, 300, 400];
     quotasLimitTime = [100, 200, 300, 400];
     planetNames = ['Марс-7', 'Аквария', 'Гелиос-Прайм', 'Терра-Нова'];
 

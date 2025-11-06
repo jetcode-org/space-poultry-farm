@@ -445,11 +445,10 @@ export class MonitorStage extends AbstractStage {
         }
 
         if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_4 == false) {
-            this.gameState.currentQuota += 1;
-            this.gameState.quota_4 = true;
-
             if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
                 this.gameState.quotas_complete += 1;
+                this.gameState.quota_4 = true;
+                this.gameState.currentQuota += 1;
 
                 this.showMission(
                     this.gameState.currentQuota,
@@ -458,6 +457,9 @@ export class MonitorStage extends AbstractStage {
                 );
 
             } else {
+                this.gameState.quota_4 = true;
+                this.gameState.currentQuota += 1;
+
                 this.showMission(
                     this.gameState.currentQuota,
                     'ПРОВАЛ! Терра-Нова: Финальная миссия сорвана! Шанс восстановить планету упущен. Ваша репутация серьезно пострадала.',
