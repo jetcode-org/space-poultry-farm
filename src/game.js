@@ -18,6 +18,6 @@ MonitorStage.getInstance();
 
 
 game.run(MonitorStage.getInstance());
-// game.run(MenuStage.getInstance());
+//game.run(MenuStage.getInstance());
 // game.run(IntroStage.getInstance());
 // game.run(OutroStage.getInstance());

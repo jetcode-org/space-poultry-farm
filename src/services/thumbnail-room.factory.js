@@ -5,7 +5,7 @@ import {RobotStationSprite} from "../sprites/robot-station.sprite";
 
 
 export class ThumbnailRoomFactory {
-    static build(stage, room, x, y, chargeDif = 0) {
+    static build(stage, room, x, y, chargeDif = 0, monitor) {
         const label = room.getLabel();
         const thumbnailImage = room.getThumbnailImage();
 
@@ -35,6 +35,12 @@ export class ThumbnailRoomFactory {
 
         thumbnail.onClick(() => {
             stage.game.run(room);
+        });
+
+        thumbnail.forever(() => {
+            if (thumbnail.touchMouse()) {
+                monitor.showHelp(room.getHelpText());
+            }
         });
 
         return thumbnail;

@@ -63,8 +63,8 @@ export class AbstractStage extends Stage {
         let line = '';
         let testLine = '';
         let lineArray = [];
-        
-        
+
+
         for (let n = 0; n < words.length; n++) {
             testLine = line + words[n] + ' ';
             const metrics = context.measureText(testLine);

@@ -2,7 +2,7 @@ import { Sprite } from "jetcode-scrubjs";
 import {AbstractRootStage} from "./abstract-room.stage";
 import { SortingRoomStage } from "./sorting-room.stage";
 
-export class CoopRoomStage extends AbstractRootStage { 
+export class CoopRoomStage extends AbstractRootStage {
     init() {
         super.init();
 
@@ -19,6 +19,10 @@ export class CoopRoomStage extends AbstractRootStage {
 
     getLabel() {
         return 'Стадо';
+    }
+
+    getHelpText() {
+        return 'Стадо - основное помещение содержания взрослых кур-несушек.';
     }
 
     getBackgroundImage() {
@@ -88,7 +92,7 @@ export class CoopRoomStage extends AbstractRootStage {
             context.fillText('Сколько куриц: ' + coop.currentQuantity, 615, 200);
             context.fillText('Загрязненность: ' + coop.pollution + '%', 615, 225);
         }
-       
+
 	}
 
 	setVisCostumes() {

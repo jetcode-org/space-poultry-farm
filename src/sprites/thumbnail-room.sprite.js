@@ -1,6 +1,8 @@
 import {AbstractButtonSprite} from "./abstract-button.sprite";
 
 export class ThumbnailRoomSprite extends AbstractButtonSprite {
+    minSize = 400;
+    maxSize = 415;
     active = false;
 
     init() {
@@ -23,8 +25,4 @@ export class ThumbnailRoomSprite extends AbstractButtonSprite {
         this.filter = 'grayscale(100%)';
         this.active = false;
     }
-
-    // control() {
-        
-    // }
 }

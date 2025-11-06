@@ -21,12 +21,12 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.nextButton.x = 690;
         this.nextButton.y = 500;
 
-        
+
         this.visualiser.moving = false;
 
 
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Перевести циплят', undefined, 5)
+            this.nextButton.setLabel('Цыплят в ясли', undefined, 70)
         });
         this.nextButton.onClick(() => {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);
@@ -62,6 +62,10 @@ export class IncubatorRoomStage extends AbstractRootStage {
         return 'Инкубатор';
     }
 
+    getHelpText() {
+        return 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_incubator_space.png';
     }
@@ -91,14 +95,21 @@ export class IncubatorRoomStage extends AbstractRootStage {
         super.roomTick();
         if (this.inProgress) {
             this.tickCount += 1;
+
             if (this.tickCount > this.tickMaxCount) {
                 this.tickCount = 0
                 this.currentProgress += 1;
                 if (this.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
                     this.currentProgress = IncubatorRoomStage.INCUBATOR_CYCLE_TIMER
+
+                    if (!this.isRoomReady) {
+                        this.playSound('ready');
+                    }
+
                     this.isRoomReady = true;
                 }
             }
+
             if (this.isRoomReady) {
                 this.currentReadyProgress += 1;
                 if (this.currentReadyProgress > IncubatorRoomStage.INCUBATOR_READY_LIMIT) {
@@ -116,13 +127,13 @@ export class IncubatorRoomStage extends AbstractRootStage {
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Работает: ' + incubator.inProgress, 615, 200);
             context.fillText('Сколько яиц: ' + incubator.currentQuantity, 615, 225);
             context.fillText('Загрязненность: ' + incubator.pollution + '%', 615, 250);
             context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 615, 275);
-            if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
-                context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
-            }
+
+            // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
+            //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
+            // }
         }
     }
 

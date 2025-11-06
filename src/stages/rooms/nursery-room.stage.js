@@ -21,11 +21,11 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.nextButton.x = 690;
         this.nextButton.y = 500;
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Куриц в загон', undefined, 5)
+            this.nextButton.setLabel('Куриц в загон', undefined, 70)
         });
         this.nextButton.onClick(() => {
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
-                if (this.monitorStage.rooms[i].getLabel() == 'Стадо') {
+                if (this.monitorStage.rooms[i].getLabel() === 'Стадо') {
                     const potentialCoop = this.monitorStage.rooms[i];
                     if (potentialCoop.active && potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
                         if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
@@ -42,8 +42,10 @@ export class NurseryRoomStage extends AbstractRootStage {
                     }
 				}
             }
-            alert('Не получитлось перевести всех куриц');
+
+            showModal('Недостаточно места в стаде, не всех куриц удалось перевести', () => this.stop(), () => this.run());
             this.failRoom();
+
             return false;
         })
     }
@@ -59,6 +61,10 @@ export class NurseryRoomStage extends AbstractRootStage {
 
     getLabel() {
         return 'Ясли';
+    }
+
+    getHelpText() {
+        return 'Ясли - модуль для выращивания молодняка до взрослых особей.';
     }
 
     getBackgroundImage() {
@@ -98,20 +104,24 @@ export class NurseryRoomStage extends AbstractRootStage {
 
                 if (this.gameState.food >= this.currentQuantity * 0.5) {
                     this.gameState.food -= this.currentQuantity * 0.5;
-                }
-                else {
+                } else {
 					this.currentQuantity = this.gameState.food * 2;
 					this.visualizerSpawn();
                     this.gameState.food = 0;
                     if (this.currentQuantity <= 0) {
                         this.failRoom();
-                    } 
+                    }
                 }
 
                 let chickenMultiplayer = this.pollution >= 100 ? 0.75 : 1;
                 this.currentProgress += chickenMultiplayer;
                 if (this.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
                     this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
+
+                    if (!this.isRoomReady) {
+                        this.playSound('ready');
+                    }
+
                     this.isRoomReady = true;
                 }
             }
@@ -131,13 +141,13 @@ export class NurseryRoomStage extends AbstractRootStage {
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Работает: ' + nursery.inProgress, 615, 200);
-            context.fillText('Сколько циплят: ' + nursery.currentQuantity, 615, 225);
+            context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 615, 225);
             context.fillText('Загрязненность: ' + nursery.pollution + '%', 615, 250);
             context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSEY_CYCLE_TIMER) * 100 + '%', 615, 275);
-            if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
-                context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
-            }
+
+            // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
+            //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
+            // }
         }
 	}
 

@@ -15,6 +15,8 @@ import { RobotSprite } from "../sprites/robot.sprite";
 
 export class MonitorStage extends AbstractStage {
     static instance;
+    helpText = null;
+    helpTextLifetime = 0;
 
     static getInstance() {
         if (!MonitorStage.instance) {
@@ -34,25 +36,47 @@ export class MonitorStage extends AbstractStage {
 	init() {
 		super.init();
 
-       
-       
-
         this.addBackground('public/images/background_main_monitor.png');
+        this.addSound('public/sounds/background_music.mp3', 'background_music');
 
         // слой с схемой-космическим кораблем
         this.bgShipSprite = new Sprite();
-        this.bgShipSprite.addCostume('public/images/menu/main_screeen.jpg')
-        this.bgShipSprite.leftX = 300
-        this.bgShipSprite.setAlpha = 0.5
+        this.bgShipSprite.addCostume('public/images/menu/main_screeen_2.png');
+        this.bgShipSprite.leftX = 300;
+        this.bgShipSprite.setAlpha = 0.5;
+        this.bgShipSprite.br = 0;
+        this.bgShipSprite.time = 0.9;
+        //this.bgShipSprite.filter = 'brightness(0.9)';
+
+        // Картинки для прогресса миссии на слайдер
+        this.sliderPlanet1 = new Sprite();
+        this.sliderPlanet1.addCostume('public/images/sliderSprites/slider_planet_1.png');
+        this.sliderPlanet1.x = 170;
+        this.sliderPlanet1.y = 500;
+
+        this.sliderPlanet2 = new Sprite();
+        this.sliderPlanet2.addCostume('public/images/sliderSprites/slider_planet_2.png');
+        this.sliderPlanet2.x = 300;
+        this.sliderPlanet2.y = 500;
+
+        this.sliderPlanet3 = new Sprite();
+        this.sliderPlanet3.addCostume('public/images/sliderSprites/slider_planet_3.png');
+        this.sliderPlanet3.x = 420;
+        this.sliderPlanet3.y = 500;
+
+        this.sliderPlanet4 = new Sprite();
+        this.sliderPlanet4.addCostume('public/images/sliderSprites/slider_planet_4.png');
+        this.sliderPlanet4.x = 515;
+        this.sliderPlanet4.y = 505;
+        this.sliderPlanet4.size = 200;
 
 
-        //this.music = new Sprite();
-        //this.music.addSound('public/sounds/ChickenTABPOC.mp3');
+        this.game.onUserInteracted(() => {
+            this.playSound('background_music', {
+                loop: true
+            });
+        })
 
-        // this.music.onReady(function() {
-        //     //this.music.playSound(0)
-        // })
-        
         // слайдер для кораблика
         this.progressSlider = new SliderSprite();
         this.progressSlider.x = 290;
@@ -66,15 +90,20 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
+
+        this.progressSlider.onReady(()=>{
+		    this.progressSlider.nextCostume()
+		});
+
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
 
         // спрайт готовности
         this.readySprite = new Sprite();
-        this.readySprite.addCostume('public/images/room_is_ready.png') 
+        this.readySprite.addCostume('public/images/room_is_ready.png')
         this.readySprite.size = 50
         this.readySprite.hidden = true;
-        
+
         //создание роботов
         this.robots = this.createDrones(6);
 
@@ -91,15 +120,25 @@ export class MonitorStage extends AbstractStage {
         const coopRoom1 = new CoopRoomStage();
         coopRoom1.activate();
         coopRoom1.currentQuantity = 10;
-        
+
         const farmRoom1 = new FarmRoomStage();
         farmRoom1.activate();
 
-        const sortingRoom2 = new SortingRoomStage();
+        //const sortingRoom2 = new SortingRoomStage();
         const incubatorRoom2 = new IncubatorRoomStage();
         const nurseryRoom2 = new NurseryRoomStage();
         const coopRoom2 = new CoopRoomStage();
         const farmRoom2 = new FarmRoomStage();
+
+        const incubatorRoom3 = new IncubatorRoomStage();
+        const nurseryRoom3 = new NurseryRoomStage();
+        const coopRoom3 = new CoopRoomStage();
+        const farmRoom3 = new FarmRoomStage();
+
+        const incubatorRoom4 = new IncubatorRoomStage();
+        const nurseryRoom4 = new NurseryRoomStage();
+        const coopRoom4 = new CoopRoomStage();
+        const farmRoom4 = new FarmRoomStage();
 
         this.rooms = [];
         this.rooms.push(sortingRoom1);
@@ -108,18 +147,29 @@ export class MonitorStage extends AbstractStage {
         this.rooms.push(coopRoom1);
         this.rooms.push(farmRoom1);
 
-        this.rooms.push(sortingRoom2);
+        //this.rooms.push(sortingRoom2);
         this.rooms.push(incubatorRoom2);
         this.rooms.push(nurseryRoom2);
         this.rooms.push(coopRoom2);
         this.rooms.push(farmRoom2);
+
+        this.rooms.push(incubatorRoom3);
+        this.rooms.push(nurseryRoom3);
+        this.rooms.push(coopRoom3);
+        this.rooms.push(farmRoom3);
+
+        this.rooms.push(incubatorRoom4);
+        this.rooms.push(nurseryRoom4);
+        this.rooms.push(coopRoom4);
+        this.rooms.push(farmRoom4);
 
         ThumbnailRoomFactory.build(
             this,
             sortingRoom1,
             206,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -127,7 +177,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom1,
             292,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -135,7 +186,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom1,
             377,
             152,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -143,7 +195,8 @@ export class MonitorStage extends AbstractStage {
             coopRoom1,
             477,
             200,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -151,15 +204,8 @@ export class MonitorStage extends AbstractStage {
             farmRoom1,
             477,
             357,
-            5
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            sortingRoom2,
-            206,
-            198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -167,7 +213,8 @@ export class MonitorStage extends AbstractStage {
             incubatorRoom2,
             206,
             244,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -175,7 +222,8 @@ export class MonitorStage extends AbstractStage {
             nurseryRoom2,
             292,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -183,7 +231,8 @@ export class MonitorStage extends AbstractStage {
             coopRoom2,
             378,
             198,
-            5
+            5,
+            this
         );
 
         ThumbnailRoomFactory.build(
@@ -191,10 +240,84 @@ export class MonitorStage extends AbstractStage {
             farmRoom2,
             377,
             357,
-            5
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom3,
+            206,
+            198,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom3,
+            206,
+            198,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            nurseryRoom3,
+            292,
+            244,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            coopRoom3,
+            377,
+            244,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            farmRoom3,
+            476,
+            244,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            incubatorRoom4,
+            206,
+            288,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            nurseryRoom4,
+            330,
+            291,
+            5,
+            this
+        );
+
+        ThumbnailRoomFactory.build(
+            this,
+            coopRoom4,
+            422,
+            291,
+            5,
+            this
         );
 
         this.forever(this.gameTick, 1000);
+        this.pen(this.drawHelpBlock.bind(this));
     }
 
     restartGame() {
@@ -210,12 +333,13 @@ export class MonitorStage extends AbstractStage {
     }
 
     drawReadyRooms() {
-        this.readySprite.deleteClones()
+        this.readySprite.deleteClones();
+
         for (const room of this.rooms) {
             if (room.isRoomReady) {
                 const clone = this.readySprite.createClone();
-                clone.x = room.thumbnail.x + 35;
-                clone.y = room.thumbnail.y - 20;
+                clone.x = room.thumbnail.x + 27;
+                clone.y = room.thumbnail.y - 16;
                 clone.hidden = false;
                 clone.layer = 4;
             }
@@ -298,8 +422,6 @@ export class MonitorStage extends AbstractStage {
             this.game.run(MenuStage.getInstance());
         }
 
-        //
-
         this.gameState.chargeValue += 0.2;
         this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
 
@@ -340,6 +462,7 @@ export class MonitorStage extends AbstractStage {
         this.drawReadyRooms();
 	}
 
+
 	drawParameters(context) {
 		super.drawParameters(context)
 
@@ -347,17 +470,51 @@ export class MonitorStage extends AbstractStage {
 		context.fillStyle = '#a8e2c0ff';
 		context.textAlign = 'start';
 
-		context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 320);
-		context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 345);
-		context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 365);
-		context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
-        context.fillText('----------------------------', 600, 395);
-		context.fillText('Еда: ' + this.gameState.food, 600, 410);
-		context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
-		context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
-        context.fillText('----------------------------', 600, 465);
+		//context.fillText('Зарядка: ' + this.gameState.chargeValue, 600, 320);
+		// context.fillText('Прошло время: ' + this.gameState.passedTime, 600, 345);
+		// context.fillText('Лимит времени: ' + this.gameState.limitTime, 600, 365);
+		// context.fillText('Замороженных яиц: ' + this.gameState.cooledEggs, 600, 385);
+        // context.fillText('----------------------------', 600, 395);
+		//context.fillText('Еда: ' + this.gameState.food, 600, 410);
+		//context.fillText('Скорлупа: ' + this.gameState.eggshell, 600, 430);
+		//context.fillText('Удобрение: ' + this.gameState.manure, 600, 455);
+        // context.fillText('----------------------------', 600, 465);
+
         context.fillStyle = '#f1f1f1ff';
-        context.fillText('Текущая квота: ' + this.gameState.quotas[this.gameState.currentQuota], 600, 490)
-        context.fillText('Планета: ' + this.gameState.distance_planet[this.gameState.currentQuota] + 'св. лет', 600, 510)
+        context.fillText('Планета: ' + this.gameState.distance_planet[this.gameState.currentQuota] + 'св. лет', 70, 390)
+        context.fillText('Текущая квота: ' + this.gameState.quotas[this.gameState.currentQuota], 70, 415)
+        context.fillText('Осталось время: ' + (this.gameState.quotasLimitTime[this.gameState.currentQuota] - this.gameState.passedTime), 70, 440)
+
+        // для монитора декор
+        this.bgShipSprite.time += 0.01
+        this.bgShipSprite.br = Math.sin(this.bgShipSprite.time) * 20
+        //this.bgShipSprite.filter = 'brightness('+ this.bgShipSprite.br +')';
+        this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
+
 	}
+
+    showHelp(text, lifetime = 10) {
+        this.helpText = text;
+        this.helpTextLifetime = lifetime;
+    }
+
+    drawHelpBlock(context) {
+        if (!this.helpText) {
+            return;
+        }
+
+        this.helpTextLifetime--;
+        if (this.helpTextLifetime <= 0) {
+            this.helpText = null;
+            return;
+        }
+
+        context.font = 'bold 18px Arial';
+        context.fillStyle = '#a8e2c0ff';
+        context.fillText('Справка:', 610, 370)
+
+        context.font = '14px Arial';
+        this.drawMultilineText(context, this.helpText, 610, 400, 165, 20);
+    }
+
 }
