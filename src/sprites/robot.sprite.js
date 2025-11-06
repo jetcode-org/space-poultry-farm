@@ -27,11 +27,11 @@ export class RobotSprite extends AbstractDragAndDropSprite {
         if (this.charge >= 100) {
             this.charge = 100;
         }
+
         if (this.charge <= 0) {
             this.charge = 0;
             this.switchCostume(1);
-        }
-        else {
+        } else {
             this.switchCostume(0);
         }
 
@@ -54,8 +54,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
                 this.y = station.y;
                 this.size = station.size;
                 this.isCharging = false;
-            }
-            else {
+            } else {
                 this.x = this.startX;
                 this.y = this.startY;
                 this.isCharging = true;
