@@ -67,6 +67,7 @@ export class AbstractRootStage extends AbstractStage {
 		})
 		this.firstUseButton.onClick(()=>{
 			this.isFirstUse = false;
+			this.gameState.ifReadingHelper = false;
 		})
 
 		this.firstUseSprite.y = this.height + 100;
@@ -90,6 +91,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.forever(()=>{
 			if (this.isFirstUse) {
+				this.gameState.ifReadingHelper = true;
 				if (this.firstUseSprite.y > this.height - 100) {
 					this.firstUseSprite.y -= 1;
 				}

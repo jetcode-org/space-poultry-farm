@@ -33,6 +33,7 @@ export class GameState {
     quotasLimitTime = [100, 200, 300, 400]
 
     isDraggableObjectActive = false;
+    ifReadingHelper = false;
 
     constructor() {
         if (GameState.instance) {
@@ -56,7 +57,7 @@ export class GameState {
 
         this.manure = 0;
         this.eggshell = 0;
-        this.food = 100;
+        this.food = 500;
     }
 
     isEnoughCharge() {

@@ -441,13 +441,15 @@ export class MonitorStage extends AbstractStage {
         this.gameState.chicken = 0;
 
         for (const room of this.rooms) {
-            if (room.active) {
-                room.roomTick();
-                if (room.getLabel() == 'Ясли') {
-                    this.gameState.chick += room.currentQuantity;
-                }
-                if (room.getLabel() == 'Стадо') {
-                    this.gameState.chicken += room.currentQuantity;
+            if (!this.gameState.ifReadingHelper) {
+                if (room.active) {
+                    room.roomTick();
+                    if (room.getLabel() == 'Ясли') {
+                        this.gameState.chick += room.currentQuantity;
+                    }
+                    if (room.getLabel() == 'Стадо') {
+                        this.gameState.chicken += room.currentQuantity;
+                    }
                 }
             }
 		}
