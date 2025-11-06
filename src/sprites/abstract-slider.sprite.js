@@ -40,8 +40,8 @@ export class AbstractSliderSprite extends Sprite {
                 context.lineTo(this.maxX, this.y);
                 context.stroke();
             }
-        }, 3);
-        this.pen(this.setLabel, 4);
+        }, 10);
+        this.pen(this.setLabel, 10);
     }
 
     control() {

@@ -92,6 +92,12 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
+
+
+        this.progressSlider.onReady(()=>{
+		    this.progressSlider.nextCostume()
+		});
+
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
 

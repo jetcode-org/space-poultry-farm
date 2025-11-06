@@ -7,6 +7,7 @@ export class SliderSprite extends AbstractSliderSprite {
 
     init(){
         this.addCostume('public/images/button.png');
+        this.addCostume('public/images/sliderSprites/slider_ship_1.png')
 
         super.init();
     }
