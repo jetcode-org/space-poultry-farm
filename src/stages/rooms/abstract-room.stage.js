@@ -30,6 +30,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.addBackground('public/images/background_main_monitor.png');
 		this.addSound('public/sounds/ready.mp3', 'ready');
+		this.addSound('public/sounds/activation.mp3', 'activation');
 
 		this.bgSpace = new Sprite()
 		this.bgSpace.addCostume('public/images/rooms/background_space.png')
@@ -119,6 +120,7 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.activateButton.onClick(() => {
 			this.activate();
+			this.playSound('activation');
 		});
 	}
 
