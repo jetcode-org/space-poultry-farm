@@ -56,6 +56,7 @@ export class GameState {
         this.limitTime = 100;
         this.chargeValue = 0;
         this.cooledEggs = 0;
+        this.currentQuota = 0;
 
         this.manure = 0;
         this.eggshell = 0;
