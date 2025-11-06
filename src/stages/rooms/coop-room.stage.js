@@ -85,7 +85,7 @@ export class CoopRoomStage extends AbstractRootStage {
 
     roomTick () {
         super.roomTick();
-        console.log('CoopRoomStage tick');
+
         if (this.active) {
             this.isRoomReady = false;
             this.tickCount += 1;

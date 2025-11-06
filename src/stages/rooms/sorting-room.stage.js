@@ -117,14 +117,16 @@ export class SortingRoomStage extends AbstractRootStage {
 
     roomTick () {
         super.roomTick();
-        // console.log('SortingRoomStage tick');
         this.tickCount += 1;
+
         if (this.tickCount > this.tickMaxCount) {
             this.tickCount = 0;
         }
+
         if (this.currentQuantity > this.maxQuantity) {
             this.currentQuantity = this.maxQuantity;
         }
+
         this.isRoomReady = this.currentQuantity >= this.maxQuantity;
         this.quantitySlider.maxValue = this.currentQuantity;
         this.quantitySlider.setCurrentValue();
