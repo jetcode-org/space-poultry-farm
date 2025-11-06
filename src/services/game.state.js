@@ -20,17 +20,19 @@ export class GameState {
     currentQuota = 0;
 
     // для переключателей
-    quota_1 = false
-    quota_2 = false
-    quota_3 = false
-    quota_4 = false
+    quota_0 = false;
+    quota_1 = false;
+    quota_2 = false;
+    quota_3 = false;
+    quota_4 = false;
 
     // общее количество выполненных квот
-    quotas_complete = 0
+    quotas_complete = 0;
 
     // дистанция до планет
-    distance_planet = [100, 200, 350, 400]
-    quotasLimitTime = [100, 200, 300, 400]
+    distance_planet = [100, 200, 350, 400];
+    quotasLimitTime = [100, 200, 300, 400];
+    planetNames = ['Марс-7', 'Аквария', 'Гелиос-Прайм', 'Терра-Нова'];
 
     isDraggableObjectActive = false;
     ifReadingHelper = false;

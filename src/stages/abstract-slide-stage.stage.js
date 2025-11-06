@@ -10,6 +10,7 @@ export class AbstractSlideStageStage extends AbstractStage {
     textBlockReady = false;
     currentTextBlockHeight = 0;
     slideTimer = 0;
+    nextButtonLabel = 'Далее';
 
     init() {
         this.nextButton = new ButtonSprite();
@@ -22,7 +23,7 @@ export class AbstractSlideStageStage extends AbstractStage {
         this.nextButton.onClick(this.nextSlide.bind(this));
 
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Далее', 'white', 64);
+            this.nextButton.setLabel(this.nextButtonLabel, 'white', 64);
         });
 
         this.pen(this.drawTextBlock.bind(this));
@@ -64,5 +65,14 @@ export class AbstractSlideStageStage extends AbstractStage {
         this.currentSlide++;
 
         this.onNextSlide();
+    }
+
+    reset() {
+        this.currentSlide = 0;
+        this.textBlockReady = false;
+        this.currentTextBlockHeight = 0;
+        this.slideTimer = 0;
+
+        this.startButton.hidden = true;
     }
 }

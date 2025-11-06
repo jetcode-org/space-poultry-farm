@@ -74,6 +74,7 @@ export class IntroStage extends AbstractSlideStageStage {
     }
 
     runGame() {
+        this.reset();
         this.game.run(MonitorStage.getInstance());
     }
 }
