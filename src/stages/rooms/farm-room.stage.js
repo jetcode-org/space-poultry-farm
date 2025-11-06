@@ -3,20 +3,20 @@ import { ButtonSprite } from "../../sprites/button.sprite";
 
 export class FarmRoomStage extends AbstractRootStage {
     maxQuantity = 100;
-    
+
     init() {
         super.init();
 
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
-        this.nextButton.y = 500;
+        this.nextButton.y = 250;
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Собрать урожай', undefined, 70)
+            this.nextButton.setLabel('Собрать урожай', undefined, 65)
         });
+
         this.nextButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
             this.currentQuantity = 0;
-
         })
 
         this.pen(this.drawParameters, 5);
@@ -38,6 +38,10 @@ export class FarmRoomStage extends AbstractRootStage {
         return 'Ферма - гидропонный комплекс производства кормовых культур.';
     }
 
+    getInstructionText() {
+        return 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_farm.png';
     }
@@ -51,7 +55,6 @@ export class FarmRoomStage extends AbstractRootStage {
     }
 
     roomTick () {
-        // console.log('FarmRoomStage tick');
         this.tickCount += 1;
         if (this.tickCount > this.tickMaxCount) {
             this.tickCount = 0;
@@ -61,10 +64,10 @@ export class FarmRoomStage extends AbstractRootStage {
                 this.currentQuantity += 30;
             }
         }
+
         if (this.currentQuantity > 0) {
             this.isRoomReady = true;
-        }
-        else {
+        } else {
             this.isRoomReady = false;
         }
     }
@@ -72,11 +75,11 @@ export class FarmRoomStage extends AbstractRootStage {
     drawParameters(context, sort) {
 		super.drawParameters(context)
         if (sort.active) {
-            context.font = '18px Arial';
+            context.font = '16px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Урожай: ' + sort.currentQuantity, 615, 200);
+            context.fillText('Урожай: ' + sort.currentQuantity, 610, 190);
         }
     }
 

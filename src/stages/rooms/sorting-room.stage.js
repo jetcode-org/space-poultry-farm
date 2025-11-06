@@ -35,7 +35,7 @@ export class SortingRoomStage extends AbstractRootStage {
             this.quantitySlider.maxValue = this.currentQuantity;
             this.quantitySlider.setCurrentValue()
         });
-        this.coolerButton.x = 300;
+        this.coolerButton.x = 290;
         this.coolerButton.y = 300;
         this.coolerButton.layer = 10;
         this.coolerButton.onReady(()=>{
@@ -99,6 +99,10 @@ export class SortingRoomStage extends AbstractRootStage {
         return 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.';
     }
 
+    getInstructionText() {
+        return 'Распределяйте яйца между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)';
+    }
+
     getBackgroundImage() {
         return 'public/images/rooms/background_sorting.png';
     }
@@ -137,15 +141,15 @@ export class SortingRoomStage extends AbstractRootStage {
 	drawParameters(context, sorting) {
 		super.drawParameters(context)
         if (sorting.active) {
-            context.font = '18px Arial';
+            context.font = '16px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Количество яиц: ' + sorting.currentQuantity, 600, 200);
-            context.fillText('Загрязненность: ' + sorting.pollution + '%', 600, 225);
+            context.fillText('Количество яиц: ' + sorting.currentQuantity, 610, 190);
+            context.fillText('Загрязненность: ' + sorting.pollution + '%', 610, 215);
         }
     }
-    
+
     drawHelp(context) {
 		super.drawHelp(context);
 	}

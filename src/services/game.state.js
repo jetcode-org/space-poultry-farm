@@ -11,7 +11,7 @@ export class GameState {
 
     eggshell = 0;
     manure = 0;
-    food = 1000;
+    food = 500;
     chick = 0;
     chicken = 0;
 

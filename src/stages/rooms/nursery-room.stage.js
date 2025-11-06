@@ -19,7 +19,7 @@ export class NurseryRoomStage extends AbstractRootStage {
 
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
-        this.nextButton.y = 500;
+        this.nextButton.y = 330;
         this.nextButton.onReady(() => {
             this.nextButton.setLabel('Куриц в загон', undefined, 70)
         });
@@ -65,6 +65,10 @@ export class NurseryRoomStage extends AbstractRootStage {
 
     getHelpText() {
         return 'Ясли - модуль для выращивания молодняка до взрослых особей.';
+    }
+
+    getInstructionText() {
+        return 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета';
     }
 
     getBackgroundImage() {
@@ -137,13 +141,13 @@ export class NurseryRoomStage extends AbstractRootStage {
 	drawParameters(context, nursery) {
 		super.drawParameters(context)
         if (nursery.active) {
-            context.font = '18px Arial';
+            context.font = '16px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 615, 225);
-            context.fillText('Загрязненность: ' + nursery.pollution + '%', 615, 250);
-            context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSEY_CYCLE_TIMER) * 100 + '%', 615, 275);
+            context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 610, 190);
+            context.fillText('Загрязненность: ' + nursery.pollution + '%', 610, 215);
+            context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSEY_CYCLE_TIMER) * 100 + '%', 610, 240);
 
             // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
             //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);

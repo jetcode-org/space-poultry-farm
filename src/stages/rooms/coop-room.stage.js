@@ -15,10 +15,11 @@ export class CoopRoomStage extends AbstractRootStage {
 
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
-        this.nextButton.y = 500;
+        this.nextButton.y = 330;
         this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Яйца -> сортировка', undefined, 50)
+            this.nextButton.setLabel('Собрать яйца', undefined)
         });
+
         this.nextButton.onClick(() => {
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
                 if (this.monitorStage.rooms[i].getLabel() === 'Сортировка') {
@@ -50,8 +51,8 @@ export class CoopRoomStage extends AbstractRootStage {
         return () => {
             if (this.eggsAmount > 0) {
                 this.nextButton.hidden = false;
-            }
-            else {
+
+            } else {
                 this.nextButton.hidden = true;
             }
         }
@@ -63,6 +64,10 @@ export class CoopRoomStage extends AbstractRootStage {
 
     getHelpText() {
         return 'Стадо - основное помещение содержания взрослых кур-несушек.';
+    }
+
+    getInstructionText() {
+        return 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек';
     }
 
     getBackgroundImage() {
@@ -110,13 +115,13 @@ export class CoopRoomStage extends AbstractRootStage {
 	drawParameters(context, coop) {
 		super.drawParameters(context)
         if (coop.active) {
-            context.font = '18px Arial';
+            context.font = '16px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Сколько куриц: ' + coop.currentQuantity, 615, 200);
-            context.fillText('Сколько яиц: ' + coop.eggsAmount, 615, 225);
-            context.fillText('Загрязненность: ' + coop.pollution + '%', 615, 250);
+            context.fillText('Сколько куриц: ' + coop.currentQuantity, 610, 190);
+            context.fillText('Сколько яиц: ' + coop.eggsAmount, 610, 215);
+            context.fillText('Загрязненность: ' + coop.pollution + '%', 610, 240);
         }
 
 	}

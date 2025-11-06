@@ -19,18 +19,19 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
         this.nextButton = new ButtonSprite();
         this.nextButton.x = 690;
-        this.nextButton.y = 500;
-
+        this.nextButton.y = 330;
+        this.nextButton.hidden = true;
 
         this.visualiser.moving = false;
-
 
         this.nextButton.onReady(() => {
             this.nextButton.setLabel('Цыплят в ясли', undefined, 70)
         });
+
         this.nextButton.onClick(() => {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);
             let quantityToMove = Math.round(this.currentQuantity * (0.9 - chicksMultiplayer))
+
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
                 if (this.monitorStage.rooms[i].getLabel() == 'Ясли') {
                     const potentialNursery = this.monitorStage.rooms[i];
@@ -45,16 +46,17 @@ export class IncubatorRoomStage extends AbstractRootStage {
                     }
                 }
             }
-        })
-        this.nextButton.hidden = true;
+        });
     }
 
     control() {
         return () => {
-            if (this.isRoomReady)
+            if (this.isRoomReady) {
                 this.nextButton.hidden = false;
-            else
+
+            } else {
                 this.nextButton.hidden = true;
+            }
         }
     }
 
@@ -64,6 +66,10 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
     getHelpText() {
         return 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.';
+    }
+
+    getInstructionText() {
+        return 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе';
     }
 
     getBackgroundImage() {
@@ -123,13 +129,13 @@ export class IncubatorRoomStage extends AbstractRootStage {
 	drawParameters(context, incubator) {
 		super.drawParameters(context)
         if (incubator.active) {
-            context.font = '18px Arial';
+            context.font = '16px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'start';
 
-            context.fillText('Сколько яиц: ' + incubator.currentQuantity, 615, 225);
-            context.fillText('Загрязненность: ' + incubator.pollution + '%', 615, 250);
-            context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 615, 275);
+            context.fillText('Сколько яиц: ' + incubator.currentQuantity, 610, 190);
+            context.fillText('Загрязненность: ' + incubator.pollution + '%', 610, 215);
+            context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 240);
 
             // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
             //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);

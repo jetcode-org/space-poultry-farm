@@ -50,71 +50,32 @@ export class AbstractRootStage extends AbstractStage {
 		this.backgroundSprite.y = 300
 		this.backgroundSprite.filter = 'grayscale(100%)';
 
-		//Пока не работает 👇
-		this.firstUseSprite = new Sprite();
-		this.firstUseSprite.drawCostume(this.drawHelp, {width: 800, height: 200});
-		this.firstUseSprite.layer = 11;
-		
-		this.firstUseButton = new ButtonSprite();
-		this.firstUseButton.addCostume('public/images/button.png')
-		this.firstUseButton.setParent(this.firstUseSprite);
-		this.firstUseButton.minSize = 100;
-		this.firstUseButton.maxSize = 100;
-		this.firstUseButton.x = 1200;
-		this.firstUseButton.y = 200;
-		this.firstUseButton.onReady(()=>{
-			this.firstUseButton.setLabel('Ок', 'white', 70)
-		})
-		this.firstUseButton.onClick(()=>{
-			this.isFirstUse = false;
-			this.gameState.ifReadingHelper = false;
-		})
-
-		this.firstUseSprite.y = this.height + 100;
-		//Пока не работает 👆
-
 		this.createBackButton();
+		this.createInstructionButton();
 		this.createActivateButton();
 		this.createGetManureButton();
 
 		this.forever(this.gameTickAllRooms, 1000);
-		
 		this.pen(this.drawTextBlock.bind(this), 10);
-		
-		
+
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
-		
-		this.forever(this.spawStars, 2)
 
-		this.forever(()=>{
-			if (this.isFirstUse) {
-				this.gameState.ifReadingHelper = true;
-				if (this.firstUseSprite.y > this.height - 100) {
-					this.firstUseSprite.y -= 1;
-				}
-			}
-			else {
-				if (this.firstUseSprite.y < this.height + 100) {
-					this.firstUseSprite.y += 1;
-				}
-			}
-		})
-		
+		this.forever(this.spawStars, 2)
+		this.pen(this.drawHelpBlock.bind(this));
+
 		this.onStart(() => {
 			this.visualizerSpawn();
-
 		})
 	}
-
 
 	createGetManureButton() {
 		const getManureButton = new ButtonSprite();
 		getManureButton.layer = 3;
 		getManureButton.x = 690;
-		getManureButton.y = 400;
+		getManureButton.y = 280;
 
 		getManureButton.onReady(()=>{
 			getManureButton.setLabel('Собрать помет', undefined, 70);
@@ -126,12 +87,15 @@ export class AbstractRootStage extends AbstractStage {
 		});
 
 		getManureButton.forever(() => {
-			if (this.pollution >= 1)
-			getManureButton.hidden = false;
-			else
-			getManureButton.hidden = true;
+			if (this.pollution >= 1) {
+				getManureButton.hidden = false;
+
+			} else {
+				getManureButton.hidden = true;
+			}
 		})
 	}
+
 	createBackButton() {
 		const backButton = new ButtonSprite();
 		backButton.layer = 10;
@@ -145,6 +109,27 @@ export class AbstractRootStage extends AbstractStage {
 		backButton.onClick(() => {
 			this.game.run(MonitorStage.getInstance());
 		});
+	}
+
+	createInstructionButton() {
+		const button = new ButtonSprite();
+		button.layer = 10;
+		button.minSize = 70;
+		button.maxSize = 80;
+		button.x = 655;
+		button.y = 540;
+
+		button.onReady(()=>{
+			button.setLabel('Помощь');
+		});
+
+		button.onClick(() => {
+			this.showInstructionModal();
+		});
+	}
+
+	showInstructionModal() {
+		showModal(this.getInstructionText(), () => this.stop(), () => this.run());
 	}
 
 	createActivateButton() {
@@ -168,6 +153,10 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	getHelpText() {
+		console.error('Метод не определен.');
+	}
+
+	getInstructionText() {
 		console.error('Метод не определен.');
 	}
 
@@ -220,7 +209,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	gameTickAllRooms () {
-		if (!this.isFirstUse) {	
+		if (!this.isFirstUse) {
 			MonitorStage.getInstance().gameTick();
 		}
 	}
@@ -326,12 +315,15 @@ export class AbstractRootStage extends AbstractStage {
 				c.delete()
 			}
 		})
-
 	}
 
-	drawHelp(context) {
-		context.fillStyle = 'rgba(0, 0, 0, 0.5)';
-		context.fillRect(0, 0, 800, 200);
-	}
+	drawHelpBlock(context) {
+		context.textAlign = 'left';
+		context.font = 'bold 18px Arial';
+		context.fillStyle = '#a8e2c0ff';
+		context.fillText('Справка:', 610, 400)
 
+		context.font = '14px Arial';
+		this.drawMultilineText(context, this.getHelpText(), 610, 430, 165, 20);
+	}
 }

@@ -70,7 +70,6 @@ export class MonitorStage extends AbstractStage {
         this.sliderPlanet4.y = 505;
         this.sliderPlanet4.size = 200;
 
-
         this.game.onUserInteracted(() => {
             this.playSound('background_music', {
                 loop: true
@@ -514,10 +513,9 @@ export class MonitorStage extends AbstractStage {
 
         context.font = 'bold 18px Arial';
         context.fillStyle = '#a8e2c0ff';
-        context.fillText('Справка:', 610, 370)
+        context.fillText('Справка:', 610, 400)
 
         context.font = '14px Arial';
-        this.drawMultilineText(context, this.helpText, 610, 400, 165, 20);
+        this.drawMultilineText(context, this.helpText, 610, 430, 165, 20);
     }
-
 }
