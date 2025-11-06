@@ -25,7 +25,7 @@ export class NurseryRoomStage extends AbstractRootStage {
         });
         this.nextButton.onClick(() => {
             for (let i = 0; i < this.monitorStage.rooms.length; i++) {
-                if (this.monitorStage.rooms[i].getLabel() == 'Стадо') {
+                if (this.monitorStage.rooms[i].getLabel() === 'Стадо') {
                     const potentialCoop = this.monitorStage.rooms[i];
                     if (potentialCoop.active && potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
                         if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
@@ -42,8 +42,10 @@ export class NurseryRoomStage extends AbstractRootStage {
                     }
 				}
             }
-            alert('Не получитлось перевести всех куриц');
+
+            showModal('Недостаточно места в стаде, не всех куриц удалось перевести', () => this.stop(), () => this.run());
             this.failRoom();
+
             return false;
         })
     }

@@ -65,7 +65,9 @@ export class SortingRoomStage extends AbstractRootStage {
                     }
                 }
             }
-            alert('Нет готовых инкубаторов');
+
+            showModal('Нет готовых инкубаторов', () => this.stop(), () => this.run());
+
             return false;
         });
         this.incubatorButton.x = 500;

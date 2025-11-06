@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ScrubJS</title>
+    <link href="public/styles/modal.css" rel="stylesheet">
 </head>
 <body style="background: black;">
     <script type="module" src="src/game.js"></script>
+
+    <div class="modal" data-modal>
+        <div class="modal__content" data-modal-content>Выгрузка завершена. Добавьте корма для подопытных и уберите помет</div>
+        <div class="modal__close">
+            <button type="button">Закрыть</button>
+        </div>
+    </div>
+    <div class="modal-overlay" data-modal-overlay></div>
+
+    <script src="public/scripts/modal.js"></script>
 </body>
 </html>
