@@ -82,6 +82,15 @@ export class CoopRoomStage extends AbstractRootStage {
     roomTick () {
         super.roomTick();
 
+        if (this.gameState.food >= this.currentQuantity * this.foodConsumption / 5) {
+            this.gameState.food -= this.currentQuantity * this.foodConsumption / 5;
+        }
+        else {
+            this.currentQuantity = Math.floor(this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption / 5 - this.gameState.food * (1 / this.foodConsumption)));
+            this.gameState.food = 0;
+
+            this.visualizerSpawn();
+        }
         if (this.active) {
             this.isRoomReady = false;
             this.tickCount += 1;
@@ -90,15 +99,6 @@ export class CoopRoomStage extends AbstractRootStage {
 
                 this.pollution += Math.floor(0.7 * this.currentQuantity);
 
-                if (this.gameState.food >= this.currentQuantity * this.foodConsumption) {
-                    this.gameState.food -= this.currentQuantity * this.foodConsumption;
-                }
-                else {
-                    this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
-					this.gameState.food = 0;
-
-					this.visualizerSpawn();
-                }
 
                 let eggMultiplayer = 0.8 * this.pollution > 50 ? this.pollution >= 100 ? 0.4 : 0.75 : 1;
                 this.eggsAmount += Math.round(this.currentQuantity * eggMultiplayer);

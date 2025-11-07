@@ -99,6 +99,16 @@ export class NurseryRoomStage extends AbstractRootStage {
 
     roomTick() {
         super.roomTick();
+        if (this.gameState.food >= this.currentQuantity * this.foodConsumption / 5) {
+            this.gameState.food -= this.currentQuantity * this.foodConsumption / 5;
+        } else {
+            this.currentQuantity = Math.floor(this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption / 5 - this.gameState.food * (1 / this.foodConsumption)));
+            this.visualizerSpawn();
+            this.gameState.food = 0;
+            if (this.currentQuantity <= 0) {
+                this.failRoom();
+            }
+        }
         if (this.inProgress) {
             this.tickCount += 1
             if (this.tickCount > this.tickMaxCount) {
@@ -106,16 +116,6 @@ export class NurseryRoomStage extends AbstractRootStage {
 
                 this.pollution += Math.floor(0.3 * this.currentQuantity);
 
-                if (this.gameState.food >= this.currentQuantity * this.foodConsumption) {
-                    this.gameState.food -= this.currentQuantity * this.foodConsumption;
-                } else {
-					this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
-					this.visualizerSpawn();
-                    this.gameState.food = 0;
-                    if (this.currentQuantity <= 0) {
-                        this.failRoom();
-                    }
-                }
 
                 let chickenMultiplayer = this.pollution >= 100 ? 0.75 : 1;
                 this.currentProgress += chickenMultiplayer;
