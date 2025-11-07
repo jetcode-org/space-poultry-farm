@@ -35,7 +35,7 @@ export class MissionStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
-        this.addBackground('public/images/mission.jpg');
+        this.addBackground('public/images/mission_1.jpg');
 
         this.startButton = new ButtonSprite();
         this.startButton.layer = 4;
