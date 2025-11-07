@@ -55,10 +55,6 @@ export class FarmRoomStage extends AbstractRootStage {
         return 'public/images/rooms/thumbnails/background_farm.png';
     }
 
-    resetRoom() {
-
-    }
-
     roomTick () {
         this.tickCount += 1;
         if (this.tickCount > this.tickMaxCount) {

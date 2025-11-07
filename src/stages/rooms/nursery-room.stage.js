@@ -81,12 +81,11 @@ export class NurseryRoomStage extends AbstractRootStage {
     }
 
     resetRoom() {
+        super.resetRoom();
+
         this.inProgress = false;
         this.currentProgress = 0;
         this.currentReadyProgress = 0;
-        this.currentQuantity = 0;
-        this.isRoomReady = false;
-        this.pollution = 0;
     }
 
     failRoom() {

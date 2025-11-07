@@ -6,6 +6,7 @@ import {GameState} from "../../services/game.state";
 
 export class AbstractRootStage extends AbstractStage {
 	active = false;
+	activeInStart = false;
 	thumbnail;
 	pollution = 0;
 	isRoomReady = false;
@@ -169,7 +170,16 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	resetRoom() {
+		this.currentQuantity = 0;
+		this.isRoomReady = false;
+		this.pollution = 0;
 
+		if (this.activeInStart) {
+			this.activate();
+
+		} else {
+			this.deactivate();
+		}
 	}
 
 	roomTick () {
@@ -192,6 +202,12 @@ export class AbstractRootStage extends AbstractStage {
 		this.thumbnail = thumbnailSprite;
 	}
 
+	activateInStart() {
+		this.activeInStart = true;
+
+		this.activate();
+	}
+
 	activate() {
 		if (this.active) {
 			return;
@@ -205,6 +221,21 @@ export class AbstractRootStage extends AbstractStage {
 
 		if (this.thumbnail) {
 			this.thumbnail.activate();
+		}
+	}
+
+	deactivate() {
+		if (!this.active) {
+			return;
+		}
+
+		this.active = false;
+
+		this.backgroundSprite.filter = 'grayscale(100%)';
+		this.activateButton.hidden = false;
+
+		if (this.thumbnail) {
+			this.thumbnail.deactivate();
 		}
 	}
 

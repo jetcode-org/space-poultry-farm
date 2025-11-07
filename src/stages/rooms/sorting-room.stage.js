@@ -81,6 +81,10 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.hidden = true;
         this.incubatorButton.hidden = true;
 
+        this.onReady(() => {
+            this.resetRoom();
+        });
+
         this.forever(this.control());
         this.pen(this.drawParameters, 10)
     }
@@ -112,7 +116,9 @@ export class SortingRoomStage extends AbstractRootStage {
     }
 
     resetRoom() {
+        super.resetRoom();
 
+        this.currentQuantity = 20;
     }
 
     roomTick () {

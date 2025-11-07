@@ -107,21 +107,19 @@ export class MonitorStage extends AbstractStage {
 
         const sortingRoom1 = new SortingRoomStage();
         sortingRoom1.isFirstUse = true;
-        sortingRoom1.activate();
-        sortingRoom1.currentQuantity = 20;
+        sortingRoom1.activateInStart();
 
         const incubatorRoom1 = new IncubatorRoomStage();
-        incubatorRoom1.activate();
+        incubatorRoom1.activateInStart();
 
         const nurseryRoom1 = new NurseryRoomStage();
-		nurseryRoom1.activate();
+		nurseryRoom1.activateInStart();
 
         const coopRoom1 = new CoopRoomStage();
-        coopRoom1.activate();
-        coopRoom1.currentQuantity = 10;
+        coopRoom1.activateInStart();
 
         const farmRoom1 = new FarmRoomStage();
-        farmRoom1.activate();
+        farmRoom1.activateInStart();
 
         //const sortingRoom2 = new SortingRoomStage();
         const incubatorRoom2 = new IncubatorRoomStage();

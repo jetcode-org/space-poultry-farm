@@ -80,7 +80,9 @@ export class CoopRoomStage extends AbstractRootStage {
     }
 
     resetRoom() {
+        super.resetRoom();
 
+        this.currentQuantity = 10;
     }
 
     roomTick () {
