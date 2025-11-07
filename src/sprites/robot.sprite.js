@@ -75,7 +75,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
     setLabel(context, sprite) {
         if (sprite.drawValue) {
             context.font = '16px Arial';
-            context.fillStyle = '#000';
+            context.fillStyle = '#fff';
             context.textAlign = 'center';
             context.fillText(sprite.charge, sprite.x, sprite.y - 7);
         }
