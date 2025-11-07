@@ -79,12 +79,6 @@ export class CoopRoomStage extends AbstractRootStage {
         return 'public/images/rooms/thumbnails/background_coop.png';
     }
 
-    resetRoom() {
-        super.resetRoom();
-
-        this.currentQuantity = 10;
-    }
-
     roomTick () {
         super.roomTick();
 
@@ -102,7 +96,7 @@ export class CoopRoomStage extends AbstractRootStage {
                 else {
                     this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
 					this.gameState.food = 0;
-                    
+
 					this.visualizerSpawn();
                 }
 

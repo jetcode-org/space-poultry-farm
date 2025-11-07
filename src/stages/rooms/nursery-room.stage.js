@@ -48,7 +48,7 @@ export class NurseryRoomStage extends AbstractRootStage {
             this.failRoom();
 
             return false;
-        })
+        });
     }
 
     control() {

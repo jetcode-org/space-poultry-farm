@@ -69,7 +69,11 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.onStart(() => {
 			this.visualizerSpawn();
-		})
+		});
+
+		this.onReady(() => {
+			this.resetRoom();
+		});
 	}
 
 	createGetManureButton() {
