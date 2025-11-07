@@ -100,7 +100,7 @@ export class CoopRoomStage extends AbstractRootStage {
                     this.gameState.food -= this.currentQuantity * this.foodConsumption;
                 }
                 else {
-                    this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
+                    this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
 					this.gameState.food = 0;
                     
 					this.visualizerSpawn();

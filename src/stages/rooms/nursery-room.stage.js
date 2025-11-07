@@ -109,7 +109,7 @@ export class NurseryRoomStage extends AbstractRootStage {
                 if (this.gameState.food >= this.currentQuantity * this.foodConsumption) {
                     this.gameState.food -= this.currentQuantity * this.foodConsumption;
                 } else {
-					this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
+					this.currentQuantity = this.gameState.food * (1 / this.foodConsumption) + 0.5 * (this.currentQuantity * this.foodConsumption - this.gameState.food * (1 / this.foodConsumption));
 					this.visualizerSpawn();
                     this.gameState.food = 0;
                     if (this.currentQuantity <= 0) {
