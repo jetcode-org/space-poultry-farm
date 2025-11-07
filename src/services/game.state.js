@@ -16,7 +16,7 @@ export class GameState {
     chicken = 0;
 
     // сколько нужно набрать
-    quotas = [25, 50, 100, 150];
+    quotas = [50, 125, 250, 400];
     currentQuota = 0;
 
     // для переключателей
