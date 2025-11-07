@@ -43,14 +43,14 @@ export class AbstractStage extends Stage {
 
 		this.shit = new Sprite()
 		this.shit.addCostume('public/images/resicons/iconShit.png')
-		this.shit.x = 330
+		this.shit.x = 350
 		this.shit.y = 550
 		this.shit.size = 90
 		this.shit.layer = 10
 
 		this.crash = new Sprite()
 		this.crash.addCostume('public/images/resicons/iconCrash.png')
-		this.crash.x = 400
+		this.crash.x = 420
 		this.crash.y = 550
 		this.crash.size = 90
 		this.crash.layer = 10
@@ -98,9 +98,9 @@ export class AbstractStage extends Stage {
 		context.fillText(GameState.getInstance().cooledEggs, 70, 555);
 		context.fillText(GameState.getInstance().chick, 140, 555);
 		context.fillText(GameState.getInstance().chicken, 210, 555);
-		context.fillText(GameState.getInstance().food, 280, 555);
-		context.fillText(GameState.getInstance().manure, 350, 555);
-		context.fillText(GameState.getInstance().eggshell, 420, 555);
+		context.fillText(GameState.getInstance().food.toFixed(1), 280, 555);
+		context.fillText(GameState.getInstance().manure, 370, 555);
+		context.fillText(GameState.getInstance().eggshell, 440, 555);
 
 	}
 }
