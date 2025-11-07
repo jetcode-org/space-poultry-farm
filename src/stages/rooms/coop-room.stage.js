@@ -103,6 +103,7 @@ export class CoopRoomStage extends AbstractRootStage {
 
                 let eggMultiplayer = 0.8 * this.pollution > 50 ? this.pollution >= 100 ? 0.4 : 0.75 : 1;
                 this.eggsAmount += Math.round(this.currentQuantity * eggMultiplayer);
+                this.currentQuantity = Math.floor(this.currentQuantity * 0.95)
                 if (this.eggsAmount > this.maxEggsAmount) {
                     this.eggsAmount = this.maxEggsAmount;
                     this.isRoomReady = true;
