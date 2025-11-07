@@ -16,6 +16,7 @@ export class FarmRoomStage extends AbstractRootStage {
 
         this.nextButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
+            this.gameState.thereWasFood = true;
             this.currentQuantity = 0;
         })
 

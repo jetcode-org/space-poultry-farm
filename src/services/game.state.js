@@ -37,6 +37,8 @@ export class GameState {
     isDraggableObjectActive = false;
     ifReadingHelper = false;
 
+    thereWasFood = true;
+
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');
