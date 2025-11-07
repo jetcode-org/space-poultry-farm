@@ -499,7 +499,7 @@ export class MonitorStage extends AbstractStage {
 
         if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
             this.gameState.thereWasFood = false;
-            showModal('Еда закончилась. Курицы и циплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
+            showModal('Еда закончилась. Курицы и цыплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
         }
 
         for (const robot of this.robots) {
