@@ -35,11 +35,12 @@ export class MissionStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
+        this.addBackground('public/images/mission_0.jpg');
         this.addBackground('public/images/mission_1.jpg');
         this.addBackground('public/images/mission_2.jpg');
         this.addBackground('public/images/mission_3.jpg');
         this.addBackground('public/images/mission_4.jpg');
-        this.addBackground('public/images/mission_1.jpg');
+        this.addBackground('public/images/mission_0.jpg');
 
         this.startButton = new ButtonSprite();
         this.startButton.layer = 4;
@@ -57,7 +58,7 @@ export class MissionStage extends AbstractSlideStageStage {
 
     setMissionSlides(missionIndex, resultText, finishText = null) {
         this.reset();
-        this.switchBackground(missionIndex);
+        this.switchBackground(missionIndex + 1); // "+1" костыльное исправление бага со switchBackground()
 
         if (finishText !== null) {
             this.missions.push(finishText);
