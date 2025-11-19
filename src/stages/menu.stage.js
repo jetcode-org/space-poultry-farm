@@ -3,6 +3,8 @@ import {Stage} from 'jetcode-scrubjs';
 import {MenuBackgroundSprite} from '../sprites/menu-background.sprite.js';
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {IntroStage} from "./intro.stage";
+import {HelperSprite } from "../sprites/helper.sprite.js";
+
 
 export class MenuStage extends Stage {
     static instance;
@@ -32,6 +34,11 @@ export class MenuStage extends Stage {
             this.game.run(IntroStage.getInstance());
         });
 
+        this.helper = new HelperSprite();
+        this.helper.onClick(this.helper.hide)
+        this.onReady(()=>{
+            this.helper.show('Привет землянам asd asd asd asd asd asd asd asd asd asd asd asd asd!');
+        })
     }
 
 }
