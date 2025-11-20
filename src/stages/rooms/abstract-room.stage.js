@@ -118,7 +118,7 @@ export class AbstractRootStage extends AbstractStage {
 
 	createInstructionButton() {
 		const button = new ButtonSprite();
-		button.layer = 10;
+		button.layer = 8;
 		button.minSize = 70;
 		button.maxSize = 80;
 		button.x = 655;

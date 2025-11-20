@@ -33,12 +33,6 @@ export class MenuStage extends Stage {
         startButton.onClick(() => {
             this.game.run(IntroStage.getInstance());
         });
-
-        this.helper = new HelperSprite();
-        this.helper.onClick(this.helper.hide)
-        this.onReady(()=>{
-            this.helper.show('Привет землянам asd asd asd asd asd asd asd asd asd asd asd asd asd!');
-        })
     }
 
 }

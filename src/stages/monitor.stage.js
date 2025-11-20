@@ -110,15 +110,19 @@ export class MonitorStage extends AbstractStage {
         sortingRoom1.activateInStart();
 
         const incubatorRoom1 = new IncubatorRoomStage();
+        incubatorRoom1.isFirstUse = true;
         incubatorRoom1.activateInStart();
 
         const nurseryRoom1 = new NurseryRoomStage();
+        nurseryRoom1.isFirstUse = true;
 		nurseryRoom1.activateInStart();
 
         const coopRoom1 = new CoopRoomStage();
+        coopRoom1.isFirstUse = true;
         coopRoom1.activateInStart();
 
         const farmRoom1 = new FarmRoomStage();
+        farmRoom1.isFirstUse = true;
         farmRoom1.activateInStart();
 
         //const sortingRoom2 = new SortingRoomStage();

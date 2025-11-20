@@ -1,6 +1,7 @@
 import {Sprite, Stage} from 'jetcode-scrubjs';
 import {GameState} from "../services/game.state";
 import {ButtonSprite} from '../sprites/button.sprite.js';
+import {HelperSprite } from "../sprites/helper.sprite.js";
 
 export class AbstractStage extends Stage {
 	init() {
@@ -56,6 +57,9 @@ export class AbstractStage extends Stage {
 		this.crash.layer = 10
 
 		this.pen(this.drawParameters.bind(this), 10);
+
+		this.helper = new HelperSprite();
+		this.helper.onClick(this.helper.hide);
 	}
 
     drawMultilineText(context, text, x, y, maxWidth, lineHeight) {

@@ -81,6 +81,17 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.hidden = true;
         this.incubatorButton.hidden = true;
 
+        this.onStart(()=>{
+            if (this.isFirstUse) {
+                this.isFirstUse = false;
+                this.helper.show('Это центр сортировки. Здесь вы можете определять, сколько яиц уйдут в холодильник, а сколько отправятся в инкубатор для выращивания', 'Boss');
+                this.helper.onClick(()=>{
+                    this.helper.show('Хорошо, Вас понял, Босс');
+                    this.helper.onClick(()=>{this.helper.hide()})
+                })
+            }
+        })
+
         this.forever(this.control());
         this.pen(this.drawParameters, 10)
     }
