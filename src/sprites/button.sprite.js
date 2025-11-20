@@ -1,4 +1,3 @@
-import {Sprite} from "jetcode-scrubjs";
 import {AbstractButtonSprite} from "./abstract-button.sprite";
 
 export class ButtonSprite extends AbstractButtonSprite {

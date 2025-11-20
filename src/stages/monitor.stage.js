@@ -10,6 +10,7 @@ import {AbstractStage} from "./abstract.stage";
 import { SliderSprite } from "../sprites/slider.sprite";
 import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
+import {InfoButtonSprite} from "../sprites/info-button.sprite";
 
 
 export class MonitorStage extends AbstractStage {
@@ -92,8 +93,6 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.onReady(()=>{
 		    this.progressSlider.nextCostume()
 		});
-
-        
 
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
@@ -315,10 +314,43 @@ export class MonitorStage extends AbstractStage {
             this
         );
 
+        // Info Icon
+
+        const eggQualityInfoButton = new InfoButtonSprite(this, 1);
+        eggQualityInfoButton.x = 550;
+        eggQualityInfoButton.y = 455;
+        eggQualityInfoButton.hidden = false;
+
+        eggQualityInfoButton.onClick(() => {
+            const nextEggQualityClass = this.gameState.getNextEggQualityClass();
+
+            let text = '<table border="0">';
+            const qualityInfo = this.gameState.getEggQualityInfo();
+            text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityMoney() + '$</td></tr>';
+
+            text += '<tr><td colspan="2"><hr></td></tr>';
+
+            text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Нарушение условий чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Нарушение кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Нарушение условий содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
+            text += '</table>';
+            text += '<hr>';
+
+            if (nextEggQualityClass) {
+                text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
+            }
+
+            showModal(text, () => this.stop(), () => this.run());
+        });
+
         this.forever(this.gameTick, 1000);
         this.pen(this.drawHelpBlock.bind(this));
+    }
 
-        
+    addPlus(value) {
+        return value ? '+' + value: value;
     }
 
     restartGame() {
@@ -489,7 +521,7 @@ export class MonitorStage extends AbstractStage {
             this.gameState.chicken = 0;
 
             for (const room of this.rooms) {
-                
+
                 if (room.active) {
                     room.roomTick();
                     if (room.getLabel() == 'Ясли') {
@@ -499,7 +531,7 @@ export class MonitorStage extends AbstractStage {
                         this.gameState.chicken += room.currentQuantity;
                     }
                 }
-                
+
             }
 
             if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
@@ -554,6 +586,10 @@ export class MonitorStage extends AbstractStage {
         context.fillText('Нужно яиц: ' + this.gameState.quotas[this.gameState.currentQuota], 70, 405)
         context.fillText('Осталось время: ' + (this.gameState.quotasLimitTime[this.gameState.currentQuota] - this.gameState.passedTime), 70, 430)
         context.fillText('Зарядка корабля: ' + this.gameState.chargeValue + '%', 70, 455);
+
+        context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);
+        context.fillText('Деньги: ' + this.gameState.money + '$', 320, 435);
+        context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityMoney() + '$)' , 320, 460);
 
         // для монитора декор
         this.bgShipSprite.time += 0.01
