@@ -182,7 +182,7 @@ export class GameState {
         return currentQualityClass;
     }
 
-    getEggQualityMoney(qualityClass = null) {
+    getEggQualityCost(qualityClass = null) {
         qualityClass = qualityClass ? qualityClass : this.getEggQualityClass();
 
         return this.eggQualityMoney[qualityClass];

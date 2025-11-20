@@ -326,7 +326,7 @@ export class MonitorStage extends AbstractStage {
             let text = '<table border="0">';
             const qualityInfo = this.gameState.getEggQualityInfo();
             text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityMoney() + '$</td></tr>';
+            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '$</td></tr>';
 
             text += '<tr><td colspan="2"><hr></td></tr>';
 
@@ -399,6 +399,8 @@ export class MonitorStage extends AbstractStage {
             this.showMission(
                 this.gameState.currentMission,
                 true,
+                null,
+                null,
                 'Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания. Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции. Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.'
             );
             this.gameState.currentMission++;
@@ -500,7 +502,7 @@ export class MonitorStage extends AbstractStage {
 
         context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);
         context.fillText('Деньги: ' + this.gameState.money + '$', 320, 435);
-        context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityMoney() + '$)' , 320, 460);
+        context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , 320, 460);
 
         // для монитора декор
         this.bgShipSprite.time += 0.01
@@ -509,10 +511,12 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
 	}
 
-    showMission(currentQuota, success, startMessage = null, finishMessage = null) {
+    showMission(currentQuota, success, soldEggs = null, earnedMoney = null, startMessage = null, finishMessage = null) {
         MissionStage.getInstance().setMissionSlides(
             currentQuota,
             success,
+            soldEggs,
+            earnedMoney,
             startMessage,
             finishMessage
         );
@@ -562,15 +566,17 @@ export class MonitorStage extends AbstractStage {
                 this.gameState.successfulCompletedMissions += 1;
             }
 
-            this.gameState.frozenEggs -= missionEggQuota;
-            this.gameState.frozenEggs = Math.max(this.gameState.frozenEggs, 0);
+            const soldEggs = Math.min(this.gameState.frozenEggs, missionEggQuota);
+            const earnedMoney = soldEggs * this.gameState.getEggQualityCost();
+            this.gameState.frozenEggs -= soldEggs;
+            this.gameState.money += earnedMoney;
 
             const finishMessage = this.gameState.currentMission === this.gameState.missions.length - 1 ?
                 this.getFinishMessage() :
                 null
             ;
 
-            this.showMission(this.gameState.currentMission, success, null, finishMessage);
+            this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, null, finishMessage);
             this.gameState.currentMission += 1;
         }
     }

@@ -51,7 +51,7 @@ export class MissionStage extends AbstractSlideStageStage {
         });
     }
 
-    setMissionSlides(missionIndex, success, startMessage = null, finishMessage = null) {
+    setMissionSlides(missionIndex, success, soldEggs = null, earnedMoney = null, startMessage = null, finishMessage = null) {
         this.reset();
         this.switchBackground(missionIndex + 1); // "+1" костыльное исправление бага со switchBackground()
 
@@ -66,11 +66,20 @@ export class MissionStage extends AbstractSlideStageStage {
         const mission = this.gameState.missions[missionIndex];
         if (mission !== undefined) {
             const resultMessage = success ? mission['success'] : mission['fail'];
+
             if (resultMessage !== undefined) {
                 this.slides.push({
                     'text': resultMessage
                 });
             }
+        }
+
+        if (soldEggs !== null && earnedMoney !== null) {
+            const resultMessage2 = 'Мы продали: ' + soldEggs + ' яиц и заработали ' + earnedMoney + '$';
+
+            this.slides.push({
+                'text': resultMessage2
+            });
         }
 
         const nextMissionIndex = missionIndex + 1;
