@@ -12,7 +12,6 @@ import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
 import {InfoButtonSprite} from "../sprites/info-button.sprite";
 
-
 export class MonitorStage extends AbstractStage {
     static instance;
     helpText = null;
@@ -396,163 +395,70 @@ export class MonitorStage extends AbstractStage {
 
     gameTick() {
         // Первая миссия
-        if (this.gameState.quota_0 === false) {
-            this.gameState.quota_0 = true;
-
+        if (this.gameState.currentMission === -1) {
             this.showMission(
-                this.gameState.currentQuota,
+                this.gameState.currentMission,
+                true,
                 'Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания. Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции. Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.'
             );
+            this.gameState.currentMission++;
         }
 
-        if (!this.gameState.ifReadingHelper) {
-            // логика получения квот
-            if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_1 == false) {
-                if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
-                    this.gameState.quota_1 = true;
-                    this.gameState.quotas_complete += 1;
-                    this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
-                    this.gameState.currentQuota += 1;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'УСПЕХ! Марс-7: Квота выполнена! Научная колония получила жизненно важные белки'
-                    );
-
-                } else {
-                    this.gameState.quota_1 = true;
-                    this.gameState.currentQuota += 1;
-                    this.gameState.cooledEggs = 0;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'ПРОВАЛ! Марс-7: Квота не выполнена! Колония осталась без жизненно важных ресурсов. Придется объясняться перед Советом...'
-                    );
-                }
-            }
-
-            if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_2 == false) {
-                if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
-                    this.gameState.quotas_complete += 1;
-                    this.gameState.quota_2 = true
-                    this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
-                    this.gameState.currentQuota += 1;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'УСПЕХ! Аквария: Груз доставлен! Плавучие города спасены от белкового голодания.'
-                    );
-
-                } else {
-                    this.gameState.quota_2 = true
-                    this.gameState.currentQuota += 1;
-                    this.gameState.cooledEggs = 0;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'ПРОВАЛ! Аквария: Груз не доставлен! Население водного мира продолжает страдать от дефицита белка. Летим дальше с пустыми трюмами.'
-                    );
-                }
-            }
-
-            if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_3 == false) {
-                if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
-                    this.gameState.quotas_complete += 1;
-                    this.gameState.quota_3 = true
-                    this.gameState.cooledEggs -= this.gameState.quotas[this.gameState.currentQuota]
-                    this.gameState.currentQuota += 1;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'УСПЕХ! Гелиос-Прайм: Миссия выполнена! Полярные исследователи обеспечены провизией.'
-                    );
-
-                } else {
-                    this.gameState.quota_3 = true
-                    this.gameState.currentQuota += 1;
-                    this.gameState.cooledEggs = 0;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'ПРОВАЛ! Гелиос-Прайм: Миссия провалена! Исследователи остались без провизии в ледяной пустыне. Время не ждет - движемся к следующей цели.'
-                    );
-                }
-            }
-
-            if (this.gameState.passedTime >= this.gameState.distance_planet[this.gameState.currentQuota] && this.gameState.quota_4 == false) {
-                if (this.gameState.cooledEggs >= this.gameState.quotas[this.gameState.currentQuota]) {
-                    this.gameState.quotas_complete += 1;
-                    this.gameState.quota_4 = true;
-                    this.gameState.currentQuota += 1;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'УСПЕХ! Терра-Нова: Финальный груз доставлен! Биосфера планеты спасена. Вы стали героем Галактического Совета!',
-                        this.getFinishText()
-                    );
-
-                } else {
-                    this.gameState.quota_4 = true;
-                    this.gameState.currentQuota += 1;
-
-                    this.showMission(
-                        this.gameState.currentQuota,
-                        'ПРОВАЛ! Терра-Нова: Финальная миссия сорвана! Шанс восстановить планету упущен. Ваша репутация серьезно пострадала.',
-                        this.getFinishText()
-                    );
-                }
-            }
-
-            this.gameState.chargeValue += 5;
-            this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
-
-            if (this.gameState.chargeValue > GameState.CHARGE_VALUE_FULL) {
-                this.gameState.chargeValue = GameState.CHARGE_VALUE_FULL;
-            }
-
-            this.gameState.passedTime += 1;
-
-            if (this.gameState.passedTime >= this.gameState.limitTime) {
-                //this.restartGame();
-                //this.game.run(MenuStage.getInstance());
-            }
-
-            this.gameState.chick = 0;
-            this.gameState.chicken = 0;
-
-            for (const room of this.rooms) {
-
-                if (room.active) {
-                    room.roomTick();
-                    if (room.getLabel() == 'Ясли') {
-                        this.gameState.chick += room.currentQuantity;
-                    }
-                    if (room.getLabel() == 'Стадо') {
-                        this.gameState.chicken += room.currentQuantity;
-                    }
-                }
-
-            }
-
-            if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
-                this.gameState.thereWasFood = false;
-                showModal('Еда закончилась. Курицы и цыплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
-            }
-
-            for (const robot of this.robots) {
-                if (robot.isCharging) {
-                    robot.charge += 5;
-                }
-            }
-
-            this.progressSlider.setCurrentValue(this.gameState.passedTime);
-
-            this.drawReadyRooms();
+        if (this.gameState.ifReadingHelper) {
+            return;
         }
+
+        this.missionProcess(); // логика прохождения миссий
+
+        this.gameState.chargeValue += 5;
+        this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
+
+        if (this.gameState.chargeValue > GameState.CHARGE_VALUE_FULL) {
+            this.gameState.chargeValue = GameState.CHARGE_VALUE_FULL;
+        }
+
+        this.gameState.passedTime += 1;
+
+        if (this.gameState.passedTime >= this.gameState.limitTime) {
+            //this.restartGame();
+            //this.game.run(MenuStage.getInstance());
+        }
+
+        this.gameState.chick = 0;
+        this.gameState.chicken = 0;
+
+        for (const room of this.rooms) {
+
+            if (room.active) {
+                room.roomTick();
+                if (room.getLabel() == 'Ясли') {
+                    this.gameState.chick += room.currentQuantity;
+                }
+                if (room.getLabel() == 'Стадо') {
+                    this.gameState.chicken += room.currentQuantity;
+                }
+            }
+
+        }
+
+        if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
+            this.gameState.thereWasFood = false;
+            showModal('Еда закончилась. Курицы и цыплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
+        }
+
+        for (const robot of this.robots) {
+            if (robot.isCharging) {
+                robot.charge += 5;
+            }
+        }
+
+        this.progressSlider.setCurrentValue(this.gameState.passedTime);
+
+        this.drawReadyRooms();
 	}
 
-    getFinishText() {
-        switch (this.gameState.quotas_complete) {
+    getFinishMessage() {
+        switch (this.gameState.successfulCompletedMissions) {
             case 0:
                 return 'Экипаж, мы потерпели полное фиаско! Ни одна из планет не получила жизненно важные грузы. Наша репутация уничтожена, контракты расторгнуты. Возможно, птицеводство в космосе - не ваше призвание...';
 
@@ -571,7 +477,7 @@ export class MonitorStage extends AbstractStage {
     }
 
 	drawParameters(context) {
-		super.drawParameters(context)
+		super.drawParameters(context);
 
         context.font = 'bold 18px Arial';
         context.fillStyle = '#fff';
@@ -581,11 +487,16 @@ export class MonitorStage extends AbstractStage {
 		context.fillStyle = '#a8e2c0ff';
 		context.textAlign = 'start';
 
-        context.fillStyle = '#f1f1f1ff';
-        context.fillText('Планета: ' + this.gameState.planetNames[this.gameState.currentQuota], 70, 380)
-        context.fillText('Нужно яиц: ' + this.gameState.quotas[this.gameState.currentQuota], 70, 405)
-        context.fillText('Осталось время: ' + (this.gameState.quotasLimitTime[this.gameState.currentQuota] - this.gameState.passedTime), 70, 430)
-        context.fillText('Зарядка корабля: ' + this.gameState.chargeValue + '%', 70, 455);
+        const currentMission = this.gameState.currentMission;
+        const mission = this.gameState.missions[currentMission];
+
+        if (mission) {
+            context.fillStyle = '#f1f1f1ff';
+            context.fillText('Планета: ' + mission['name'], 70, 380)
+            context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
+            context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
+            context.fillText('Зарядка корабля: ' + this.gameState.chargeValue + '%', 70, 455);
+        }
 
         context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);
         context.fillText('Деньги: ' + this.gameState.money + '$', 320, 435);
@@ -598,11 +509,12 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
 	}
 
-    showMission(currentQuota, resultText, finishText = null) {
+    showMission(currentQuota, success, startMessage = null, finishMessage = null) {
         MissionStage.getInstance().setMissionSlides(
             currentQuota,
-            resultText,
-            finishText
+            success,
+            startMessage,
+            finishMessage
         );
 
         this.game.run(MissionStage.getInstance());
@@ -630,5 +542,36 @@ export class MonitorStage extends AbstractStage {
 
         context.font = '14px Arial';
         this.drawMultilineText(context, this.helpText, 610, 430, 165, 20);
+    }
+
+    missionProcess() {
+        const currentMission = this.gameState.currentMission;
+        const mission = this.gameState.missions[currentMission];
+
+        if (!mission) {
+            return;
+        }
+
+        const missionDistance = mission['distance'];
+
+        if (this.gameState.passedTime >= missionDistance) {
+            const missionEggQuota = mission['eggQuota'];
+            const success = this.gameState.frozenEggs >= missionEggQuota;
+
+            if (success) {
+                this.gameState.successfulCompletedMissions += 1;
+            }
+
+            this.gameState.frozenEggs -= missionEggQuota;
+            this.gameState.frozenEggs = Math.max(this.gameState.frozenEggs, 0);
+
+            const finishMessage = this.gameState.currentMission === this.gameState.missions.length - 1 ?
+                this.getFinishMessage() :
+                null
+            ;
+
+            this.showMission(this.gameState.currentMission, success, null, finishMessage);
+            this.gameState.currentMission += 1;
+        }
     }
 }

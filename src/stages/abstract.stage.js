@@ -95,7 +95,7 @@ export class AbstractStage extends Stage {
 		context.textAlign = 'start';
 
 		// показатели на панели ресурсов у иконок
-		context.fillText(GameState.getInstance().cooledEggs, 70, 555);
+		context.fillText(GameState.getInstance().frozenEggs, 70, 555);
 		context.fillText(GameState.getInstance().chick, 140, 555);
 		context.fillText(GameState.getInstance().chicken, 210, 555);
 		context.fillText(GameState.getInstance().food.toFixed(1), 280, 555);

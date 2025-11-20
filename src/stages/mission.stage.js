@@ -1,20 +1,13 @@
-import {Stage} from 'jetcode-scrubjs';
-
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractSlideStageStage} from "./abstract-slide-stage.stage";
 import {MonitorStage} from "./monitor.stage";
 import {MenuStage} from "./menu.stage";
+import {GameState} from "../services/game.state";
 
 export class MissionStage extends AbstractSlideStageStage {
     static instance;
     textBlockHeight = 180;
     nextButtonLabel = 'Задание';
-    missions = [
-        'Планета: Марс-7 (Агрикультурный сектор). Доставьте 50 яиц первой партии для обеспечения белком научной колонии. Ученые проводят эксперименты по адаптации земной флоры и фауны к марсианским условиям. Ваш груз станет основой для создания устойчивой экосистемы',
-        'Планета: Аквария (Водный мир). Требуется 125 яиц для плавучих городов-архипелагов. Местное население страдает от дефицита белка из-за ограниченности земельных ресурсов. Ваш груз поможет стабилизировать пищевую ситуацию на планете.',
-        'Планета: Гелиос-Прайм (Приполярная зона). Срочно доставьте 250 яиц в криогенной упаковке для полярных исследовательских станций. Экстремальные температуры требуют особых условий транспортировки и максимальной свежести продукции.',
-        'Планета: Терра-Нова (Землеподобный мир). Финальная миссия - 400 яиц для восстановления биосферы после экологической катастрофы. Ваш вклад поможет реанимировать планетарную экосистему и дать начало новой цивилизации.',
-    ];
 
     static getInstance() {
         if (!MissionStage.instance) {
@@ -30,6 +23,8 @@ export class MissionStage extends AbstractSlideStageStage {
         if (MissionStage.instance) {
             throw new Error('MissionStage class: use getInstance() method instead.');
         }
+
+        this.gameState = GameState.getInstance();
     }
 
     init() {
@@ -56,26 +51,44 @@ export class MissionStage extends AbstractSlideStageStage {
         });
     }
 
-    setMissionSlides(missionIndex, resultText, finishText = null) {
+    setMissionSlides(missionIndex, success, startMessage = null, finishMessage = null) {
         this.reset();
         this.switchBackground(missionIndex + 1); // "+1" костыльное исправление бага со switchBackground()
 
-        if (finishText !== null) {
-            this.missions.push(finishText);
+        this.slides = [];
 
+        if (startMessage !== null) {
+            this.slides.push({
+                'text': startMessage
+            });
+        }
+
+        const mission = this.gameState.missions[missionIndex];
+        if (mission !== undefined) {
+            const resultMessage = success ? mission['success'] : mission['fail'];
+            if (resultMessage !== undefined) {
+                this.slides.push({
+                    'text': resultMessage
+                });
+            }
+        }
+
+        const nextMissionIndex = missionIndex + 1;
+        const nextMission = this.gameState.missions[nextMissionIndex];
+        if (nextMission !== undefined) {
+            this.slides.push({
+                'text': nextMission['task']
+            });
+
+        } else {
             this.startButton.onClick(this.restartGame.bind(this));
         }
 
-        const missionText = this.missions[missionIndex];
-
-        this.slides = [
-            {
-                'text': resultText
-            },
-            {
-                'text': missionText
-            },
-        ];
+        if (finishMessage !== null) {
+            this.slides.push({
+                'text': finishMessage
+            });
+        }
     }
 
     onNextSlide() {
