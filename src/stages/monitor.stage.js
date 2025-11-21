@@ -207,10 +207,9 @@ export class MonitorStage extends AbstractStage {
             this.gameState.currentMission++;
         }
 
-        if (this.gameState.ifReadingHelper) {
+        if (this.gameState.isReadingHelper) {
             return;
         }
-
         this.missionProcess(); // логика прохождения миссий
 
         this.gameState.chargeValue += 5;

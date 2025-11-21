@@ -117,6 +117,62 @@ export class GameState {
     currentShip = 0;
 
     /**
+     * Анимации персонажей
+     */
+
+    personAnimations = {
+        'HeroNormal': ['public/images/persons/Hero/normal_1.png',
+                       'public/images/persons/Hero/normal_2.png',
+                       'public/images/persons/Hero/normal_3.png',
+                       'public/images/persons/Hero/normal_4.png'
+        ],
+        'BossNormal': ['public/images/persons/Boss/normal_1.png',
+                       'public/images/persons/Boss/normal_2.png',
+                       'public/images/persons/Boss/normal_3.png',
+                       'public/images/persons/Boss/normal_4.png'
+        ],
+        'RicoNormal': ['public/images/persons/Rico/normal_1.png',
+                       'public/images/persons/Rico/normal_2.png',
+                       'public/images/persons/Rico/normal_3.png',
+                       'public/images/persons/Rico/normal_4.png'
+        ],
+        'CCCNormal': ['public/images/persons/CCC/normal_1.png',
+                      'public/images/persons/CCC/normal_2.png',
+                      'public/images/persons/CCC/normal_3.png',
+                      'public/images/persons/CCC/normal_4.png'
+        ],
+        'HeroAngry':  ['public/images/persons/Hero/angry_1.png',
+                       'public/images/persons/Hero/angry_2.png',
+                       'public/images/persons/Hero/angry_3.png',
+                       'public/images/persons/Hero/angry_4.png'
+        ],
+        'BossAngry':  ['public/images/persons/Boss/angry_1.png',
+                       'public/images/persons/Boss/angry_2.png',
+                       'public/images/persons/Boss/angry_3.png',
+                       'public/images/persons/Boss/angry_4.png'
+        ],
+        'RicoAngry':  ['public/images/persons/Rico/angry_1.png',
+                       'public/images/persons/Rico/angry_2.png',
+                       'public/images/persons/Rico/angry_3.png',
+                       'public/images/persons/Rico/angry_4.png'
+        ],
+        'CCCAngry':  ['public/images/persons/CCC/angry_1.png',
+                      'public/images/persons/CCC/angry_2.png',
+                      'public/images/persons/CCC/angry_3.png',
+                      'public/images/persons/CCC/angry_4.png'
+        ],
+    }
+
+    /**
+     * Ответы героя
+     */
+
+    heroAnswers = {
+        'Normal': ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
+        'Angry': ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
+    }
+
+    /**
      * Комнаты
      */
     roomsConfig = {
@@ -217,7 +273,7 @@ export class GameState {
     ];
 
     isDraggableObjectActive = false;
-    ifReadingHelper = false;
+    isReadingHelper = false;
 
     thereWasFood = true;
 
@@ -402,5 +458,10 @@ export class GameState {
         this.money -= cost;
 
         return true;
+    }
+
+    getHeroAnswer(emotion) {
+        const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers[emotion].length);
+        return this.heroAnswers[emotion][randomAnswerIndex];
     }
 }

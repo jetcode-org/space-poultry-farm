@@ -69,6 +69,14 @@ export class AbstractRootStage extends AbstractStage {
 
 		this.onStart(() => {
 			this.visualizerSpawn();
+
+            if (this.isFirstUse) {
+				this.helper.show(this.getHelpText(), 'Boss');
+				this.helper.setButtonText('Дальше');
+				this.helper.onClick(()=>{
+					this.showInstructionDialog();
+				})
+            }
 		});
 
 		this.onReady(() => {
@@ -129,7 +137,7 @@ export class AbstractRootStage extends AbstractStage {
 		});
 
 		button.onClick(() => {
-			this.showInstructionModal();
+			this.showInstructionDialog();
 		});
 	}
 
@@ -290,7 +298,6 @@ export class AbstractRootStage extends AbstractStage {
 		const text = 'Модуль временно не работает. Требуется полная зарядка корабля. Текущий уровень энергии: ' + this.gameState.chargeValue + '%';
 
 		this.drawMultilineText(context, text, 120, 200, 350, 30);
-
 	}
 
 	//Создает спрайты, которые задаются в SetVisCostumes() в соответствии с текущим количеством
@@ -379,5 +386,16 @@ export class AbstractRootStage extends AbstractStage {
 
 		context.font = '14px Arial';
 		this.drawMultilineText(context, this.getHelpText(), 610, 430, 165, 20);
+	}
+
+	showInstructionDialog() {
+		this.helper.show(this.getInstructionText(), 'Boss');
+		this.helper.setButtonText('Дальше');
+		this.helper.onClick(()=>{
+			this.helper.show(GameState.getInstance().getHeroAnswer('Normal') + ', босс!', 'Hero');
+			this.helper.setButtonText('Конец');
+			this.isFirstUse = false;
+			this.helper.onClick(()=>{this.helper.hide()});
+		});
 	}
 }

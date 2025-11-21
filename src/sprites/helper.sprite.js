@@ -3,13 +3,6 @@ import {GameState} from "../services/game.state";
 import {ButtonSprite} from "./button.sprite";
 
 export class HelperSprite extends Sprite {
-    static persons = {
-        'HeroNormal': ['public/images/rooms/background/scoop.png'],
-        'BossNormal': ['public/images/rooms/backgrounds/farm.png'],
-        'RicoNormal': ['public/images/rooms/backgrounds/nursery.png', 'public/images/rooms/backgrounds/sorting.png'],
-        'CCCNormal': ['public/images/rooms/backgrounds/sorting.png']
-    }
-
     startY = 700;
     shouldShow = false;
     speed = 8;
@@ -23,6 +16,8 @@ export class HelperSprite extends Sprite {
     imageTickSpeed = 6;
 
     showPerson = false;
+
+    currentPerson = null;
 
     init(){
         this.drawCostume((context)=>{
@@ -76,8 +71,15 @@ export class HelperSprite extends Sprite {
 
     }
 
-    onClick(callback) {
+    onClick(callback, newText='') {
         this.nextButton.onClick(callback.bind(this))
+        if (newText){
+            this.nextButton.setLabel(newText);
+        }
+    }
+
+    setButtonText(text) {
+        this.nextButton.setLabel(text);
     }
 
     showText(context, helper) {
@@ -95,7 +97,7 @@ export class HelperSprite extends Sprite {
                 helper.personImage.switchCostume(0);
             }
             context.fillStyle = '#ffffff';
-            context.font = '24px Arial'
+            context.font = '20px Arial'
             if (helper.showPerson) {
                 helper.drawMultilineText(context, helper.currentText, 200, 450, 550, 30);
             } else {
@@ -105,21 +107,20 @@ export class HelperSprite extends Sprite {
     }
 
     show(text, person = null, emotion = 'Normal') {
-        GameState.isReadingHelper = true;
+        GameState.getInstance().isReadingHelper = true;
         this.shouldShow = true;
         this.currentText = '';
         this.currentTextIndex = 0;
         this.needText = text;
-        this.showPerson = false;
-        this.clearPersonCostumes();
-        if (person) {
-            this.showPerson = true;
+        this.showPerson = person != null;
+        if (person && this.currentPerson != person + emotion) {
+            this.clearPersonCostumes();
             this.setPerson(person, emotion);
         }
     }
 
     hide() {
-        GameState.isReadingHelper = false;
+        GameState.getInstance().isReadingHelper = false;
         this.shouldShow = false;
         this.active = false;
         this.nextButton.hidden = true;
@@ -163,8 +164,9 @@ export class HelperSprite extends Sprite {
     }
 
     setPerson(person, emotion) {
-        for(const costume of HelperSprite.persons[person + emotion]) {
+        for(const costume of GameState.getInstance().personAnimations[person + emotion]) {
             this.personImage.addCostume(costume);
         }
+        this.currentPerson = person + emotion;
     }
 }

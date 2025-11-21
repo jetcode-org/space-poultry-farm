@@ -36,7 +36,9 @@ export class ThumbnailRoomFactory {
         });
 
         thumbnail.onClick(() => {
-            monitorStage.game.run(room);
+            if (room.active) {
+                monitorStage.game.run(room);
+            }
         });
 
         thumbnail.forever(() => {
