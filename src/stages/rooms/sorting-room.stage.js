@@ -3,6 +3,7 @@ import {ThumbnailRoomSprite} from "../../sprites/thumbnail-room.sprite";
 import { ButtonSprite } from "../../sprites/button.sprite";
 import { SliderSprite } from "../../sprites/slider.sprite";
 import { IncubatorRoomStage } from "./incubator-room.stage";
+import {GameState} from "../../services/game.state";
 
 export class SortingRoomStage extends AbstractRootStage {
 
@@ -52,9 +53,9 @@ export class SortingRoomStage extends AbstractRootStage {
                 return;
             }
 
-            for (let i = 0; i < this.monitorStage.rooms.length; i++){
-                if (this.monitorStage.rooms[i].getLabel() == 'Инкубатор') {
-                    const potentialIncubator = this.monitorStage.rooms[i];
+            for (let i = 0; i < this.gameState.rooms.length; i++){
+                if (this.gameState.rooms[i].getRoomType() === GameState.INCUBATOR_ROOM_TYPE) {
+                    const potentialIncubator = this.gameState.rooms[i];
                     if (!potentialIncubator.inProgress && potentialIncubator.active) {
                         potentialIncubator.inProgress = true;
                         potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.95);
@@ -102,24 +103,8 @@ export class SortingRoomStage extends AbstractRootStage {
         }
     }
 
-    getLabel() {
-        return 'Сортировка';
-    }
-
-    getHelpText() {
-        return 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.';
-    }
-
-    getInstructionText() {
-        return 'Распределяйте яйца между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)';
-    }
-
-    getBackgroundImage() {
-        return 'public/images/rooms/background_sorting.png';
-    }
-
-    getThumbnailImage() {
-        return 'public/images/rooms/thumbnails/background_sorting.png';
+    getRoomType() {
+        return GameState.SORTING_ROOM_TYPE;
     }
 
     resetRoom() {

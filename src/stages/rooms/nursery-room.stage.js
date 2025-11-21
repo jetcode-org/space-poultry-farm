@@ -1,10 +1,11 @@
 import { AbstractRootStage } from "./abstract-room.stage";
 import { CoopRoomStage } from "./coop-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
+import {GameState} from "../../services/game.state";
 
 export class NurseryRoomStage extends AbstractRootStage {
-    static NURSEY_CYCLE_TIMER = 10;
-    static NURSEY_READY_LIMIT = 10;
+    static NURSERY_CYCLE_TIMER = 10;
+    static NURSERY_READY_LIMIT = 10;
 
     inProgress = false;
     currentProgress = 0;
@@ -25,9 +26,9 @@ export class NurseryRoomStage extends AbstractRootStage {
             this.nextButton.setLabel('Куриц в загон', undefined, 70)
         });
         this.nextButton.onClick(() => {
-            for (let i = 0; i < this.monitorStage.rooms.length; i++) {
-                if (this.monitorStage.rooms[i].getLabel() === 'Стадо') {
-                    const potentialCoop = this.monitorStage.rooms[i];
+            for (let i = 0; i < this.gameState.rooms.length; i++) {
+                if (this.gameState.rooms[i].getRoomType() === GameState.COOP_ROOM_TYPE) {
+                    const potentialCoop = this.gameState.rooms[i];
                     if (potentialCoop.active && potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
                         if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
                             potentialCoop.currentQuantity += potentialCoop.maxQuantity - potentialCoop.currentQuantity;
@@ -60,24 +61,8 @@ export class NurseryRoomStage extends AbstractRootStage {
         }
     }
 
-    getLabel() {
-        return 'Ясли';
-    }
-
-    getHelpText() {
-        return 'Ясли - модуль для выращивания молодняка до взрослых особей.';
-    }
-
-    getInstructionText() {
-        return 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета';
-    }
-
-    getBackgroundImage() {
-        return 'public/images/rooms/background_nursery_space.png';
-    }
-
-    getThumbnailImage() {
-        return 'public/images/rooms/thumbnails/background_nursery.png';
+    getRoomType() {
+        return GameState.NURSERY_ROOM_TYPE;
     }
 
     resetRoom() {
@@ -99,17 +84,21 @@ export class NurseryRoomStage extends AbstractRootStage {
 
     roomTick() {
         super.roomTick();
+
         if (this.gameState.food >= this.currentQuantity * this.foodConsumption / 5) {
             this.gameState.food -= this.currentQuantity * this.foodConsumption / 5;
+
         } else {
             const withoutFood = this.currentQuantity - Math.floor(this.gameState.food * (1 / this.foodConsumption));
             this.currentQuantity = Math.floor(this.gameState.food * (1 / this.foodConsumption) + 0.95 * withoutFood);
             this.visualizerSpawn();
             this.gameState.food = 0;
+
             if (this.currentQuantity <= 0) {
                 this.failRoom();
             }
         }
+
         if (this.inProgress) {
             this.tickCount += 1
             if (this.tickCount > this.tickMaxCount) {
@@ -117,11 +106,10 @@ export class NurseryRoomStage extends AbstractRootStage {
 
                 this.pollution += Math.floor(0.3 * this.currentQuantity);
 
-
                 let chickenMultiplayer = this.pollution >= 100 ? 0.75 : 1;
                 this.currentProgress += chickenMultiplayer;
-                if (this.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
-                    this.currentProgress = NurseryRoomStage.NURSEY_CYCLE_TIMER
+                if (this.currentProgress >= NurseryRoomStage.NURSERY_CYCLE_TIMER) {
+                    this.currentProgress = NurseryRoomStage.NURSERY_CYCLE_TIMER
 
                     if (!this.isRoomReady) {
                         this.playSound('ready', 0.5);
@@ -130,9 +118,10 @@ export class NurseryRoomStage extends AbstractRootStage {
                     this.isRoomReady = true;
                 }
             }
+
             if (this.isRoomReady) {
                 this.currentReadyProgress += 1;
-                if (this.currentReadyProgress > NurseryRoomStage.NURSEY_READY_LIMIT) {
+                if (this.currentReadyProgress > NurseryRoomStage.NURSERY_READY_LIMIT) {
                     this.pollution += Math.round(this.currentQuantity * 0.4);
                 }
             }
@@ -148,7 +137,7 @@ export class NurseryRoomStage extends AbstractRootStage {
 
             context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 610, 190);
             context.fillText('Загрязненность: ' + nursery.pollution + '%', 610, 215);
-            context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSEY_CYCLE_TIMER) * 100 + '%', 610, 240);
+            context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSERY_CYCLE_TIMER) * 100 + '%', 610, 240);
 
             // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
             //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);

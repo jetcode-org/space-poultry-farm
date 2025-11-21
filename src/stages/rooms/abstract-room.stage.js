@@ -1,4 +1,4 @@
-import {Sprite, Stage} from 'jetcode-scrubjs';
+import {Sprite} from 'jetcode-scrubjs';
 import {ButtonSprite} from "../../sprites/button.sprite";
 import {MonitorStage} from "../monitor.stage";
 import {AbstractStage} from "../abstract.stage";
@@ -153,24 +153,44 @@ export class AbstractRootStage extends AbstractStage {
 		});
 	}
 
-	getLabel() {
+	getRoomType() {
 		console.error('Метод не определен.');
+	}
+
+	getRoomConfig() {
+		return this.gameState.roomsConfig[this.getRoomType()];
+	}
+
+	getRoomConfigParam(paramName) {
+		return this.getRoomConfig()[paramName];
+	}
+
+	getLabel() {
+		return this.getRoomConfigParam('name');
 	}
 
 	getHelpText() {
-		console.error('Метод не определен.');
+		return this.getRoomConfigParam('helpText');
 	}
 
 	getInstructionText() {
-		console.error('Метод не определен.');
+		return this.getRoomConfigParam('instructionText');
 	}
 
 	getBackgroundImage() {
-		console.error('Метод не определен.');
+		return this.getRoomConfigParam('backgroundImage');
 	}
 
 	getThumbnailImage() {
-		console.error('Метод не определен.');
+		return this.getRoomConfigParam('thumbnailImage');
+	}
+
+	getShopImage() {
+		return this.getRoomConfigParam('shopImage');
+	}
+
+	getCost() {
+		return this.getRoomConfigParam('cost');
 	}
 
 	resetRoom() {
@@ -197,6 +217,7 @@ export class AbstractRootStage extends AbstractStage {
 				this.pollution = 0;
 			}
 		}
+
 		if (this.pollution >= 100) {
 			this.pollution = 100;
 		}
@@ -244,9 +265,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	gameTickAllRooms () {
-		if (!this.isFirstUse) {
-			MonitorStage.getInstance().gameTick();
-		}
+		MonitorStage.getInstance().gameTick();
 	}
 
 	drawTextBlock(context) {

@@ -1,4 +1,3 @@
-
 export class GameState {
     static instance;
 
@@ -14,6 +13,168 @@ export class GameState {
     food = 500;
     chick = 0;
     chicken = 0;
+
+    rooms = [];
+    drones = [];
+
+    /**
+     * Комнаты
+     */
+    static EMPTY_ROOM_TYPE = 'empty_room_type';
+    static SORTING_ROOM_TYPE = 'sorting_room_type';
+    static INCUBATOR_ROOM_TYPE = 'incubator_room_type';
+    static NURSERY_ROOM_TYPE = 'nursery_room_type';
+    static COOP_ROOM_TYPE = 'coop_room_type';
+    static FARM_ROOM_TYPE = 'farm_room_type';
+
+    /**
+     * Корабли
+     */
+    shipsConfig = [
+        [
+            {
+                'type': GameState.SORTING_ROOM_TYPE,
+                'x': 206,
+                'y': 152,
+            },
+            {
+                'type': GameState.INCUBATOR_ROOM_TYPE,
+                'x': 292,
+                'y': 152,
+            },
+            {
+                'type': GameState.NURSERY_ROOM_TYPE,
+                'x': 377,
+                'y': 152,
+            },
+            {
+                'type': GameState.COOP_ROOM_TYPE,
+                'x': 477,
+                'y': 200,
+            },
+            {
+                'type': GameState.FARM_ROOM_TYPE,
+                'x': 477,
+                'y': 357,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 206,
+                'y': 244,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 292,
+                'y': 198,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 378,
+                'y': 198,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 377,
+                'y': 357,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 206,
+                'y': 198,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 292,
+                'y': 244,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 377,
+                'y': 244,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 476,
+                'y': 244,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 206,
+                'y': 288,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 330,
+                'y': 291,
+            },
+            {
+                'type': GameState.EMPTY_ROOM_TYPE,
+                'x': 422,
+                'y': 291,
+            }
+        ]
+    ];
+    currentShip = 0;
+
+    /**
+     * Комнаты
+     */
+    roomsConfig = {
+        [GameState.EMPTY_ROOM_TYPE]: {
+            'name': 'Незанятый модуль',
+            'cost': 0,
+            'helpText': 'Незанятый модуль, готовый к преобразованию в любой производственный отсек.',
+            'instructionText': 'Изучите доступные варианты и создайте отсек, который максимально соответствует вашим текущим производственным задачам',
+            'backgroundImage': 'public/images/rooms/backgrounds/empty.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/empty.png',
+            'shopImage': null,
+        },
+        [GameState.SORTING_ROOM_TYPE]: {
+            'name': 'Сортировка',
+            'cost': 0,
+            'helpText': 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.',
+            'instructionText': 'Распределяйте яйца между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)',
+            'backgroundImage': 'public/images/rooms/backgrounds/sorting.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/sorting.png',
+            'shopImage': null,
+        },
+        [GameState.INCUBATOR_ROOM_TYPE]: {
+            'name': 'Инкубатор',
+            'cost': 5000,
+            'helpText': 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.',
+            'instructionText': 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе',
+            'backgroundImage': 'public/images/rooms/backgrounds/incubator.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/incubator.png',
+            'shopImage': 'public/images/rooms/shop/incubator.png',
+        },
+        [GameState.NURSERY_ROOM_TYPE]: {
+            'name': 'Цыплятник',
+            'cost': 9000,
+            'helpText': 'Цыплятник - модуль для выращивания молодняка до взрослых особей.',
+            'instructionText': 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета',
+            'backgroundImage': 'public/images/rooms/backgrounds/nursery.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/nursery.png',
+            'shopImage': 'public/images/rooms/shop/nursery.png',
+        },
+        [GameState.COOP_ROOM_TYPE]: {
+            'name': 'Стадо',
+            'cost': 5000,
+            'helpText': 'Стадо - основное помещение содержания взрослых кур-несушек.',
+            'instructionText': 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек',
+            'backgroundImage': 'public/images/rooms/backgrounds/coop.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/coop.png',
+            'shopImage': 'public/images/rooms/shop/coop.png',
+        },
+        [GameState.FARM_ROOM_TYPE]: {
+            'name': 'Ферма',
+            'cost': 15000,
+            'helpText': 'Ферма - гидропонный комплекс производства кормовых культур.',
+            'instructionText': 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур',
+            'backgroundImage': 'public/images/rooms/backgrounds/farm.png',
+            'thumbnailImage': 'public/images/rooms/thumbnails/farm.png',
+            'shopImage': 'public/images/rooms/shop/farm.png',
+        },
+    };
 
     /**
      * Миссии
@@ -66,7 +227,7 @@ export class GameState {
     static CRITICAL_RATING = 0; // Критичный порог рейтинга, при котором игра заканчивается проигрышем
 
     // Деньги - основная игровая валюта
-    money = 1000;
+    money = 20000;
 
     /**
      * Породы куриц
@@ -143,6 +304,26 @@ export class GameState {
         this.manure = 0;
         this.eggshell = 0;
         this.food = 500;
+
+        // Обнулить все параметры всех комнат
+        for (const room of this.rooms) {
+            if (room.active) {
+                room.resetRoom();
+            }
+        }
+    }
+
+    addRoom(room) {
+        this.rooms.push(room);
+    }
+
+    deleteRoom(room) {
+        const roomIndex = this.rooms.indexOf(room);
+        this.rooms.splice(roomIndex, 1);
+    }
+
+    addDrone(drone) {
+        this.drones.push(drone);
     }
 
     isEnoughCharge() {
@@ -205,5 +386,21 @@ export class GameState {
         }
 
         return keys[index + 1];
+    }
+
+    getShipConfig() {
+        return this.shipsConfig[this.currentShip];
+    }
+
+    buy(cost) {
+        if (this.money < cost) {
+            showModal('Недостаточно денег');
+
+            return false;
+        }
+
+        this.money -= cost;
+
+        return true;
     }
 }

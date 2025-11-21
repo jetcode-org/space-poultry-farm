@@ -2,6 +2,7 @@ import { Sprite } from "jetcode-scrubjs";
 import {AbstractRootStage} from "./abstract-room.stage";
 import { SortingRoomStage } from "./sorting-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
+import {GameState} from "../../services/game.state";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
@@ -22,9 +23,9 @@ export class CoopRoomStage extends AbstractRootStage {
         });
 
         this.nextButton.onClick(() => {
-            for (let i = 0; i < this.monitorStage.rooms.length; i++) {
-                if (this.monitorStage.rooms[i].getLabel() === 'Сортировка') {
-                    const potentialSort = this.monitorStage.rooms[i];
+            for (let i = 0; i < this.gameState.rooms.length; i++) {
+                if (this.gameState.rooms[i].getRoomType() === GameState.SORTING_ROOM_TYPE) {
+                    const potentialSort = this.gameState.rooms[i];
                     if (potentialSort.active && potentialSort.currentQuantity != potentialSort.maxQuantity) {
                         if (potentialSort.maxQuantity - potentialSort.currentQuantity < this.eggsAmount) {
                             potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
@@ -59,24 +60,8 @@ export class CoopRoomStage extends AbstractRootStage {
         }
     }
 
-    getLabel() {
-        return 'Стадо';
-    }
-
-    getHelpText() {
-        return 'Стадо - основное помещение содержания взрослых кур-несушек.';
-    }
-
-    getInstructionText() {
-        return 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек';
-    }
-
-    getBackgroundImage() {
-        return 'public/images/rooms/background_coop_space.png';
-    }
-
-    getThumbnailImage() {
-        return 'public/images/rooms/thumbnails/background_coop.png';
+    getRoomType() {
+        return GameState.COOP_ROOM_TYPE;
     }
 
     roomTick () {

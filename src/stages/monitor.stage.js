@@ -1,16 +1,12 @@
 import {Sprite} from 'jetcode-scrubjs';
-import {SortingRoomStage} from "./rooms/sorting-room.stage";
 import {ThumbnailRoomFactory} from "../services/thumbnail-room.factory";
-import {IncubatorRoomStage} from "./rooms/incubator-room.stage";
-import {NurseryRoomStage} from "./rooms/nursery-room.stage";
-import {CoopRoomStage} from "./rooms/coop-room.stage";
-import {FarmRoomStage} from "./rooms/farm-room.stage";
 import {GameState} from "../services/game.state";
 import {AbstractStage} from "./abstract.stage";
 import { SliderSprite } from "../sprites/slider.sprite";
 import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
 import {InfoButtonSprite} from "../sprites/info-button.sprite";
+import {RoomFactory} from "../services/room.factory";
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -28,12 +24,13 @@ export class MonitorStage extends AbstractStage {
     constructor(background = null) {
         super(background);
 
-        this.gameState = GameState.getInstance();
     }
 
     // главный монитор.меню выбора комнат
 	init() {
 		super.init();
+
+        this.gameState = GameState.getInstance();
 
         this.addBackground('public/images/background_main_monitor.png');
         this.addSound('public/sounds/background_music.mp3', 'background_music');
@@ -103,222 +100,12 @@ export class MonitorStage extends AbstractStage {
         this.readySprite.hidden = true;
 
         //создание роботов
-        this.robots = this.createDrones(6);
+        this.createDrones(6);
 
-        const sortingRoom1 = new SortingRoomStage();
-        sortingRoom1.isFirstUse = true;
-        sortingRoom1.activateInStart();
-
-        const incubatorRoom1 = new IncubatorRoomStage();
-        incubatorRoom1.isFirstUse = true;
-        incubatorRoom1.activateInStart();
-
-        const nurseryRoom1 = new NurseryRoomStage();
-        nurseryRoom1.isFirstUse = true;
-		nurseryRoom1.activateInStart();
-
-        const coopRoom1 = new CoopRoomStage();
-        coopRoom1.isFirstUse = true;
-        coopRoom1.activateInStart();
-
-        const farmRoom1 = new FarmRoomStage();
-        farmRoom1.isFirstUse = true;
-        farmRoom1.activateInStart();
-
-        //const sortingRoom2 = new SortingRoomStage();
-        const incubatorRoom2 = new IncubatorRoomStage();
-        const nurseryRoom2 = new NurseryRoomStage();
-        const coopRoom2 = new CoopRoomStage();
-        const farmRoom2 = new FarmRoomStage();
-
-        const incubatorRoom3 = new IncubatorRoomStage();
-        const nurseryRoom3 = new NurseryRoomStage();
-        const coopRoom3 = new CoopRoomStage();
-        const farmRoom3 = new FarmRoomStage();
-
-        const incubatorRoom4 = new IncubatorRoomStage();
-        const nurseryRoom4 = new NurseryRoomStage();
-        const coopRoom4 = new CoopRoomStage();
-        const farmRoom4 = new FarmRoomStage();
-
-        this.rooms = [];
-        this.rooms.push(sortingRoom1);
-        this.rooms.push(incubatorRoom1);
-        this.rooms.push(nurseryRoom1);
-        this.rooms.push(coopRoom1);
-        this.rooms.push(farmRoom1);
-
-        //this.rooms.push(sortingRoom2);
-        this.rooms.push(incubatorRoom2);
-        this.rooms.push(nurseryRoom2);
-        this.rooms.push(coopRoom2);
-        this.rooms.push(farmRoom2);
-
-        this.rooms.push(incubatorRoom3);
-        this.rooms.push(nurseryRoom3);
-        this.rooms.push(coopRoom3);
-        this.rooms.push(farmRoom3);
-
-        this.rooms.push(incubatorRoom4);
-        this.rooms.push(nurseryRoom4);
-        this.rooms.push(coopRoom4);
-        this.rooms.push(farmRoom4);
-
-        ThumbnailRoomFactory.build(
-            this,
-            sortingRoom1,
-            206,
-            152,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            incubatorRoom1,
-            292,
-            152,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            nurseryRoom1,
-            377,
-            152,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            coopRoom1,
-            477,
-            200,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            farmRoom1,
-            477,
-            357,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            incubatorRoom2,
-            206,
-            244,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            nurseryRoom2,
-            292,
-            198,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            coopRoom2,
-            378,
-            198,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            farmRoom2,
-            377,
-            357,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            incubatorRoom3,
-            206,
-            198,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            incubatorRoom3,
-            206,
-            198,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            nurseryRoom3,
-            292,
-            244,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            coopRoom3,
-            377,
-            244,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            farmRoom3,
-            476,
-            244,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            incubatorRoom4,
-            206,
-            288,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            nurseryRoom4,
-            330,
-            291,
-            5,
-            this
-        );
-
-        ThumbnailRoomFactory.build(
-            this,
-            coopRoom4,
-            422,
-            291,
-            5,
-            this
-        );
+        // Создание комнат
+        this.createRooms();
 
         // Info Icon
-
         const eggQualityInfoButton = new InfoButtonSprite(this, 1);
         eggQualityInfoButton.x = 550;
         eggQualityInfoButton.y = 455;
@@ -357,21 +144,13 @@ export class MonitorStage extends AbstractStage {
     }
 
     restartGame() {
-        // Обнулить все параметры игры
-        this.gameState.reset();
-
-        // Обнулить все параметры всех комнат
-        for (const room of this.rooms) {
-            if (room.active) {
-                room.resetRoom();
-            }
-        }
+        this.gameState.reset(); // Обнулить все параметры игры
     }
 
     drawReadyRooms() {
         this.readySprite.deleteClones();
 
-        for (const room of this.rooms) {
+        for (const room of this.gameState.rooms) {
             if (room.isRoomReady) {
                 const clone = this.readySprite.createClone();
                 clone.x = room.thumbnail.x + 27;
@@ -382,19 +161,37 @@ export class MonitorStage extends AbstractStage {
         }
     }
 
-    createDrones(count) {
-        const robots = [];
-        for (let i = 0; i < count; i++) {
-            const robot = new RobotSprite(this);
-            robot.layer = 8;
-            robot.x = 650 + (i % 2 * 75);
-            robot.y = 145 + Math.floor(i / 2) * 75;
-            robot.setStartPos();
-            robot.hidden = false;
-            robots.push(robot);
-        }
+    createRooms() {
+        const shipConfig = this.gameState.getShipConfig();
 
-        return robots;
+        for (const roomConfig of shipConfig) {
+            const room = this.createRoom(roomConfig.type, roomConfig.x, roomConfig.y);
+
+            this.gameState.addRoom(room);
+        }
+    }
+
+    createRoom(type, x, y) {
+        const room = RoomFactory.build(type);
+        room.activateInStart();
+
+        ThumbnailRoomFactory.build(this, room, x, y);
+
+        return room;
+    }
+
+    createDrones(count) {
+        for (let i = 0; i < count; i++) {
+            const drone = new RobotSprite(this);
+
+            drone.layer = 8;
+            drone.x = 650 + (i % 2 * 75);
+            drone.y = 145 + Math.floor(i / 2) * 75;
+            drone.setStartPos();
+            drone.hidden = false;
+
+            this.gameState.addDrone(drone);
+        }
     }
 
     gameTick() {
@@ -433,18 +230,18 @@ export class MonitorStage extends AbstractStage {
         this.gameState.chick = 0;
         this.gameState.chicken = 0;
 
-        for (const room of this.rooms) {
-
+        for (const room of this.gameState.rooms) {
             if (room.active) {
                 room.roomTick();
-                if (room.getLabel() == 'Ясли') {
+
+                if (room.getRoomType() === GameState.NURSERY_ROOM_TYPE) {
                     this.gameState.chick += room.currentQuantity;
                 }
-                if (room.getLabel() == 'Стадо') {
+
+                if (room.getRoomType() === GameState.COOP_ROOM_TYPE) {
                     this.gameState.chicken += room.currentQuantity;
                 }
             }
-
         }
 
         if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
@@ -452,9 +249,9 @@ export class MonitorStage extends AbstractStage {
             showModal('Еда закончилась. Курицы и цыплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
         }
 
-        for (const robot of this.robots) {
-            if (robot.isCharging) {
-                robot.charge += 5;
+        for (const drone of this.gameState.drones) {
+            if (drone.isCharging) {
+                drone.charge += 5;
             }
         }
 

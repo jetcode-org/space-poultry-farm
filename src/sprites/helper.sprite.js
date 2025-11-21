@@ -4,10 +4,10 @@ import {ButtonSprite} from "./button.sprite";
 
 export class HelperSprite extends Sprite {
     static persons = {
-        'HeroNormal': ['public/images/rooms/background_coop.png'],
-        'BossNormal': ['public/images/rooms/background_farm.png'],
-        'RicoNormal': ['public/images/rooms/background_nursery.png', 'public/images/rooms/background_sorting.png'],
-        'CCCNormal': ['public/images/rooms/background_sorting.png']
+        'HeroNormal': ['public/images/rooms/background/scoop.png'],
+        'BossNormal': ['public/images/rooms/backgrounds/farm.png'],
+        'RicoNormal': ['public/images/rooms/backgrounds/nursery.png', 'public/images/rooms/backgrounds/sorting.png'],
+        'CCCNormal': ['public/images/rooms/backgrounds/sorting.png']
     }
 
     startY = 700;
@@ -23,7 +23,7 @@ export class HelperSprite extends Sprite {
     imageTickSpeed = 6;
 
     showPerson = false;
-    
+
     init(){
         this.drawCostume((context)=>{
             context.fillRect(0, 0, 800, 200)
@@ -33,7 +33,7 @@ export class HelperSprite extends Sprite {
         this.nextButton.x = this.game.width - this.nextButton.width / 2 - 100;
         this.nextButton.y = this.game.height - this.nextButton.height / 2 - 50;
         this.nextButton.hidden = true;
-        
+
         this.personImage = new Sprite();
         this.personImage.x = 100;
         this.personImage.y = 500;
@@ -67,13 +67,13 @@ export class HelperSprite extends Sprite {
                 this.y += this.speed;
             } else {
                 this.y = this.startY;
-                
+
             }
         }
     }
 
     onReadyCallback() {
-        
+
     }
 
     onClick(callback) {

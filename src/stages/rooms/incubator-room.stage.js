@@ -1,6 +1,7 @@
 import { ButtonSprite } from "../../sprites/button.sprite";
 import { AbstractRootStage } from "./abstract-room.stage";
 import { MonitorStage } from "../monitor.stage";
+import {GameState} from "../../services/game.state";
 
 export class IncubatorRoomStage extends AbstractRootStage {
     static INCUBATOR_CYCLE_TIMER = 10;
@@ -32,16 +33,18 @@ export class IncubatorRoomStage extends AbstractRootStage {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);
             let quantityToMove = Math.round(this.currentQuantity * (0.9 - chicksMultiplayer))
 
-            for (let i = 0; i < this.monitorStage.rooms.length; i++) {
-                if (this.monitorStage.rooms[i].getLabel() == 'Ясли') {
-                    const potentialNursery = this.monitorStage.rooms[i];
-					if (!potentialNursery.inProgress && potentialNursery.active) {
+            for (let i = 0; i < this.gameState.rooms.length; i++) {
+                if (this.gameState.rooms[i].getRoomType() === GameState.NURSERY_ROOM_TYPE) {
+                    const potentialNursery = this.gameState.rooms[i];
 
+					if (!potentialNursery.inProgress && potentialNursery.active) {
                         potentialNursery.inProgress = true;
                         potentialNursery.currentQuantity = quantityToMove;
+
                         this.gameState.eggshell += Math.floor(quantityToMove / 2);
                         this.failRoom();
                         this.visualizerSpawn();
+
                         return true;
                     }
                 }
@@ -60,24 +63,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
         }
     }
 
-    getLabel() {
-        return 'Инкубатор';
-    }
-
-    getHelpText() {
-        return 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.';
-    }
-
-    getInstructionText() {
-        return 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе';
-    }
-
-    getBackgroundImage() {
-        return 'public/images/rooms/background_incubator_space.png';
-    }
-
-    getThumbnailImage() {
-        return 'public/images/rooms/thumbnails/background_incubator.png';
+    getRoomType() {
+        return GameState.INCUBATOR_ROOM_TYPE;
     }
 
     resetRoom() {
@@ -98,6 +85,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
     roomTick() {
         super.roomTick();
+
         if (this.inProgress) {
             this.tickCount += 1;
 

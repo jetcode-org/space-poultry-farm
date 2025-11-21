@@ -1,5 +1,6 @@
 import {AbstractRootStage} from "./abstract-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
+import {GameState} from "../../services/game.state";
 
 export class FarmRoomStage extends AbstractRootStage {
     maxQuantity = 100;
@@ -36,24 +37,8 @@ export class FarmRoomStage extends AbstractRootStage {
         }
     }
 
-    getLabel() {
-        return 'Ферма';
-    }
-
-    getHelpText() {
-        return 'Ферма - гидропонный комплекс производства кормовых культур.';
-    }
-
-    getInstructionText() {
-        return 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур';
-    }
-
-    getBackgroundImage() {
-        return 'public/images/rooms/background_farm.png';
-    }
-
-    getThumbnailImage() {
-        return 'public/images/rooms/thumbnails/background_farm.png';
+    getRoomType() {
+        return GameState.FARM_ROOM_TYPE;
     }
 
     roomTick () {
