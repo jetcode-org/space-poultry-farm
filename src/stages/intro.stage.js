@@ -65,7 +65,7 @@ export class IntroStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
-        this.addBackground('public/images/menu/menu_bg_sprite.jpg');
+        this.addBackground('public/images/intro/background.jpg');
 
         this.startButton = new ButtonSprite();
         this.startButton.layer = 4;

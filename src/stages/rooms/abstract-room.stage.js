@@ -31,7 +31,7 @@ export class AbstractRootStage extends AbstractStage {
 			this.monitorStage = MonitorStage.getInstance();
 		})
 
-		this.addBackground('public/images/background_main_monitor.png');
+		this.addBackground('public/images/common/main_monitor.png');
 		this.addSound('public/sounds/ready.mp3', 'ready');
 		this.addSound('public/sounds/activation.mp3', 'activation');
 

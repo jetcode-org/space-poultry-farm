@@ -34,12 +34,12 @@ export class MonitorStage extends AbstractStage {
 
         this.gameState = GameState.getInstance();
 
-        this.addBackground('public/images/background_main_monitor.png');
+        this.addBackground('public/images/common/main_monitor.png');
         this.addSound('public/sounds/background_music.mp3', 'background_music');
 
         // слой с схемой-космическим кораблем
         this.bgShipSprite = new Sprite();
-        this.bgShipSprite.addCostume('public/images/menu/main_screeen_2.png');
+        this.bgShipSprite.addCostume('public/images/monitor/main_screen.png');
         this.bgShipSprite.leftX = 300;
         this.bgShipSprite.setAlpha = 0.5;
         this.bgShipSprite.br = 0;
@@ -48,22 +48,22 @@ export class MonitorStage extends AbstractStage {
 
         // Картинки для прогресса миссии на слайдер
         this.sliderPlanet1 = new Sprite();
-        this.sliderPlanet1.addCostume('public/images/sliderSprites/slider_planet_1.png');
+        this.sliderPlanet1.addCostume('public/images/icons/space_progress/planet_1.png');
         this.sliderPlanet1.x = 170;
         this.sliderPlanet1.y = 500;
 
         this.sliderPlanet2 = new Sprite();
-        this.sliderPlanet2.addCostume('public/images/sliderSprites/slider_planet_2.png');
+        this.sliderPlanet2.addCostume('public/images/icons/space_progress/planet_2.png');
         this.sliderPlanet2.x = 300;
         this.sliderPlanet2.y = 500;
 
         this.sliderPlanet3 = new Sprite();
-        this.sliderPlanet3.addCostume('public/images/sliderSprites/slider_planet_3.png');
+        this.sliderPlanet3.addCostume('public/images/icons/space_progress/planet_3.png');
         this.sliderPlanet3.x = 420;
         this.sliderPlanet3.y = 500;
 
         this.sliderPlanet4 = new Sprite();
-        this.sliderPlanet4.addCostume('public/images/sliderSprites/slider_planet_4.png');
+        this.sliderPlanet4.addCostume('public/images/icons/space_progress/planet_4.png');
         this.sliderPlanet4.x = 515;
         this.sliderPlanet4.y = 505;
         this.sliderPlanet4.size = 200;
@@ -93,7 +93,7 @@ export class MonitorStage extends AbstractStage {
 
         // спрайт готовности
         this.readySprite = new Sprite();
-        this.readySprite.addCostume('public/images/room_is_ready.png')
+        this.readySprite.addCostume('public/images/icons/room_is_ready.png')
         this.readySprite.size = 50
         this.readySprite.hidden = true;
 

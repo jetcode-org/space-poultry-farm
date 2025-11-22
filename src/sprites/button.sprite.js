@@ -5,7 +5,7 @@ export class ButtonSprite extends AbstractButtonSprite {
     maxSize = 125;
 
     init(){
-        this.addCostume('public/images/button.png');
+        this.addCostume('public/images/ui/button.png');
 
         super.init();
     }

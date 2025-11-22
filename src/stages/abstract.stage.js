@@ -7,7 +7,7 @@ export class AbstractStage extends Stage {
 	init() {
 		// панель для ресурсов
 		this.mainResousesPanel = new Sprite();
-		this.mainResousesPanel.addCostume('public/images/top_panel_base.png')
+		this.mainResousesPanel.addCostume('public/images/icons/top_panel_base.png')
 		this.mainResousesPanel.y = 550
 		this.mainResousesPanel.leftX = 300
 		this.mainResousesPanel.size = 70
@@ -15,42 +15,42 @@ export class AbstractStage extends Stage {
 
 		// сами иконки ресурсов
 		this.egs = new Sprite()
-		this.egs.addCostume('public/images/resicons/iconEgg.png')
+		this.egs.addCostume('public/images/icons/resources/egg.png')
 		this.egs.x = 50
 		this.egs.y = 550
 		this.egs.size = 90
 		this.egs.layer = 10
 
 		this.chick = new Sprite()
-		this.chick.addCostume('public/images/resicons/iconSmallChicken.png')
+		this.chick.addCostume('public/images/icons/resources/small_chicken.png')
 		this.chick.x = 120
 		this.chick.y = 550
 		this.chick.size = 90
 		this.chick.layer = 10
 
 		this.chicken = new Sprite()
-		this.chicken.addCostume('public/images/resicons/iconChicken.png')
+		this.chicken.addCostume('public/images/icons/resources/chicken.png')
 		this.chicken.x = 190
 		this.chicken.y = 550
 		this.chicken.size = 90
 		this.chicken.layer = 10
 
 		this.eat = new Sprite()
-		this.eat.addCostume('public/images/resicons/iconEat.png')
+		this.eat.addCostume('public/images/icons/resources/eat.png')
 		this.eat.x = 260
 		this.eat.y = 550
 		this.eat.size = 90
 		this.eat.layer = 10
 
 		this.shit = new Sprite()
-		this.shit.addCostume('public/images/resicons/iconShit.png')
+		this.shit.addCostume('public/images/icons/resources/shit.png')
 		this.shit.x = 350
 		this.shit.y = 550
 		this.shit.size = 90
 		this.shit.layer = 10
 
 		this.crash = new Sprite()
-		this.crash.addCostume('public/images/resicons/iconCrash.png')
+		this.crash.addCostume('public/images/icons/resources/crash.png')
 		this.crash.x = 420
 		this.crash.y = 550
 		this.crash.size = 90
@@ -90,7 +90,7 @@ export class AbstractStage extends Stage {
     // хз как это вызывать, отсюда напишу пока в монитор стрейжд
     drawResoursesPanel() {
         let mainResPanel = new Sprite()
-        mainResPanel.addCostume('public/images/top_panel_base.png')
+        mainResPanel.addCostume('public/images/icons/top_panel_base.png')
 	}
 
 	drawParameters(context) {

@@ -6,7 +6,7 @@ export class ShipSprite extends AbstractSliderSprite {
     maxSize = 20;
 
     init(){
-        this.addCostume('public/images/sliderSprites/slider_ship_1.png')
+        this.addCostume('public/images/icons/space_progress/ship_1.png')
 
         super.init();
     }

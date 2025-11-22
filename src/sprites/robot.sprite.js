@@ -13,8 +13,8 @@ export class RobotSprite extends AbstractDragAndDropSprite {
     stationRoom = null;
 
     init() {
-        this.addCostume('public/images/icon_droid_active.png')
-        this.addCostume('public/images/icon_droid_charging.png')
+        this.addCostume('public/images/sprites/drone/drone_active.png')
+        this.addCostume('public/images/sprites/drone/drone_charging.png')
 
         this.size = 75;
 

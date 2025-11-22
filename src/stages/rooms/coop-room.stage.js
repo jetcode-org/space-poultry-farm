@@ -114,9 +114,9 @@ export class CoopRoomStage extends AbstractRootStage {
 	setVisCostumes() {
 		super.setVisCostumes()
 
-		this.visualiser.addCostume('public/images/chicken_sprite_1.png')
-		this.visualiser.addCostume('public/images/chicken_sprite_2.png')
-		this.visualiser.addCostume('public/images/chicken_sprite_3.png')
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png')
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png')
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png')
 	}
 
     drawHelp(context) {

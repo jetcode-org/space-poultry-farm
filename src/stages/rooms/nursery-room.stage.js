@@ -148,8 +148,8 @@ export class NurseryRoomStage extends AbstractRootStage {
 	setVisCostumes() {
 		super.setVisCostumes()
 
-		this.visualiser.addCostume('public/images/chick_sprite_1.png')
-		this.visualiser.addCostume('public/images/chick_sprite_2.png')
+		this.visualiser.addCostume('public/images/sprites/small_chicken/small_chicken_1.png')
+		this.visualiser.addCostume('public/images/sprites/small_chicken/small_chicken_2.png')
 	}
 
     drawHelp(context) {

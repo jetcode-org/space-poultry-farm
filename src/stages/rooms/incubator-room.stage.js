@@ -137,9 +137,9 @@ export class IncubatorRoomStage extends AbstractRootStage {
     setVisCostumes() {
 		super.setVisCostumes()
 
-		this.visualiser.addCostume('public/images/egg_sprite_1.png')
-		this.visualiser.addCostume('public/images/egg_sprite_2.png')
-		this.visualiser.addCostume('public/images/egg_sprite_3.png')
+		this.visualiser.addCostume('public/images/sprites/egg/egg_1.png')
+		this.visualiser.addCostume('public/images/sprites/egg/egg_2.png')
+		this.visualiser.addCostume('public/images/sprites/egg/egg_3.png')
 	}
 
     drawHelp(context) {

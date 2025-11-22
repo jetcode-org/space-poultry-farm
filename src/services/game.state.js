@@ -121,45 +121,45 @@ export class GameState {
      */
 
     personAnimations = {
-        'HeroNormal': ['public/images/persons/Hero/normal_1.png',
-                       'public/images/persons/Hero/normal_2.png',
-                       'public/images/persons/Hero/normal_3.png',
-                       'public/images/persons/Hero/normal_4.png'
+        'HeroNormal': ['public/images/persons/hero/normal_1.png',
+                       'public/images/persons/hero/normal_2.png',
+                       'public/images/persons/hero/normal_3.png',
+                       'public/images/persons/hero/normal_4.png'
         ],
-        'BossNormal': ['public/images/persons/Boss/normal_1.png',
-                       'public/images/persons/Boss/normal_2.png',
-                       'public/images/persons/Boss/normal_3.png',
-                       'public/images/persons/Boss/normal_4.png'
+        'BossNormal': ['public/images/persons/boss/normal_1.png',
+                       'public/images/persons/boss/normal_2.png',
+                       'public/images/persons/boss/normal_3.png',
+                       'public/images/persons/boss/normal_4.png'
         ],
-        'RicoNormal': ['public/images/persons/Rico/normal_1.png',
-                       'public/images/persons/Rico/normal_2.png',
-                       'public/images/persons/Rico/normal_3.png',
-                       'public/images/persons/Rico/normal_4.png'
+        'RicoNormal': ['public/images/persons/rico/normal_1.png',
+                       'public/images/persons/rico/normal_2.png',
+                       'public/images/persons/rico/normal_3.png',
+                       'public/images/persons/rico/normal_4.png'
         ],
-        'CCCNormal': ['public/images/persons/CCC/normal_1.png',
-                      'public/images/persons/CCC/normal_2.png',
-                      'public/images/persons/CCC/normal_3.png',
-                      'public/images/persons/CCC/normal_4.png'
+        'CCCNormal': ['public/images/persons/ccc/normal_1.png',
+                      'public/images/persons/ccc/normal_2.png',
+                      'public/images/persons/ccc/normal_3.png',
+                      'public/images/persons/ccc/normal_4.png'
         ],
-        'HeroAngry':  ['public/images/persons/Hero/angry_1.png',
-                       'public/images/persons/Hero/angry_2.png',
-                       'public/images/persons/Hero/angry_3.png',
-                       'public/images/persons/Hero/angry_4.png'
+        'HeroAngry':  ['public/images/persons/hero/angry_1.png',
+                       'public/images/persons/hero/angry_2.png',
+                       'public/images/persons/hero/angry_3.png',
+                       'public/images/persons/hero/angry_4.png'
         ],
-        'BossAngry':  ['public/images/persons/Boss/angry_1.png',
-                       'public/images/persons/Boss/angry_2.png',
-                       'public/images/persons/Boss/angry_3.png',
-                       'public/images/persons/Boss/angry_4.png'
+        'BossAngry':  ['public/images/persons/boss/angry_1.png',
+                       'public/images/persons/boss/angry_2.png',
+                       'public/images/persons/boss/angry_3.png',
+                       'public/images/persons/boss/angry_4.png'
         ],
-        'RicoAngry':  ['public/images/persons/Rico/angry_1.png',
-                       'public/images/persons/Rico/angry_2.png',
-                       'public/images/persons/Rico/angry_3.png',
-                       'public/images/persons/Rico/angry_4.png'
+        'RicoAngry':  ['public/images/persons/rico/angry_1.png',
+                       'public/images/persons/rico/angry_2.png',
+                       'public/images/persons/rico/angry_3.png',
+                       'public/images/persons/rico/angry_4.png'
         ],
-        'CCCAngry':  ['public/images/persons/CCC/angry_1.png',
-                      'public/images/persons/CCC/angry_2.png',
-                      'public/images/persons/CCC/angry_3.png',
-                      'public/images/persons/CCC/angry_4.png'
+        'CCCAngry':  ['public/images/persons/ccc/angry_1.png',
+                      'public/images/persons/ccc/angry_2.png',
+                      'public/images/persons/ccc/angry_3.png',
+                      'public/images/persons/ccc/angry_4.png'
         ],
     }
 

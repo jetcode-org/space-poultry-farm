@@ -5,7 +5,7 @@ export class DragAndDropSprite extends AbstractDragAndDropSprite {
     maxSize = 20;
 
     init(){
-        this.addCostume('public/images/button.png');
+        this.addCostume('public/images/ui/button.png');
 
         super.init();
     }
