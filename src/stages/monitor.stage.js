@@ -7,6 +7,8 @@ import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
 import {InfoButtonSprite} from "../sprites/info-button.sprite";
 import {RoomFactory} from "../services/room.factory";
+import { ShipSprite } from '../sprites/ship.sprite';
+import { ProgressBarSprite } from '../sprites/progress-bar.sprite';
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -73,7 +75,7 @@ export class MonitorStage extends AbstractStage {
         })
 
         // слайдер для кораблика
-        this.progressSlider = new SliderSprite();
+        this.progressSlider = new ShipSprite();
         this.progressSlider.x = 290;
         this.progressSlider.y = 500;
         this.progressSlider.size = 100;
@@ -86,10 +88,6 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
 
-        this.progressSlider.onReady(()=>{
-		    this.progressSlider.nextCostume()
-		});
-
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
 
@@ -98,6 +96,12 @@ export class MonitorStage extends AbstractStage {
         this.readySprite.addCostume('public/images/room_is_ready.png')
         this.readySprite.size = 50
         this.readySprite.hidden = true;
+
+        //ПрогрессБар для лицензии (пока что регулируется с помощью a и d)
+        this.licenceProgress = new ProgressBarSprite();
+        this.licenceProgress.x = 200;
+        this.licenceProgress.y = 50;
+        this.licenceProgress.setWidth(60);
 
         //создание роботов
         this.createDrones(6);
