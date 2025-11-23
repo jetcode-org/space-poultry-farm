@@ -1,8 +1,6 @@
 export class GameState {
     static instance;
 
-    static CHARGE_VALUE_FULL = 100;
-
     passedTime = 0; // Пошло времени
     limitTime = 400;
     frozenEggs = 0; // Количество замороженных яиц
@@ -12,9 +10,17 @@ export class GameState {
     food = 500;
     chick = 0;
     chicken = 0;
+    pollution = 0; // Показатель загрязнения
+    comfortChickenQuantity = 0; // Общее количество комфортных мест для куриц
 
     rooms = [];
     drones = [];
+
+    /**
+     * Критичные показатели которые вызывают нарушения
+     */
+    static CRITICAL_FOOD = 0;
+    static CRITICAL_POLLUTION = 75;
 
     /**
      * Комнаты
@@ -274,8 +280,6 @@ export class GameState {
     isDraggableObjectActive = false;
     isReadingHelper = false;
 
-    thereWasFood = true;
-
     // Рейтинг (Лицензия Таврос)
     rating = 50;
 
@@ -333,7 +337,7 @@ export class GameState {
      */
     cleanViolation = false; // Нарушение чистоты
     feedingViolation = false; // Нарушение кормления
-    chickenConditionViolation = false; // Нарушение условий содержания
+    conditionViolation = false; // Нарушение условий содержания
 
     constructor() {
         if (GameState.instance) {
@@ -363,6 +367,8 @@ export class GameState {
         for (const room of this.rooms) {
             room.resetRoom();
         }
+
+        this.resetViolations();
     }
 
     addRoom(room) {
@@ -387,7 +393,7 @@ export class GameState {
             chickenBreed: this.chickenBreedQuality[this.chickenBreed],
             cleanViolation: this.cleanViolation ? -10 : 10,
             feedingViolation: this.feedingViolation ? -20 : 20,
-            chickenConditionViolation: this.chickenConditionViolation ? -30 : 30,
+            chickenConditionViolation: this.conditionViolation ? -30 : 30,
         };
     }
 
@@ -455,5 +461,11 @@ export class GameState {
     getHeroAnswer(emotion) {
         const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers[emotion].length);
         return this.heroAnswers[emotion][randomAnswerIndex];
+    }
+
+    resetViolations() {
+        this.cleanViolation = false;
+        this.feedingViolation = false;
+        this.conditionViolation = false;
     }
 }

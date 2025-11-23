@@ -122,6 +122,8 @@ export class SortingRoomStage extends AbstractRootStage {
         this.isRoomReady = this.currentQuantity >= this.maxQuantity;
         this.quantitySlider.maxValue = this.currentQuantity;
         this.quantitySlider.setCurrentValue();
+
+        this.pollution = Math.min(this.pollution, 100);
     }
 
 	drawParameters(context, sorting) {

@@ -2,7 +2,6 @@ import {Sprite} from 'jetcode-scrubjs';
 import {ThumbnailRoomFactory} from "../services/thumbnail-room.factory";
 import {GameState} from "../services/game.state";
 import {AbstractStage} from "./abstract.stage";
-import { SliderSprite } from "../sprites/slider.sprite";
 import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
 import {InfoButtonSprite} from "../sprites/info-button.sprite";
@@ -126,9 +125,9 @@ export class MonitorStage extends AbstractStage {
             text += '<tr><td colspan="2"><hr></td></tr>';
 
             text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Нарушение условий чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Нарушение кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Нарушение условий содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
+            text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
             text += '</table>';
             text += '<hr>';
 
@@ -136,7 +135,7 @@ export class MonitorStage extends AbstractStage {
                 text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
             }
 
-            showModal(text, () => this.stop(), () => this.run());
+            this.showModal(text);
         });
 
         this.forever(this.gameTick, 1000);
@@ -144,7 +143,7 @@ export class MonitorStage extends AbstractStage {
     }
 
     addPlus(value) {
-        return value ? '+' + value: value;
+        return value > 0 ? '+' + value : value;
     }
 
     restartGame() {
@@ -224,8 +223,16 @@ export class MonitorStage extends AbstractStage {
 
         this.gameState.chick = 0;
         this.gameState.chicken = 0;
+        this.gameState.pollution = 0;
+        this.gameState.comfortChickenQuantity = 0;
 
+        let activeRooms = 0;
         for (const room of this.gameState.rooms) {
+            if (room.getRoomType() === GameState.EMPTY_ROOM_TYPE) {
+                continue;
+            }
+
+            activeRooms++;
             room.roomTick();
 
             if (room.getRoomType() === GameState.NURSERY_ROOM_TYPE) {
@@ -234,19 +241,21 @@ export class MonitorStage extends AbstractStage {
 
             if (room.getRoomType() === GameState.COOP_ROOM_TYPE) {
                 this.gameState.chicken += room.currentQuantity;
+                this.gameState.comfortChickenQuantity += room.comfortQuantity;
             }
+
+            this.gameState.pollution += room.pollution;
         }
 
-        if (this.gameState.food <= 0 && this.gameState.thereWasFood) {
-            this.gameState.thereWasFood = false;
-            showModal('Еда закончилась. Курицы и цыплята постепенно умирают', () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
-        }
+        this.gameState.pollution = Math.round(this.gameState.pollution / activeRooms);
 
         for (const drone of this.gameState.drones) {
             if (drone.isCharging) {
                 drone.charge += 5;
             }
         }
+
+        this.violationProcess();
 
         this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
@@ -291,6 +300,7 @@ export class MonitorStage extends AbstractStage {
             context.fillText('Планета: ' + mission['name'], 70, 380)
             context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
             context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
+            context.fillText('Загрязненность: ' + this.gameState.pollution + '%', 70, 455)
         }
 
         context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);
@@ -371,6 +381,42 @@ export class MonitorStage extends AbstractStage {
 
             this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, null, finishMessage);
             this.gameState.currentMission += 1;
+
+            this.gameState.resetViolations();
         }
+    }
+
+    violationProcess() {
+        // Нарушение кормления
+        if (!this.gameState.feedingViolation && this.gameState.food <= GameState.CRITICAL_FOOD) {
+            this.gameState.feedingViolation = true;
+
+            this.showViolationModal('Нарушение кормления', 'Еда закончилась. Курицы и цыплята постепенно умирают');
+        }
+
+        // Нарушение чистоты
+        if (!this.gameState.cleanViolation && this.gameState.pollution >= GameState.CRITICAL_POLLUTION) {
+            this.gameState.cleanViolation = true;
+
+            this.showViolationModal('Нарушение чистоты', 'Слишком грязно, мы теряем качество');
+        }
+
+        // Нарушение условий содержания
+        if (!this.gameState.conditionViolation && this.gameState.chicken > this.gameState.comfortChickenQuantity) {
+            this.gameState.conditionViolation = true;
+
+            this.showViolationModal('Нарушение условий содержания', 'Курицам слишком тесно, мы теряем качество');
+        }
+    }
+
+    showModal(text) {
+        showModal(text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
+    }
+
+    showViolationModal(header, message) {
+        let text = '<h2>' + header + '</h2>';
+        text += '<p>' + message + '</p>';
+
+        this.showModal(text);
     }
 }

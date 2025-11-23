@@ -1,7 +1,4 @@
-import {ThumbnailRoomSprite} from "../sprites/thumbnail-room.sprite";
 import {IncubatorRoomStage} from "../stages/rooms/incubator-room.stage";
-import {MenuStage} from "../stages/menu.stage";
-import {RobotStationSprite} from "../sprites/robot-station.sprite";
 import {SortingRoomStage} from "../stages/rooms/sorting-room.stage";
 import {GameState} from "./game.state";
 import {EmptyRoomStage} from "../stages/rooms/empty-room.stage";

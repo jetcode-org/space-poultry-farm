@@ -110,6 +110,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
                     //this.visualizerSpawn();
                 }
             }
+
+            this.pollution = Math.min(this.pollution, 100);
         }
     }
 

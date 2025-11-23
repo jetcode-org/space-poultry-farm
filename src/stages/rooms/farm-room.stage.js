@@ -17,7 +17,6 @@ export class FarmRoomStage extends AbstractRootStage {
 
         this.nextButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
-            this.gameState.thereWasFood = true;
             this.currentQuantity = 0;
         })
 
@@ -57,6 +56,8 @@ export class FarmRoomStage extends AbstractRootStage {
         } else {
             this.isRoomReady = false;
         }
+
+        this.pollution = Math.min(this.pollution, 100);
     }
 
     drawParameters(context, room) {

@@ -8,6 +8,8 @@ export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
     maxEggsAmount = 50;
     foodConsumption = 0.5;
+    maxQuantity = 50; // Максимальное количество куриц
+    comfortQuantity = 40; // Комфортное количество куриц
 
     init() {
         super.init();
@@ -93,6 +95,8 @@ export class CoopRoomStage extends AbstractRootStage {
                 this.eggsAmount = this.maxEggsAmount;
                 this.isRoomReady = true;
             }
+
+            this.pollution = Math.min(this.pollution, 100);
         }
     }
 
@@ -104,16 +108,18 @@ export class CoopRoomStage extends AbstractRootStage {
         context.textAlign = 'start';
 
         context.fillText('Сколько куриц: ' + coop.currentQuantity, 610, 190);
-        context.fillText('Сколько яиц: ' + coop.eggsAmount, 610, 215);
-        context.fillText('Загрязненность: ' + coop.pollution + '%', 610, 240);
+        context.fillText('Макс. кол-во: ' + coop.maxQuantity, 610, 215);
+        context.fillText('Комфортное кол-во: ' + coop.comfortQuantity, 610, 240);
+        context.fillText('Сколько яиц: ' + coop.eggsAmount, 610, 265);
+        context.fillText('Загрязненность: ' + coop.pollution + '%', 610, 290);
 	}
 
 	setVisCostumes() {
-		super.setVisCostumes()
+		super.setVisCostumes();
 
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png')
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png')
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png')
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png');
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png');
+		this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png');
 	}
 
     drawHelp(context) {

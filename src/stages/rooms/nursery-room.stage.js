@@ -126,6 +126,8 @@ export class NurseryRoomStage extends AbstractRootStage {
                     this.pollution += Math.round(this.currentQuantity * 0.4);
                 }
             }
+
+            this.pollution = Math.min(this.pollution, 100);
         }
     }
 
