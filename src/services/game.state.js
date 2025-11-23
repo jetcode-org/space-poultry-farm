@@ -13,6 +13,8 @@ export class GameState {
     pollution = 0; // Показатель загрязнения
     comfortChickenQuantity = 0; // Общее количество комфортных мест для куриц
 
+    teachingMode = true; // Режим обучения
+
     rooms = [];
     drones = [];
 

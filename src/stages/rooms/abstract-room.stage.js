@@ -65,7 +65,7 @@ export class AbstractRootStage extends AbstractStage {
 		this.onStart(() => {
 			this.visualizerSpawn();
 
-            if (this.isFirstUse) {
+            if (this.isFirstUse && this.gameState.teachingMode) {
 				this.helper.show(this.getHelpText(), 'Boss');
 				this.helper.setButtonText('Дальше');
 				this.helper.onClick(()=>{
