@@ -82,8 +82,16 @@ export class HelperSprite extends Sprite {
     }
 
     setReady() {
-        this.nextButton.onClick(this.readyCallback)
-        this.nextButton.setLabel(this.readyText);
+        if (this.readyCallback) {
+            this.nextButton.onClick(this.readyCallback);
+        } else {
+            this.nextButton.onClick(this.hide);
+        }
+        if (this.readyText) {
+            this.nextButton.setLabel(this.readyText);
+        } else {
+            this.nextButton.setLabel('');
+        }
     }
 
     setButtonText(text) {
