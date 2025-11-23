@@ -19,6 +19,9 @@ export class HelperSprite extends Sprite {
 
     currentPerson = null;
 
+    readyCallback = null;
+    readyText = '';
+
     init(){
         this.drawCostume((context)=>{
             context.fillRect(0, 0, 800, 200)
@@ -72,14 +75,19 @@ export class HelperSprite extends Sprite {
     }
 
     onClick(callback, newText='') {
-        this.nextButton.onClick(callback.bind(this))
+        this.readyCallback = callback.bind(this);
         if (newText){
-            this.nextButton.setLabel(newText);
+            this.readyText = newText;
         }
     }
 
+    setReady() {
+        this.nextButton.onClick(this.readyCallback)
+        this.nextButton.setLabel(this.readyText);
+    }
+
     setButtonText(text) {
-        this.nextButton.setLabel(text);
+        this.readyText = text;
     }
 
     showText(context, helper) {
@@ -94,6 +102,7 @@ export class HelperSprite extends Sprite {
                 }
             } else {
                 helper.personImage.switchCostume(0);
+                helper.setReady();
             }
 
             context.fillStyle = '#ffffff';
@@ -117,6 +126,11 @@ export class HelperSprite extends Sprite {
             this.clearPersonCostumes();
             this.setPerson(person, emotion);
         }
+        this.nextButton.onClick(()=>{
+            this.currentTextIndex = this.needText.length;
+            this.currentText = this.needText;
+        })
+        this.nextButton.setLabel('Пропустить');
     }
 
     hide() {
