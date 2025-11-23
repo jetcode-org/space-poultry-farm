@@ -100,18 +100,19 @@ export class CoopRoomStage extends AbstractRootStage {
         }
     }
 
-	drawParameters(context, coop) {
+	drawParameters(context, room) {
 		super.drawParameters(context)
 
         context.font = '16px Arial';
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Сколько куриц: ' + coop.currentQuantity, 610, 190);
-        context.fillText('Макс. кол-во: ' + coop.maxQuantity, 610, 215);
-        context.fillText('Комфортное кол-во: ' + coop.comfortQuantity, 610, 240);
-        context.fillText('Сколько яиц: ' + coop.eggsAmount, 610, 265);
-        context.fillText('Загрязненность: ' + coop.pollution + '%', 610, 290);
+        context.fillText('Сколько куриц: ' + room.currentQuantity + ' шт.', 610, 190);
+        context.fillText('Макс. кол-во: ' + room.maxQuantity + ' шт.', 610, 215);
+        context.fillText('Комфорт. кол-во: ' + room.comfortQuantity + ' шт.', 610, 240);
+        context.fillText('Сколько яиц: ' + room.eggsAmount + ' шт.', 610, 265);
+        context.fillText('Макс. яиц: ' + room.maxEggsAmount + ' шт.', 610, 290);
+        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 315);
 	}
 
 	setVisCostumes() {

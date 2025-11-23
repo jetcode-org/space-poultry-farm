@@ -126,15 +126,16 @@ export class SortingRoomStage extends AbstractRootStage {
         this.pollution = Math.min(this.pollution, 100);
     }
 
-	drawParameters(context, sorting) {
+	drawParameters(context, room) {
 		super.drawParameters(context)
 
         context.font = '16px Arial';
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Количество яиц: ' + sorting.currentQuantity, 610, 190);
-        context.fillText('Загрязненность: ' + sorting.pollution + '%', 610, 215);
+        context.fillText('Количество яиц: ' + room.currentQuantity + ' шт.', 610, 190);
+        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
+        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 240);
     }
 
     drawHelp(context) {

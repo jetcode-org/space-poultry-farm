@@ -67,11 +67,11 @@ export class FarmRoomStage extends AbstractRootStage {
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Урожай: ' + room.currentQuantity, 610, 190);
+        context.fillText('Урожай: ' + room.currentQuantity + ' шт.', 610, 190);
+        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
     }
 
     drawHelp(context) {
 		super.drawHelp(context);
 	}
-
 }

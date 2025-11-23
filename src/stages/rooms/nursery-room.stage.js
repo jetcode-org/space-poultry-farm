@@ -131,16 +131,17 @@ export class NurseryRoomStage extends AbstractRootStage {
         }
     }
 
-	drawParameters(context, nursery) {
+	drawParameters(context, room) {
 		super.drawParameters(context)
 
         context.font = '16px Arial';
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 610, 190);
-        context.fillText('Загрязненность: ' + nursery.pollution + '%', 610, 215);
-        context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSERY_CYCLE_TIMER) * 100 + '%', 610, 240);
+        context.fillText('Сколько цыплят: ' + room.currentQuantity + ' шт.', 610, 190);
+        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
+        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 240);
+        context.fillText('Готовность: ' + (room.currentProgress / NurseryRoomStage.NURSERY_CYCLE_TIMER) * 100 + '%', 610, 265);
 
         // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
         //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);

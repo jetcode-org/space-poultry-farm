@@ -115,16 +115,17 @@ export class IncubatorRoomStage extends AbstractRootStage {
         }
     }
 
-	drawParameters(context, incubator) {
+	drawParameters(context, room) {
 		super.drawParameters(context);
 
         context.font = '16px Arial';
         context.fillStyle = 'white';
         context.textAlign = 'start';
 
-        context.fillText('Сколько яиц: ' + incubator.currentQuantity, 610, 190);
-        context.fillText('Загрязненность: ' + incubator.pollution + '%', 610, 215);
-        context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 240);
+        context.fillText('Сколько яиц: ' + room.currentQuantity + ' шт.', 610, 190);
+        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
+        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 240);
+        context.fillText('Готовность: ' + (room.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 265);
 
         // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
         //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
