@@ -10,13 +10,28 @@
 <body style="background: black;">
     <script type="module" src="src/game.js"></script>
 
+    <!--  Обычная модальное окно  -->
     <div class="modal" data-modal>
-        <div class="modal__content" data-modal-content>Выгрузка завершена. Добавьте корма для подопытных и уберите помет</div>
-        <div class="modal__close">
+        <div class="modal__content" data-modal-content></div>
+        <div class="modal__buttons">
             <button type="button">Закрыть</button>
         </div>
     </div>
     <div class="modal-overlay" data-modal-overlay></div>
+
+    <!--  Модальное окно для событий -->
+    <div class="modal modal_event" data-event-modal>
+        <div class="modal__content"><h2>Событие</h2></div>
+        <div class="modal__image" data-event-modal-image><img alt="Событие" src=""></div>
+        <div class="modal__content" data-event-modal-content></div>
+        <div class="modal__buttons">
+            <button data-answer-button="0" type="button">Вариант 1</button>
+            <button data-answer-button="1" type="button">Вариант 2</button>
+            <button data-answer-button="2" type="button">Вариант 3</button>
+            <button data-answer-button="3" type="button">Вариант 4</button>
+        </div>
+    </div>
+    <div class="modal-overlay" data-event-modal-overlay></div>
 
     <script src="public/scripts/modal.js"></script>
 </body>

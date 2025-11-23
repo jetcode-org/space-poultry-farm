@@ -16,6 +16,10 @@
     animation: modal-animation 0.3s ease forwards;
 }
 
+.modal.modal_event {
+    width: 540px;
+}
+
 .modal-overlay {
     display: none; /* none */
     position: fixed;
@@ -40,7 +44,11 @@
     font-size: 18px;
 }
 
-.modal__close button {
+.modal__image img {
+    max-width: 100%;
+}
+
+.modal__buttons button {
     display: block;
     width: calc(552px / 4);
     height: calc(168px / 4);
@@ -55,8 +63,22 @@
     background-size: contain;
 }
 
-.modal__close button:hover {
+.modal__buttons button:hover {
     transform: scale(1.1, 1.1);
+}
+
+.modal button.hidden {
+    display: none;
+}
+
+.modal.modal_event .modal__buttons {
+    width: 320px;
+    margin: 40px auto 0;
+}
+
+.modal.modal_event .modal__buttons button {
+    display: inline-block;
+    margin: 5px 5px;
 }
 
 @keyframes modal-animation {

@@ -277,6 +277,95 @@ export class GameState {
         },
     ];
 
+    /**
+     * События
+     */
+    static EVENT_TIMER_MAX = 200; // При достижении этого значение событие сработает на 100%
+    static EVENT_TIMER_MIN = 50; // До этого значения событие не сработает
+    eventTimer = 0; // Чем выше значение, тем более вероятно наступление события
+    eventAnswers = []; // Структура: [{event: eventId, variant: variantId}]
+
+    events = [
+        {
+            'description': 'От чего не может умереть цыпленок?',
+            'image': 'public/images/events/event_1.jpg',
+            'variants': [
+                {
+                    'answer': 'От старости',
+                    'correct': true,
+                    'changeRating': 10,
+                },
+                {
+                    'answer': 'От холода',
+                    'correct': false,
+                    'changeRating': -15,
+                },
+                {
+                    'answer': 'От голода',
+                    'correct': false,
+                    'changeRating': -10,
+                },
+                {
+                    'answer': 'От болезней',
+                    'correct': false,
+                    'changeRating': -5,
+                }
+            ]
+        },
+        {
+            'description': 'Вопрос 2',
+            'image': 'public/images/events/event_2.jpg',
+            'variants': [
+                {
+                    'answer': 'Вариант 1',
+                    'correct': false,
+                    'changeRating': -10,
+                },
+                {
+                    'answer': 'Вариант 2',
+                    'correct': true,
+                    'changeRating': 15,
+                },
+                {
+                    'answer': 'Вариант 3',
+                    'correct': false,
+                    'changeRating': -20,
+                },
+                {
+                    'answer': 'Вариант 4',
+                    'correct': false,
+                    'changeRating': -15,
+                }
+            ]
+        },
+        {
+            'description': 'Вопрос 3',
+            'image': 'public/images/events/event_3.jpg',
+            'variants': [
+                {
+                    'answer': 'Вариант 1',
+                    'correct': false,
+                    'changeRating': -5,
+                },
+                {
+                    'answer': 'Вариант 2',
+                    'correct': false,
+                    'changeRating': -10,
+                },
+                {
+                    'answer': 'Вариант 3',
+                    'correct': true,
+                    'changeRating': 20,
+                },
+                {
+                    'answer': 'Вариант 4',
+                    'correct': false,
+                    'changeRating': -15,
+                }
+            ]
+        },
+    ];
+
     isDraggableObjectActive = false;
     isReadingHelper = false;
 
@@ -362,6 +451,9 @@ export class GameState {
         this.manure = 0;
         this.eggshell = 0;
         this.food = 500;
+
+        this.eventTimer = 0;
+        this.eventAnswers = [];
 
         // Обнулить все параметры всех комнат
         for (const room of this.rooms) {
@@ -461,6 +553,34 @@ export class GameState {
     getHeroAnswer(emotion) {
         const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers[emotion].length);
         return this.heroAnswers[emotion][randomAnswerIndex];
+    }
+
+    getRandomEventId() {
+        const answerEventIds = this.eventAnswers.map(answer => answer.event);
+
+        let eventCandidates = Array.from(this.events.keys());
+        eventCandidates = eventCandidates.filter(item => !answerEventIds.includes(item));
+
+        return eventCandidates[Math.floor(Math.random() * eventCandidates.length)];
+    }
+
+    getEventCorrectAnswer(eventId) {
+        const event = this.events[eventId];
+
+        for (const variant of event.variants) {
+            if (variant.correct) {
+                return variant.answer;
+            }
+        }
+
+        return null;
+    }
+
+    changeRating(value) {
+        this.rating += value;
+
+        this.rating = Math.min(this.rating, 100);
+        this.rating = Math.max(this.rating, 0);
     }
 
     resetViolations() {

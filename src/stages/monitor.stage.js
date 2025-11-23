@@ -256,6 +256,7 @@ export class MonitorStage extends AbstractStage {
         }
 
         this.violationProcess();
+        this.eventProcess();
 
         this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
@@ -409,6 +410,54 @@ export class MonitorStage extends AbstractStage {
         }
     }
 
+    eventProcess() {
+        this.gameState.eventTimer++;
+
+        if (this.gameState.eventTimer < GameState.EVENT_TIMER_MIN) {
+            return;
+        }
+
+        if (this.gameState.eventAnswers.length >= this.gameState.events.length) {
+            return;
+        }
+
+        const randomValue = this.game.getRandom(0, GameState.EVENT_TIMER_MAX);
+
+        if (randomValue < this.gameState.eventTimer) {
+            const eventId = this.gameState.getRandomEventId();
+
+            this.showEventModal(eventId, (variantId) => {
+                const event = this.gameState.events[eventId];
+                const correct = event.variants[variantId].correct;
+                const changeRating = event.variants[variantId].changeRating;
+
+                this.gameState.eventAnswers.push(
+                    {event: eventId, variant: variantId}
+                );
+
+                this.gameState.changeRating(changeRating);
+
+                if (correct) {
+                    let text = '<h2>Молодец! Правильно!</h2>';
+                    text += '<p>Рейтинг изменился на: +' + changeRating + '</p>'
+
+                    this.showModal(text);
+
+                } else {
+                    const correctAnswer = this.gameState.getEventCorrectAnswer(eventId);
+
+                    let text = '<h2>Ответ неправильный</h2>';
+                    text += '<p>Правильный ответ: ' + correctAnswer + '</p>'
+                    text += '<p>Рейтинг изменился на: ' + changeRating + '</p>'
+
+                    this.showModal(text);
+                }
+            });
+
+            this.gameState.eventTimer = 0;
+        }
+    }
+
     showModal(text) {
         showModal(text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
     }
@@ -418,5 +467,19 @@ export class MonitorStage extends AbstractStage {
         text += '<p>' + message + '</p>';
 
         this.showModal(text);
+    }
+
+    showEventModal(eventId, onButtonClick) {
+        const event = this.gameState.events[eventId];
+        const description = event.description;
+        const image = event.image;
+        const buttons = event.variants.map(variant => variant.answer);
+
+        const text = '<p>' + description + '</p>';
+
+        showEventModal(text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
+            this.game.getActiveStage().run();
+            onButtonClick(answer)
+        });
     }
 }
