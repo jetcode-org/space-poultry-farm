@@ -8,6 +8,7 @@ import {InfoButtonSprite} from "../sprites/info-button.sprite";
 import {RoomFactory} from "../services/room.factory";
 import { ShipSprite } from '../sprites/ship.sprite';
 import { ProgressBarSprite } from '../sprites/progress-bar.sprite';
+import {OutroStage} from "./outro.stage";
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -204,6 +205,7 @@ export class MonitorStage extends AbstractStage {
                 true,
                 null,
                 null,
+                null,
                 'Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания. Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции. Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.'
             );
             this.gameState.currentMission++;
@@ -257,6 +259,10 @@ export class MonitorStage extends AbstractStage {
 
         this.violationProcess();
         this.eventProcess();
+
+        if (this.gameState.rating <= GameState.CRITICAL_RATING) {
+            this.showOutro(false);
+        }
 
         this.progressSlider.setCurrentValue(this.gameState.passedTime);
 
@@ -315,17 +321,24 @@ export class MonitorStage extends AbstractStage {
         this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
 	}
 
-    showMission(currentQuota, success, soldEggs = null, earnedMoney = null, startMessage = null, finishMessage = null) {
+    showMission(currentQuota, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {
         MissionStage.getInstance().setMissionSlides(
             currentQuota,
             success,
             soldEggs,
             earnedMoney,
+            changeRating,
             startMessage,
             finishMessage
         );
 
         this.game.run(MissionStage.getInstance());
+    }
+
+    showOutro(result) {
+        OutroStage.getInstance().setResult(result);
+
+        this.game.run(OutroStage.getInstance());
     }
 
     showHelp(text, lifetime = 10) {
@@ -370,17 +383,20 @@ export class MonitorStage extends AbstractStage {
                 this.gameState.successfulCompletedMissions += 1;
             }
 
+            const changeRating = success ? mission.successChangeRating : mission.failChangeRating;
             const soldEggs = Math.min(this.gameState.frozenEggs, missionEggQuota);
             const earnedMoney = soldEggs * this.gameState.getEggQualityCost();
+
             this.gameState.frozenEggs -= soldEggs;
             this.gameState.money += earnedMoney;
+            this.gameState.changeRating(changeRating);
 
             const finishMessage = this.gameState.currentMission === this.gameState.missions.length - 1 ?
                 this.getFinishMessage() :
                 null
             ;
 
-            this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, null, finishMessage);
+            this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, changeRating, null, finishMessage);
             this.gameState.currentMission += 1;
 
             this.gameState.resetViolations();
@@ -391,6 +407,7 @@ export class MonitorStage extends AbstractStage {
         // Нарушение кормления
         if (!this.gameState.feedingViolation && this.gameState.food <= GameState.CRITICAL_FOOD) {
             this.gameState.feedingViolation = true;
+            this.gameState.changeRating(this.gameState.violations.feeding.fail.changeRating);
 
             this.showViolationModal('Нарушение кормления', 'Еда закончилась. Курицы и цыплята постепенно умирают');
         }
@@ -398,6 +415,7 @@ export class MonitorStage extends AbstractStage {
         // Нарушение чистоты
         if (!this.gameState.cleanViolation && this.gameState.pollution >= GameState.CRITICAL_POLLUTION) {
             this.gameState.cleanViolation = true;
+            this.gameState.changeRating(this.gameState.violations.clean.fail.changeRating);
 
             this.showViolationModal('Нарушение чистоты', 'Слишком грязно, мы теряем качество');
         }
@@ -405,6 +423,7 @@ export class MonitorStage extends AbstractStage {
         // Нарушение условий содержания
         if (!this.gameState.conditionViolation && this.gameState.chicken > this.gameState.comfortChickenQuantity) {
             this.gameState.conditionViolation = true;
+            this.gameState.changeRating(this.gameState.violations.condition.fail.changeRating);
 
             this.showViolationModal('Нарушение условий содержания', 'Курицам слишком тесно, мы теряем качество');
         }

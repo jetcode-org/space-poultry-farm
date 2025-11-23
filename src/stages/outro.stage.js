@@ -1,14 +1,13 @@
-import {Stage} from 'jetcode-scrubjs';
-
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractSlideStageStage} from "./abstract-slide-stage.stage";
 import {MonitorStage} from "./monitor.stage";
+import {MenuStage} from "./menu.stage";
 
 export class OutroStage extends AbstractSlideStageStage {
     static instance;
     textBlockHeight = 160;
 
-    slides = [
+    successSlides = [
         {
             'text': 'Ваш космический птицеводческий комплекс успешно доставил жизненно важный груз яиц на целевые планеты. Благодаря вашему грамотному управлению и своевременному выполнению всех производственных циклов, тысячи свежих яиц пополнили продовольственные запасы колонистов.'
         },
@@ -17,6 +16,18 @@ export class OutroStage extends AbstractSlideStageStage {
         },
         {
             'text': 'Новые горизонты открываются перед вашим предприятием. Успешное завершение миссии привлекло внимание инвесторов и научных организаций. Теперь вам предстоит масштабировать производство, внедрять новые технологии и, возможно, заняться разведением других видов сельскохозяйственных животных в условиях космоса.'
+        },
+    ];
+
+    failSlides = [
+        {
+            'text': 'Плохая концовка, сообщение 1.'
+        },
+        {
+            'text': 'Плохая концовка, сообщение 2.'
+        },
+        {
+            'text': 'Плохая концовка, сообщение 3.'
         },
     ];
 
@@ -39,7 +50,8 @@ export class OutroStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
-        this.addBackground('public/images/outro/outro.jpg');
+        this.addBackground('public/images/outro/success.jpg');
+        this.addBackground('public/images/outro/fail.jpg');
 
         this.startButton = new ButtonSprite();
         this.startButton.layer = 4;
@@ -55,6 +67,17 @@ export class OutroStage extends AbstractSlideStageStage {
         });
     }
 
+    setResult(success) {
+        if (success) {
+            this.slides = this.successSlides;
+            this.switchBackground(0);
+
+        } else  {
+            this.slides = this.failSlides;
+            this.switchBackground(1);
+        }
+    }
+
     onNextSlide() {
         if (this.currentSlide === this.slides.length - 1) {
             this.nextButton.hidden = true;
@@ -63,9 +86,8 @@ export class OutroStage extends AbstractSlideStageStage {
     }
 
     runGame() {
-        const monitorStage = MonitorStage.getInstance();
-        monitorStage.restartGame();
+        MonitorStage.getInstance().restartGame();
 
-        this.game.run(monitorStage);
+        this.game.run(MenuStage.getInstance());
     }
 }

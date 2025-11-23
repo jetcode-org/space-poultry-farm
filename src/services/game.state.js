@@ -24,6 +24,8 @@ export class GameState {
     static CRITICAL_FOOD = 0;
     static CRITICAL_POLLUTION = 75;
 
+    static CRITICAL_RATING = 0; // Критичный порог рейтинга, при котором игра заканчивается проигрышем
+
     /**
      * Комнаты
      */
@@ -249,6 +251,8 @@ export class GameState {
             'name': 'Марс-7',
             'eggQuota': 50,
             'distance': 100,
+            'successChangeRating': 5,
+            'failChangeRating': -5,
             'task': 'Планета: Марс-7 (Агрикультурный сектор). Доставьте 50 яиц первой партии для обеспечения белком научной колонии. Ученые проводят эксперименты по адаптации земной флоры и фауны к марсианским условиям. Ваш груз станет основой для создания устойчивой экосистемы',
             'success': 'УСПЕХ! Марс-7: Квота выполнена! Научная колония получила жизненно важные белки',
             'fail': 'ПРОВАЛ! Марс-7: Квота не выполнена! Колония осталась без жизненно важных ресурсов. Придется объясняться перед Советом...'
@@ -257,6 +261,8 @@ export class GameState {
             'name': 'Аквария',
             'eggQuota': 125,
             'distance': 200,
+            'successChangeRating': 10,
+            'failChangeRating': -10,
             'task': 'Планета: Аквария (Водный мир). Требуется 125 яиц для плавучих городов-архипелагов. Местное население страдает от дефицита белка из-за ограниченности земельных ресурсов. Ваш груз поможет стабилизировать пищевую ситуацию на планете.',
             'success': 'УСПЕХ! Аквария: Груз доставлен! Плавучие города спасены от белкового голодания.',
             'fail': 'ПРОВАЛ! Аквария: Груз не доставлен! Население водного мира продолжает страдать от дефицита белка. Летим дальше с пустыми трюмами.'
@@ -265,6 +271,8 @@ export class GameState {
             'name': 'Гелиос-Прайм',
             'eggQuota': 250,
             'distance': 300,
+            'successChangeRating': 15,
+            'failChangeRating': -15,
             'task': 'Планета: Гелиос-Прайм (Приполярная зона). Срочно доставьте 250 яиц в криогенной упаковке для полярных исследовательских станций. Экстремальные температуры требуют особых условий транспортировки и максимальной свежести продукции.',
             'success': 'УСПЕХ! Гелиос-Прайм: Миссия выполнена! Полярные исследователи обеспечены провизией.',
             'fail': 'ПРОВАЛ! Гелиос-Прайм: Миссия провалена! Исследователи остались без провизии в ледяной пустыне. Время не ждет - движемся к следующей цели.'
@@ -273,6 +281,8 @@ export class GameState {
             'name': 'Терра-Нова',
             'eggQuota': 400,
             'distance': 400,
+            'successChangeRating': 20,
+            'failChangeRating': -20,
             'task': 'Планета: Терра-Нова (Землеподобный мир). Финальная миссия - 400 яиц для восстановления биосферы после экологической катастрофы. Ваш вклад поможет реанимировать планетарную экосистему и дать начало новой цивилизации.',
             'success': 'УСПЕХ! Терра-Нова: Финальный груз доставлен! Биосфера планеты спасена. Вы стали героем Галактического Совета!',
             'fail': 'ПРОВАЛ! Терра-Нова: Финальная миссия сорвана! Шанс восстановить планету упущен. Ваша репутация серьезно пострадала.'
@@ -374,8 +384,6 @@ export class GameState {
     // Рейтинг (Лицензия Таврос)
     rating = 50;
 
-    static CRITICAL_RATING = 0; // Критичный порог рейтинга, при котором игра заканчивается проигрышем
-
     // Деньги - основная игровая валюта
     money = 20000;
 
@@ -430,6 +438,36 @@ export class GameState {
     feedingViolation = false; // Нарушение кормления
     conditionViolation = false; // Нарушение условий содержания
 
+    violations = {
+        'clean': {
+            'success': {
+                'changeQuality': 10,
+            },
+            'fail': {
+                'changeRating': -10,
+                'changeQuality': -10,
+            }
+        },
+        'feeding': {
+            'success': {
+                'changeQuality': 20,
+            },
+            'fail': {
+                'changeRating': -20,
+                'changeQuality': -20,
+            }
+        },
+        'condition': {
+            'success': {
+                'changeQuality': 30,
+            },
+            'fail': {
+                'changeRating': -30,
+                'changeQuality': -30,
+            }
+        },
+    }
+
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');
@@ -453,6 +491,7 @@ export class GameState {
         this.manure = 0;
         this.eggshell = 0;
         this.food = 500;
+        this.rating = 50;
 
         this.eventTimer = 0;
         this.eventAnswers = [];
@@ -485,9 +524,9 @@ export class GameState {
     getEggQualityInfo() {
         return {
             chickenBreed: this.chickenBreedQuality[this.chickenBreed],
-            cleanViolation: this.cleanViolation ? -10 : 10,
-            feedingViolation: this.feedingViolation ? -20 : 20,
-            chickenConditionViolation: this.conditionViolation ? -30 : 30,
+            cleanViolation: this.cleanViolation ? this.violations.clean.fail.changeQuality : this.violations.clean.success.changeQuality,
+            feedingViolation: this.feedingViolation ? this.violations.feeding.fail.changeQuality : this.violations.feeding.success.changeQuality,
+            chickenConditionViolation: this.conditionViolation ? this.violations.condition.fail.changeQuality : this.violations.condition.success.changeQuality,
         };
     }
 

@@ -51,7 +51,7 @@ export class MissionStage extends AbstractSlideStageStage {
         });
     }
 
-    setMissionSlides(missionIndex, success, soldEggs = null, earnedMoney = null, startMessage = null, finishMessage = null) {
+    setMissionSlides(missionIndex, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {
         this.reset();
         this.switchBackground(missionIndex + 1); // "+1" костыльное исправление бага со switchBackground()
 
@@ -74,11 +74,21 @@ export class MissionStage extends AbstractSlideStageStage {
             }
         }
 
-        if (soldEggs !== null && earnedMoney !== null) {
-            const resultMessage2 = 'Мы продали: ' + soldEggs + ' яиц и заработали ' + earnedMoney + '$';
+        if (soldEggs !== null && earnedMoney !== null && changeRating !== null) {
+            let resultMessage = 'Мы продали: ' + soldEggs + ' яиц и заработали ' + earnedMoney + '$. ';
+
+            if (changeRating > 0) {
+                resultMessage += 'Наш рейтинг увеличился на ' + changeRating + '.';
+
+            } else if (changeRating < 0) {
+                resultMessage += 'Наш рейтинг уменьшился на ' + changeRating + '.';
+
+            } else {
+                resultMessage += 'Это не повлияло на наш рейтинг.';
+            }
 
             this.slides.push({
-                'text': resultMessage2
+                'text': resultMessage
             });
         }
 
