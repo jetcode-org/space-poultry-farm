@@ -5,7 +5,6 @@ export class GameState {
 
     passedTime = 0; // Пошло времени
     limitTime = 400;
-    chargeValue = 0;
     frozenEggs = 0; // Количество замороженных яиц
 
     eggshell = 0;
@@ -353,7 +352,6 @@ export class GameState {
     reset() {
         this.passedTime = 0;
         this.limitTime = 100;
-        this.chargeValue = 0;
         this.frozenEggs = 0;
         this.currentMission = -1;
 
@@ -363,9 +361,7 @@ export class GameState {
 
         // Обнулить все параметры всех комнат
         for (const room of this.rooms) {
-            if (room.active) {
-                room.resetRoom();
-            }
+            room.resetRoom();
         }
     }
 
@@ -380,10 +376,6 @@ export class GameState {
 
     addDrone(drone) {
         this.drones.push(drone);
-    }
-
-    isEnoughCharge() {
-        return this.chargeValue >= GameState.CHARGE_VALUE_FULL;
     }
 
     getChickenBreedName() {

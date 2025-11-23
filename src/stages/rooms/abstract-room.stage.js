@@ -5,8 +5,6 @@ import {AbstractStage} from "../abstract.stage";
 import {GameState} from "../../services/game.state";
 
 export class AbstractRootStage extends AbstractStage {
-	active = false;
-	activeInStart = false;
 	thumbnail;
 	pollution = 0;
 	isRoomReady = false;
@@ -49,15 +47,12 @@ export class AbstractRootStage extends AbstractStage {
 		this.backgroundSprite.layer = 5;
 		this.backgroundSprite.x = 300;
 		this.backgroundSprite.y = 300
-		this.backgroundSprite.filter = 'grayscale(100%)';
 
 		this.createBackButton();
 		this.createInstructionButton();
-		this.createActivateButton();
 		this.createGetManureButton();
 
 		this.forever(this.gameTickAllRooms, 1000);
-		this.pen(this.drawTextBlock.bind(this), 10);
 
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
@@ -145,22 +140,6 @@ export class AbstractRootStage extends AbstractStage {
 		showModal(this.getInstructionText(), () => this.stop(), () => this.run());
 	}
 
-	createActivateButton() {
-		this.activateButton = new ButtonSprite();
-		this.activateButton.layer = 10;
-		this.activateButton.x = 190;
-		this.activateButton.y = 400;
-
-		this.activateButton.onReady(()=>{
-			this.activateButton.setLabel('Активировать');
-		});
-
-		this.activateButton.onClick(() => {
-			this.activate();
-			this.playSound('activation', 0.5);
-		});
-	}
-
 	getRoomType() {
 		console.error('Метод не определен.');
 	}
@@ -205,13 +184,6 @@ export class AbstractRootStage extends AbstractStage {
 		this.currentQuantity = 0;
 		this.isRoomReady = false;
 		this.pollution = 0;
-
-		if (this.activeInStart) {
-			this.activate();
-
-		} else {
-			this.deactivate();
-		}
 	}
 
 	roomTick () {
@@ -235,69 +207,8 @@ export class AbstractRootStage extends AbstractStage {
 		this.thumbnail = thumbnailSprite;
 	}
 
-	activateInStart() {
-		this.activeInStart = true;
-
-		this.activate();
-	}
-
-	activate() {
-		if (this.active) {
-			return;
-		}
-
-		this.active = true;
-
-		this.backgroundSprite.filter = 'grayscale(0)';
-		this.activateButton.hidden = true;
-		this.gameState.chargeValue = 0;
-
-		if (this.thumbnail) {
-			this.thumbnail.activate();
-		}
-	}
-
-	deactivate() {
-		if (!this.active) {
-			return;
-		}
-
-		this.active = false;
-
-		this.backgroundSprite.filter = 'grayscale(100%)';
-		this.activateButton.hidden = false;
-
-		if (this.thumbnail) {
-			this.thumbnail.deactivate();
-		}
-	}
-
 	gameTickAllRooms () {
 		MonitorStage.getInstance().gameTick();
-	}
-
-	drawTextBlock(context) {
-		if (this.active) {
-			return false;
-		}
-
-		if (this.activateButton && this.gameState.isEnoughCharge()) {
-			this.activateButton.hidden = false;
-
-		} else {
-			this.activateButton.hidden = true;
-		}
-
-		context.fillStyle = "rgba(0, 0, 0, 0.5)";
-		context.fillRect(100, 150, 400, 300);
-
-		context.font = '18px Arial';
-		context.fillStyle = 'white';
-		context.textAlign = 'start';
-
-		const text = 'Модуль временно не работает. Требуется полная зарядка корабля. Текущий уровень энергии: ' + this.gameState.chargeValue + '%';
-
-		this.drawMultilineText(context, text, 120, 200, 350, 30);
 	}
 
 	//Создает спрайты, которые задаются в SetVisCostumes() в соответствии с текущим количеством

@@ -27,18 +27,12 @@ export class ThumbnailRoomFactory {
         room.robotChargeDif = chargeDif;
         room.setThumbnail(thumbnail);
 
-        if (room.active) {
-            thumbnail.activate();
-        }
-
         thumbnail.onReady(() => {
             //thumbnail.setLabel(label, 'white', 15);
         });
 
         thumbnail.onClick(() => {
-            if (room.active) {
-                monitorStage.game.run(room);
-            }
+            monitorStage.game.run(room);
         });
 
         thumbnail.forever(() => {

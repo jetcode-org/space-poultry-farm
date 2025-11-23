@@ -59,15 +59,14 @@ export class FarmRoomStage extends AbstractRootStage {
         }
     }
 
-    drawParameters(context, sort) {
+    drawParameters(context, room) {
 		super.drawParameters(context)
-        if (sort.active) {
-            context.font = '16px Arial';
-            context.fillStyle = 'white';
-            context.textAlign = 'start';
 
-            context.fillText('Урожай: ' + sort.currentQuantity, 610, 190);
-        }
+        context.font = '16px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'start';
+
+        context.fillText('Урожай: ' + room.currentQuantity, 610, 190);
     }
 
     drawHelp(context) {

@@ -56,12 +56,14 @@ export class SortingRoomStage extends AbstractRootStage {
             for (let i = 0; i < this.gameState.rooms.length; i++){
                 if (this.gameState.rooms[i].getRoomType() === GameState.INCUBATOR_ROOM_TYPE) {
                     const potentialIncubator = this.gameState.rooms[i];
-                    if (!potentialIncubator.inProgress && potentialIncubator.active) {
+
+                    if (!potentialIncubator.inProgress) {
                         potentialIncubator.inProgress = true;
                         potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.95);
                         this.currentQuantity -= moveQuantity;
                         this.quantitySlider.maxValue = this.currentQuantity;
                         this.quantitySlider.setCurrentValue();
+
                         return true;
                     }
                 }
@@ -100,6 +102,9 @@ export class SortingRoomStage extends AbstractRootStage {
         super.resetRoom();
 
         this.currentQuantity = 20;
+        this.quantitySlider.hidden = false;
+        this.coolerButton.hidden = false;
+        this.incubatorButton.hidden = false;
     }
 
     roomTick () {
@@ -119,24 +124,15 @@ export class SortingRoomStage extends AbstractRootStage {
         this.quantitySlider.setCurrentValue();
     }
 
-    activate() {
-        super.activate();
-
-        this.quantitySlider.hidden = false;
-        this.coolerButton.hidden = false;
-        this.incubatorButton.hidden = false;
-    }
-
 	drawParameters(context, sorting) {
 		super.drawParameters(context)
-        if (sorting.active) {
-            context.font = '16px Arial';
-            context.fillStyle = 'white';
-            context.textAlign = 'start';
 
-            context.fillText('Количество яиц: ' + sorting.currentQuantity, 610, 190);
-            context.fillText('Загрязненность: ' + sorting.pollution + '%', 610, 215);
-        }
+        context.font = '16px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'start';
+
+        context.fillText('Количество яиц: ' + sorting.currentQuantity, 610, 190);
+        context.fillText('Загрязненность: ' + sorting.pollution + '%', 610, 215);
     }
 
     drawHelp(context) {

@@ -92,12 +92,12 @@ export class HelperSprite extends Sprite {
                     helper.personImage.nextCostume();
                     helper.imageTick = 0;
                 }
-            }
-            else {
+            } else {
                 helper.personImage.switchCostume(0);
             }
+
             context.fillStyle = '#ffffff';
-            context.font = '20px Arial'
+            context.font = '20px Arial';
             if (helper.showPerson) {
                 helper.drawMultilineText(context, helper.currentText, 200, 450, 550, 30);
             } else {

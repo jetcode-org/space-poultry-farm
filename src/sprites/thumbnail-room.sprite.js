@@ -7,7 +7,6 @@ export class ThumbnailRoomSprite extends AbstractButtonSprite {
 
     init() {
         this.drawCostume(() => {}); // Костыль - без этого не работает клик (
-        this.filter = 'grayscale(100%)';
 
         super.init();
     }

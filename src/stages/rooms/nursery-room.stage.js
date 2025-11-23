@@ -29,17 +29,18 @@ export class NurseryRoomStage extends AbstractRootStage {
             for (let i = 0; i < this.gameState.rooms.length; i++) {
                 if (this.gameState.rooms[i].getRoomType() === GameState.COOP_ROOM_TYPE) {
                     const potentialCoop = this.gameState.rooms[i];
-                    if (potentialCoop.active && potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
+                    if (potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
                         if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
                             potentialCoop.currentQuantity += potentialCoop.maxQuantity - potentialCoop.currentQuantity;
                             this.currentQuantity -= potentialCoop.maxQuantity - potentialCoop.currentQuantity;
+
                             continue;
-                        }
-                        else {
+                        } else {
                             potentialCoop.currentQuantity += this.currentQuantity;
                         }
 
                         this.failRoom();
+
                         return true;
                     }
 				}
@@ -130,19 +131,18 @@ export class NurseryRoomStage extends AbstractRootStage {
 
 	drawParameters(context, nursery) {
 		super.drawParameters(context)
-        if (nursery.active) {
-            context.font = '16px Arial';
-            context.fillStyle = 'white';
-            context.textAlign = 'start';
 
-            context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 610, 190);
-            context.fillText('Загрязненность: ' + nursery.pollution + '%', 610, 215);
-            context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSERY_CYCLE_TIMER) * 100 + '%', 610, 240);
+        context.font = '16px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'start';
 
-            // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
-            //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
-            // }
-        }
+        context.fillText('Сколько цыплят: ' + nursery.currentQuantity, 610, 190);
+        context.fillText('Загрязненность: ' + nursery.pollution + '%', 610, 215);
+        context.fillText('Готовность: ' + (nursery.currentProgress / NurseryRoomStage.NURSERY_CYCLE_TIMER) * 100 + '%', 610, 240);
+
+        // if (nursery.currentProgress >= NurseryRoomStage.NURSEY_CYCLE_TIMER) {
+        //     context.fillText('Осталось: ' + (NurseryRoomStage.NURSEY_CYCLE_TIMER - nursery.currentReadyProgress), 615, 300);
+        // }
 	}
 
 	setVisCostumes() {

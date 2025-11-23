@@ -15,7 +15,6 @@ export class RoomFactory {
         const room = RoomFactory.getRoomByType(roomType);
 
         room.isFirstUse = true;
-        room.activateInStart();
 
         return room;
     }

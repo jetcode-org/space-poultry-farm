@@ -39,7 +39,6 @@ export class EmptyRoomStage extends AbstractRootStage {
             const shopRoom = new ThumbnailRoomSprite(this, 5, [
                 roomConfig.shopImage
             ]);
-            shopRoom.activate();
 
             shopRoom.minSize = 200;
             shopRoom.maxSize = 210;

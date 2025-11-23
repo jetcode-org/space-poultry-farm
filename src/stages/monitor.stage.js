@@ -177,7 +177,6 @@ export class MonitorStage extends AbstractStage {
 
     createRoom(type, x, y) {
         const room = RoomFactory.build(type);
-        room.activateInStart();
 
         ThumbnailRoomFactory.build(this, room, x, y);
 
@@ -216,13 +215,6 @@ export class MonitorStage extends AbstractStage {
         }
         this.missionProcess(); // логика прохождения миссий
 
-        this.gameState.chargeValue += 5;
-        this.gameState.chargeValue = Number(this.gameState.chargeValue.toFixed(2));
-
-        if (this.gameState.chargeValue > GameState.CHARGE_VALUE_FULL) {
-            this.gameState.chargeValue = GameState.CHARGE_VALUE_FULL;
-        }
-
         this.gameState.passedTime += 1;
 
         if (this.gameState.passedTime >= this.gameState.limitTime) {
@@ -234,16 +226,14 @@ export class MonitorStage extends AbstractStage {
         this.gameState.chicken = 0;
 
         for (const room of this.gameState.rooms) {
-            if (room.active) {
-                room.roomTick();
+            room.roomTick();
 
-                if (room.getRoomType() === GameState.NURSERY_ROOM_TYPE) {
-                    this.gameState.chick += room.currentQuantity;
-                }
+            if (room.getRoomType() === GameState.NURSERY_ROOM_TYPE) {
+                this.gameState.chick += room.currentQuantity;
+            }
 
-                if (room.getRoomType() === GameState.COOP_ROOM_TYPE) {
-                    this.gameState.chicken += room.currentQuantity;
-                }
+            if (room.getRoomType() === GameState.COOP_ROOM_TYPE) {
+                this.gameState.chicken += room.currentQuantity;
             }
         }
 
@@ -301,7 +291,6 @@ export class MonitorStage extends AbstractStage {
             context.fillText('Планета: ' + mission['name'], 70, 380)
             context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
             context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
-            context.fillText('Зарядка корабля: ' + this.gameState.chargeValue + '%', 70, 455);
         }
 
         context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);

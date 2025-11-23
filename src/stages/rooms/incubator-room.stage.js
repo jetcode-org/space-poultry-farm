@@ -37,7 +37,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 if (this.gameState.rooms[i].getRoomType() === GameState.NURSERY_ROOM_TYPE) {
                     const potentialNursery = this.gameState.rooms[i];
 
-					if (!potentialNursery.inProgress && potentialNursery.active) {
+					if (!potentialNursery.inProgress) {
                         potentialNursery.inProgress = true;
                         potentialNursery.currentQuantity = quantityToMove;
 
@@ -114,24 +114,19 @@ export class IncubatorRoomStage extends AbstractRootStage {
     }
 
 	drawParameters(context, incubator) {
-		super.drawParameters(context)
-        if (incubator.active) {
-            context.font = '16px Arial';
-            context.fillStyle = 'white';
-            context.textAlign = 'start';
+		super.drawParameters(context);
 
-            context.fillText('Сколько яиц: ' + incubator.currentQuantity, 610, 190);
-            context.fillText('Загрязненность: ' + incubator.pollution + '%', 610, 215);
-            context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 240);
+        context.font = '16px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'start';
 
-            // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
-            //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
-            // }
-        }
-    }
+        context.fillText('Сколько яиц: ' + incubator.currentQuantity, 610, 190);
+        context.fillText('Загрязненность: ' + incubator.pollution + '%', 610, 215);
+        context.fillText('Готовность: ' + (incubator.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 240);
 
-    activate() {
-        super.activate();
+        // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
+        //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
+        // }
     }
 
     setVisCostumes() {
