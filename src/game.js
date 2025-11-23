@@ -5,8 +5,9 @@ import {OutroStage} from "./stages/outro.stage";
 import {MonitorStage} from "./stages/monitor.stage";
 import {MissionStage} from "./stages/mission.stage";
 
-export const game = new Game(800, 600);
+export const game = new Game(800, 600, null, false);
 game.context.imageSmoothingEnabled = false;
+game.showFps = true;
 // game.debugCollider = true;
 
 MenuStage.getInstance();
