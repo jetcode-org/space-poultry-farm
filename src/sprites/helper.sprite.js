@@ -22,6 +22,8 @@ export class HelperSprite extends Sprite {
     readyCallback = null;
     readyText = '';
 
+    fontSize = 20;
+
     init(){
         this.drawCostume((context)=>{
             context.fillRect(0, 0, 800, 200)
@@ -114,7 +116,7 @@ export class HelperSprite extends Sprite {
             }
 
             context.fillStyle = '#ffffff';
-            context.font = '20px Arial';
+            context.font = this.fontSize + 'px Arial';
             if (this.showPerson) {
                 this.drawMultilineText(context, this.currentText, 200, 450, 550, 30);
             } else {

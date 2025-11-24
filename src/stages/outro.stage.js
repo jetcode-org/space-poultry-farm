@@ -53,18 +53,18 @@ export class OutroStage extends AbstractSlideStageStage {
         this.addBackground('public/images/outro/success.jpg');
         this.addBackground('public/images/outro/fail.jpg');
 
-        this.startButton = new ButtonSprite();
-        this.startButton.layer = 4;
-        this.startButton.minSize = 90;
-        this.startButton.maxSize = 110;
-        this.startButton.x = 80;
-        this.startButton.y = this.height - 30;
-        this.startButton.hidden = true;
-        this.startButton.onClick(this.runGame.bind(this));
+        // this.startButton = new ButtonSprite();
+        // this.startButton.layer = 4;
+        // this.startButton.minSize = 90;
+        // this.startButton.maxSize = 110;
+        // this.startButton.x = 80;
+        // this.startButton.y = this.height - 30;
+        // this.startButton.hidden = true;
+        // this.startButton.onClick(this.runGame.bind(this));
 
-        this.startButton.onReady(() => {
-            this.startButton.setLabel('Еще раз', 'white', 70);
-        });
+        // this.startButton.onReady(() => {
+        //     this.startButton.setLabel('Еще раз', 'white', 70);
+        // });
     }
 
     setResult(success) {
@@ -80,9 +80,17 @@ export class OutroStage extends AbstractSlideStageStage {
 
     onNextSlide() {
         if (this.currentSlide === this.slides.length - 1) {
-            this.nextButton.hidden = true;
-            this.startButton.hidden = false;
+            this.helper.onClick(()=>{
+                this.runGame();
+                this.helper.hide();
+            });
+            this.helper.setButtonText('Еще раз');
+            // this.startButton.hidden = false;
+        } else {
+            this.helper.onClick(this.nextSlide.bind(this));
+            this.helper.setButtonText('Дальше');
         }
+        this.drawTextBlock();
     }
 
     runGame() {

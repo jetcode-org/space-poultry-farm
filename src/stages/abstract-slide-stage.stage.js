@@ -2,6 +2,7 @@ import {Stage} from 'jetcode-scrubjs';
 
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractStage} from "./abstract.stage";
+import { HelperSprite } from '../sprites/helper.sprite.js';
 
 export class AbstractSlideStageStage extends AbstractStage {
     currentSlide = 0;
@@ -13,52 +14,65 @@ export class AbstractSlideStageStage extends AbstractStage {
     nextButtonLabel = 'Далее';
 
     init() {
-        this.nextButton = new ButtonSprite();
-        this.nextButton.layer = 4;
-        this.nextButton.minSize = 90;
-        this.nextButton.maxSize = 110;
-        this.nextButton.x = this.width - 80;
-        this.nextButton.y = this.height - 30;
-        this.nextButton.hidden = true;
-        this.nextButton.onClick(this.nextSlide.bind(this));
+        this.helper = new HelperSprite();
+        
 
-        this.nextButton.onReady(() => {
-            this.nextButton.setLabel(this.nextButtonLabel, 'white', 64);
-        });
+        // this.nextButton = new ButtonSprite();
+        // this.nextButton.layer = 4;
+        // this.nextButton.minSize = 90;
+        // this.nextButton.maxSize = 110;
+        // this.nextButton.x = this.width - 80;
+        // this.nextButton.y = this.height - 30;
+        // this.nextButton.hidden = true;
+        // this.nextButton.onClick(this.nextSlide.bind(this));
 
-        this.pen(this.drawTextBlock.bind(this));
+        // this.nextButton.onReady(() => {
+        //     this.nextButton.setLabel(this.nextButtonLabel, 'white', 64);
+        // });
+
+        // this.pen(this.drawTextBlock.bind(this));
+
+        this.onReady(()=>{
+            this.drawTextBlock();
+            this.helper.onClick(()=>{
+                this.nextSlide();
+            }, 'Дальше');
+        })
     }
 
-    drawTextBlock(context) {
+    drawTextBlock() {
         if (!this.slides[this.currentSlide]) {
             return;
         }
 
-        this.slideTimer++;
+        this.helper.show(this.slides[this.currentSlide].text);
 
-        if (this.slideTimer < 35) {
-            return;
-        }
+        // this.slideTimer++;
 
-        context.fillStyle = "rgba(0, 0, 0, 0.9)";
-        context.fillRect(0, this.height - this.currentTextBlockHeight, this.width, this.currentTextBlockHeight);
+        // if (this.slideTimer < 35) {
+        //     return;
+        // }
+        // console.log(this.slides[this.currentSlide].text);
 
-        if (this.currentTextBlockHeight >= this.textBlockHeight) {
-            context.font = '18px Arial';
-            context.fillStyle = 'white';
-            const text = this.slides[this.currentSlide].text;
+        // context.fillStyle = "rgba(0, 0, 0, 0.9)";
+        // context.fillRect(0, this.height - this.currentTextBlockHeight, this.width, this.currentTextBlockHeight);
 
-            this.drawMultilineText(context, text, 20, this.height - this.currentTextBlockHeight + 30, this.width - 40, 22);
+        // if (this.currentTextBlockHeight >= this.textBlockHeight) {
+        //     context.font = '18px Arial';
+        //     context.fillStyle = 'white';
+        //     const text = this.slides[this.currentSlide].text;
 
-            if (!this.textBlockReady) {
-                this.nextButton.hidden = false;
-            }
+        //     this.drawMultilineText(context, text, 20, this.height - this.currentTextBlockHeight + 30, this.width - 40, 22);
 
-            this.textBlockReady = true;
+        //     if (!this.textBlockReady) {
+        //         this.nextButton.hidden = false;
+        //     }
 
-        } else {
-            this.currentTextBlockHeight += 5;
-        }
+        //     this.textBlockReady = true;
+
+        // } else {
+        //     this.currentTextBlockHeight += 5;
+        // }
     }
 
     nextSlide() {
@@ -73,6 +87,6 @@ export class AbstractSlideStageStage extends AbstractStage {
         this.currentTextBlockHeight = 0;
         this.slideTimer = 0;
 
-        this.startButton.hidden = true;
+        // this.startButton.hidden = true;
     }
 }

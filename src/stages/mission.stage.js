@@ -37,27 +37,36 @@ export class MissionStage extends AbstractSlideStageStage {
         this.addBackground('public/images/missions/mission_4.jpg');
         this.addBackground('public/images/missions/mission_0.jpg');
 
-        this.startButton = new ButtonSprite();
-        this.startButton.layer = 4;
-        this.startButton.minSize = 90;
-        this.startButton.maxSize = 110;
-        this.startButton.x = this.width - 80;
-        this.startButton.y = this.height - 30;
-        this.startButton.hidden = true;
-        this.startButton.onClick(this.runGame.bind(this));
+        // this.startButton = new ButtonSprite();
+        // this.startButton.layer = 4;
+        // this.startButton.minSize = 90;
+        // this.startButton.maxSize = 110;
+        // this.startButton.x = this.width - 80;
+        // this.startButton.y = this.height - 30;
+        // this.startButton.hidden = true;
+        // this.startButton.onClick(this.runGame.bind(this));
 
-        this.startButton.onReady(() => {
-            this.startButton.setLabel('Принято!');
-        });
+        // this.startButton.onReady(() => {
+        //     this.startButton.setLabel('Принято!');
+        // });
+
+        this.onStart(()=>{
+            this.drawTextBlock();
+            this.helper.fontSize = 18;
+            this.helper.onClick(()=>{
+                this.nextSlide();
+            });
+        })
     }
 
-    setMissionSlides(missionIndex, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {
+    setMissionSlides(missionIndex, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessages = null, finishMessages = null) {
         this.reset();
         this.switchBackground(missionIndex + 1); // "+1" костыльное исправление бага со switchBackground()
 
         this.slides = [];
 
-        if (startMessage !== null) {
+        if (startMessages !== null) {
+            for(const startMessage of startMessages)
             this.slides.push({
                 'text': startMessage
             });
@@ -100,21 +109,31 @@ export class MissionStage extends AbstractSlideStageStage {
             });
 
         } else {
-            this.startButton.onClick(this.restartGame.bind(this));
+            this.helper.onClick(this.restartGame.bind(this));
         }
 
-        if (finishMessage !== null) {
-            this.slides.push({
-                'text': finishMessage
-            });
+        if (finishMessages !== null) {
+            for (const finishMessage of finishMessages) {
+                this.slides.push({
+                    'text': finishMessage
+                });
+            }
         }
     }
 
     onNextSlide() {
         if (this.currentSlide === this.slides.length - 1) {
-            this.nextButton.hidden = true;
-            this.startButton.hidden = false;
+            this.helper.onClick(()=>{
+                this.runGame();
+                this.helper.hide();
+            });
+            this.helper.setButtonText('Принято');
+            // this.startButton.hidden = false;
+        } else {
+            this.helper.onClick(this.nextSlide.bind(this));
+            this.helper.setButtonText('Дальше');
         }
+        this.drawTextBlock();
     }
 
     runGame() {
