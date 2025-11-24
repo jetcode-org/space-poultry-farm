@@ -114,6 +114,10 @@ export class AbstractRootStage extends AbstractStage {
 		});
 
 		backButton.onClick(() => {
+			if (this.helper.active) {
+				this.helper.hide();
+			}
+
 			this.game.run(MonitorStage.getInstance());
 		});
 	}
