@@ -80,10 +80,9 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	createGetManureButton() {
-		const getManureButton = new ButtonSprite();
-		getManureButton.layer = 3;
-		getManureButton.x = 690;
-		getManureButton.y = 280;
+		const getManureButton = new ButtonSprite(this, 5);
+		getManureButton.x = 320;
+		getManureButton.y = 490;
 
 		getManureButton.onReady(()=>{
 			getManureButton.setLabel('Собрать помет', undefined, 70);
@@ -115,6 +114,10 @@ export class AbstractRootStage extends AbstractStage {
 		});
 
 		backButton.onClick(() => {
+			if (this.helper.active) {
+				this.helper.hide();
+			}
+
 			this.game.run(MonitorStage.getInstance());
 		});
 	}

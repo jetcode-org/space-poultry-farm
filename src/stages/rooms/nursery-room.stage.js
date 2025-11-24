@@ -1,5 +1,4 @@
 import { AbstractRootStage } from "./abstract-room.stage";
-import { CoopRoomStage } from "./coop-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
 import {GameState} from "../../services/game.state";
 
@@ -19,13 +18,14 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.forever(this.control());
         this.pen(this.drawParameters, 4);
 
-        this.nextButton = new ButtonSprite();
-        this.nextButton.x = 690;
-        this.nextButton.y = 330;
-        this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Куриц в загон', undefined, 70)
+        this.moveButton = new ButtonSprite(this, 5);
+        this.moveButton.x = 160;
+        this.moveButton.y = 490;
+        this.moveButton.onReady(() => {
+            this.moveButton.setLabel('Куриц в загон', undefined, 70)
         });
-        this.nextButton.onClick(() => {
+
+        this.moveButton.onClick(() => {
             for (let i = 0; i < this.gameState.rooms.length; i++) {
                 if (this.gameState.rooms[i].getRoomType() === GameState.COOP_ROOM_TYPE) {
                     const potentialCoop = this.gameState.rooms[i];
@@ -55,10 +55,12 @@ export class NurseryRoomStage extends AbstractRootStage {
 
     control() {
         return () => {
-            if (this.isRoomReady)
-                this.nextButton.hidden = false;
-            else
-                this.nextButton.hidden = true;
+            if (this.isRoomReady) {
+                this.moveButton.hidden = false;
+
+            } else {
+                this.moveButton.hidden = true;
+            }
         }
     }
 

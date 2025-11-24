@@ -1,7 +1,7 @@
 import {Sprite, Stage} from 'jetcode-scrubjs';
 import {GameState} from "../services/game.state";
-import {ButtonSprite} from '../sprites/button.sprite.js';
 import {HelperSprite } from "../sprites/helper.sprite.js";
+import {FpsCounterSprite} from "../sprites/fps-counter.sprite";
 
 export class AbstractStage extends Stage {
 	init() {
@@ -60,6 +60,10 @@ export class AbstractStage extends Stage {
 
 		this.helper = new HelperSprite();
 		this.helper.onClick(this.helper.hide);
+
+		if (this.game.showFps) {
+			this.createFpsCounter();
+		}
 	}
 
     drawMultilineText(context, text, x, y, maxWidth, lineHeight) {
@@ -105,6 +109,11 @@ export class AbstractStage extends Stage {
 		context.fillText(GameState.getInstance().food.toFixed(1), 280, 555);
 		context.fillText(GameState.getInstance().manure, 370, 555);
 		context.fillText(GameState.getInstance().eggshell, 440, 555);
+	}
 
+	createFpsCounter() {
+		const fpsCounter = new FpsCounterSprite(this, 10);
+		fpsCounter.x = 720;
+		fpsCounter.y = 545;
 	}
 }

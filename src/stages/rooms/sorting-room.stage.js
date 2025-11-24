@@ -31,6 +31,10 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.maxSize = 100;
         this.coolerButton.onClick(()=>{
             const moveQuantity = this.quantitySlider.currentValue;
+            if (moveQuantity === 0) {
+                return;
+            }
+
             this.gameState.frozenEggs += Math.floor(moveQuantity * 0.9);
             this.currentQuantity -= moveQuantity;
             this.quantitySlider.maxValue = this.currentQuantity;

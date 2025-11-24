@@ -18,18 +18,18 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.forever(this.control());
         this.pen(this.drawParameters, 4);
 
-        this.nextButton = new ButtonSprite();
-        this.nextButton.x = 690;
-        this.nextButton.y = 330;
-        this.nextButton.hidden = true;
+        this.moveButton = new ButtonSprite(this, 5);
+        this.moveButton.x = 160;
+        this.moveButton.y = 490;
+        this.moveButton.hidden = true;
 
         this.visualiser.moving = false;
 
-        this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Цыплят в ясли', undefined, 70)
+        this.moveButton.onReady(() => {
+            this.moveButton.setLabel('Цыплят в ясли', undefined, 70)
         });
 
-        this.nextButton.onClick(() => {
+        this.moveButton.onClick(() => {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);
             let quantityToMove = Math.round(this.currentQuantity * (0.9 - chicksMultiplayer))
 
@@ -55,10 +55,10 @@ export class IncubatorRoomStage extends AbstractRootStage {
     control() {
         return () => {
             if (this.isRoomReady) {
-                this.nextButton.hidden = false;
+                this.moveButton.hidden = false;
 
             } else {
-                this.nextButton.hidden = true;
+                this.moveButton.hidden = true;
             }
         }
     }
