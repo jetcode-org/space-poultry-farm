@@ -34,6 +34,7 @@ function showModal(text, onShow, onClose) {
  */
 const eventModalWrapper = document.querySelector('[data-event-modal]');
 const eventOverlayWrapper = document.querySelector('[data-event-modal-overlay]');
+const eventModalHeader = document.querySelector('[data-event-modal-header]');
 const eventModalContent = document.querySelector('[data-event-modal-content]');
 const eventModalImage = document.querySelector('[data-event-modal-image]');
 const answerButtons = eventModalWrapper.querySelectorAll('[data-answer-button]');
@@ -52,10 +53,11 @@ for (const answerButton of answerButtons) {
     });
 }
 
-function showEventModal(text, image, answers, onShow, onClose) {
+function showEventModal(header, text, image, answers, onShow, onClose) {
     eventModalWrapper.classList.add('active');
     eventOverlayWrapper.classList.add('active');
     eventModalImage.querySelector('img').src = image;
+    eventModalHeader.innerHTML = header;
     eventModalContent.innerHTML = text;
 
     for (const answerButton of answerButtons) {
