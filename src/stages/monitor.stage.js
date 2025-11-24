@@ -449,6 +449,7 @@ export class MonitorStage extends AbstractStage {
                 const event = this.gameState.events[eventId];
                 const correct = event.variants[variantId].correct;
                 const changeRating = event.variants[variantId].changeRating;
+                const comment = event.variants[variantId].comment;
 
                 this.gameState.eventAnswers.push(
                     {event: eventId, variant: variantId}
@@ -458,6 +459,7 @@ export class MonitorStage extends AbstractStage {
 
                 if (correct) {
                     let text = '<h2>Молодец! Правильно!</h2>';
+                    text += '<p>' + comment + '</p>'
                     text += '<p>Рейтинг изменился на: +' + changeRating + '</p>'
 
                     this.showModal(text);
@@ -466,6 +468,7 @@ export class MonitorStage extends AbstractStage {
                     const correctAnswer = this.gameState.getEventCorrectAnswer(eventId);
 
                     let text = '<h2>Ответ неправильный</h2>';
+                    text += '<p>' + comment + '</p>'
                     text += '<p>Правильный ответ: ' + correctAnswer + '</p>'
                     text += '<p>Рейтинг изменился на: ' + changeRating + '</p>'
 
@@ -490,13 +493,16 @@ export class MonitorStage extends AbstractStage {
 
     showEventModal(eventId, onButtonClick) {
         const event = this.gameState.events[eventId];
+        const header = event.name;
         const description = event.description;
+        const question = event.question;
         const image = event.image;
         const buttons = event.variants.map(variant => variant.answer);
 
-        const text = '<p>' + description + '</p>';
+        let text = '<p>' + description + '</p>';
+        text += '<p><strong>' + question + '</strong></p>';
 
-        showEventModal(text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
+        showEventModal(header, text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
             this.game.getActiveStage().run();
             onButtonClick(answer)
         });
