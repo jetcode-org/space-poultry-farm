@@ -8,14 +8,14 @@ export class FarmRoomStage extends AbstractRootStage {
     init() {
         super.init();
 
-        this.nextButton = new ButtonSprite();
-        this.nextButton.x = 690;
-        this.nextButton.y = 250;
-        this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Собрать урожай', undefined, 65)
+        this.harvestButton = new ButtonSprite(this, 5);
+        this.harvestButton.x = 160;
+        this.harvestButton.y = 490;
+        this.harvestButton.onReady(() => {
+            this.harvestButton.setLabel('Собрать урожай', undefined, 65)
         });
 
-        this.nextButton.onClick(() => {
+        this.harvestButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
             this.currentQuantity = 0;
         })
@@ -28,10 +28,10 @@ export class FarmRoomStage extends AbstractRootStage {
     control() {
         return () => {
             if (this.isRoomReady) {
-                this.nextButton.hidden = false;
+                this.harvestButton.hidden = false;
 
             } else {
-                this.nextButton.hidden = true;
+                this.harvestButton.hidden = true;
             }
         }
     }

@@ -1,6 +1,4 @@
-import { Sprite } from "jetcode-scrubjs";
 import {AbstractRootStage} from "./abstract-room.stage";
-import { SortingRoomStage } from "./sorting-room.stage";
 import { ButtonSprite } from "../../sprites/button.sprite";
 import {GameState} from "../../services/game.state";
 
@@ -17,14 +15,14 @@ export class CoopRoomStage extends AbstractRootStage {
         this.forever(this.control());
 		this.pen(this.drawParameters, 4);
 
-        this.nextButton = new ButtonSprite();
-        this.nextButton.x = 690;
-        this.nextButton.y = 330;
-        this.nextButton.onReady(() => {
-            this.nextButton.setLabel('Собрать яйца', undefined)
+        this.harvestButton = new ButtonSprite(this, 5);
+        this.harvestButton.x = 160;
+        this.harvestButton.y = 490;
+        this.harvestButton.onReady(() => {
+            this.harvestButton.setLabel('Собрать яйца', undefined)
         });
 
-        this.nextButton.onClick(() => {
+        this.harvestButton.onClick(() => {
             for (let i = 0; i < this.gameState.rooms.length; i++) {
                 if (this.gameState.rooms[i].getRoomType() === GameState.SORTING_ROOM_TYPE) {
                     const potentialSort = this.gameState.rooms[i];
@@ -54,10 +52,10 @@ export class CoopRoomStage extends AbstractRootStage {
     control() {
         return () => {
             if (this.eggsAmount > 0) {
-                this.nextButton.hidden = false;
+                this.harvestButton.hidden = false;
 
             } else {
-                this.nextButton.hidden = true;
+                this.harvestButton.hidden = true;
             }
         }
     }
