@@ -17,8 +17,8 @@ export class AbstractProgressBarSprite extends Sprite {
 
     init() {
         this.forever(this.control);
-        this.pen(this.drawProgress, 10);
-        this.pen(this.setLabel, 11);
+        this.pen(this.drawProgress.bind(this), 10);
+        this.pen(this.setLabel.bind(this), 11);
     }
 
     control() {
@@ -43,24 +43,24 @@ export class AbstractProgressBarSprite extends Sprite {
         }
     }
 
-    drawProgress(context, sprite) {
-        context.fillStyle = sprite.valueColor;
-        context.fillRect(sprite.minX, sprite.y - 10, (sprite.maxX - sprite.minX) * (sprite.currentValue / sprite.maxValue), 20);
-        if (sprite.targetValue > sprite.currentValue) {
-            context.fillStyle = sprite.moreColor;
+    drawProgress(context) {
+        context.fillStyle = this.valueColor;
+        context.fillRect(this.minX, this.y - 10, (this.maxX - this.minX) * (this.currentValue / this.maxValue), 20);
+        if (this.targetValue > this.currentValue) {
+            context.fillStyle = this.moreColor;
         } else {
-            context.fillStyle = sprite.lessColor;
+            context.fillStyle = this.lessColor;
         }
-        context.fillRect(sprite.minX + (sprite.maxX - sprite.minX) * (sprite.currentValue / sprite.maxValue), sprite.y - 10, (sprite.maxX - sprite.minX) * ((sprite.targetValue - sprite.currentValue) / sprite.maxValue), 20)
+        context.fillRect(this.minX + (this.maxX - this.minX) * (this.currentValue / this.maxValue), this.y - 10, (this.maxX - this.minX) * ((this.targetValue - this.currentValue) / this.maxValue), 20)
 
     }
 
-    setLabel(context, sprite) {
-        if (sprite.touchMouse()) {
+    setLabel(context) {
+        if (this.touchMouse()) {
             context.font = '10px Arial';
-            context.fillStyle = sprite.textColor;
+            context.fillStyle = this.textColor;
             context.textAlign = 'center';
-            context.fillText(sprite.currentValue, sprite.x, sprite.y + 3);
+            context.fillText(this.currentValue, this.x, this.y + 3);
         }
     }
 

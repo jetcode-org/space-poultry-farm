@@ -15,7 +15,7 @@ export class AbstractDragAndDropSprite extends Sprite {
 
     init() {
         this.forever(this.control);
-        this.pen(this.setLabel, 4);
+        this.pen(this.setLabel.bind(this), 4);
     }
 
     control() {
@@ -37,12 +37,12 @@ export class AbstractDragAndDropSprite extends Sprite {
         }
     }
 
-    setLabel(context, sprite) {
-        if (sprite.drawValue) {
+    setLabel(context) {
+        if (this.drawValue) {
             context.font = '10px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'center';
-            context.fillText(sprite.currentValue, sprite.x, sprite.y + 3);
+            context.fillText(this.currentValue, this.x, this.y + 3);
         }
     }
 }

@@ -45,7 +45,7 @@ export class HelperSprite extends Sprite {
         this.y = 700
 
         this.forever(this.control);
-        this.pen(this.showText, this.layer + 1);
+        this.pen(this.showText.bind(this), this.layer + 1);
     }
 
     control(){
@@ -98,27 +98,27 @@ export class HelperSprite extends Sprite {
         this.readyText = text;
     }
 
-    showText(context, helper) {
-        if (helper.active) {
-            if (helper.currentTextIndex < helper.needText.length) {
-                helper.currentText += helper.needText[helper.currentTextIndex];
-                helper.currentTextIndex += 1;
-                helper.imageTick += 1;
-                if (helper.imageTick >= helper.imageTickSpeed) {
-                    helper.personImage.nextCostume();
-                    helper.imageTick = 0;
+    showText(context) {
+        if (this.active) {
+            if (this.currentTextIndex < this.needText.length) {
+                this.currentText += this.needText[this.currentTextIndex];
+                this.currentTextIndex += 1;
+                this.imageTick += 1;
+                if (this.imageTick >= this.imageTickSpeed) {
+                    this.personImage.nextCostume();
+                    this.imageTick = 0;
                 }
             } else {
-                helper.personImage.switchCostume(0);
-                helper.setReady();
+                this.personImage.switchCostume(0);
+                this.setReady();
             }
 
             context.fillStyle = '#ffffff';
             context.font = '20px Arial';
-            if (helper.showPerson) {
-                helper.drawMultilineText(context, helper.currentText, 200, 450, 550, 30);
+            if (this.showPerson) {
+                this.drawMultilineText(context, this.currentText, 200, 450, 550, 30);
             } else {
-                helper.drawMultilineText(context, helper.currentText, 50, 450, 700, 30);
+                this.drawMultilineText(context, this.currentText, 50, 450, 700, 30);
             }
         }
     }
