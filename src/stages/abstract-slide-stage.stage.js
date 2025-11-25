@@ -32,7 +32,7 @@ export class AbstractSlideStageStage extends AbstractStage {
 
         // this.pen(this.drawTextBlock.bind(this));
 
-        this.onReady(()=>{
+        this.onStart(()=>{
             this.drawTextBlock();
             this.helper.onClick(()=>{
                 this.nextSlide();

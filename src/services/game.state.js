@@ -37,6 +37,19 @@ export class GameState {
     static FARM_ROOM_TYPE = 'farm_room_type';
 
     /**
+     * Параметры для посмещения комнат
+     */
+
+    visits = {
+        [GameState.EMPTY_ROOM_TYPE] : true,
+        [GameState.SORTING_ROOM_TYPE] : true,
+        [GameState.INCUBATOR_ROOM_TYPE] : true,
+        [GameState.NURSERY_ROOM_TYPE] : true,
+        [GameState.COOP_ROOM_TYPE] : true,
+        [GameState.FARM_ROOM_TYPE] : true,
+    };
+
+    /**
      * Корабли
      */
     shipsConfig = [

@@ -49,10 +49,10 @@ export class OutroStage extends AbstractSlideStageStage {
 
     init() {
         super.init();
-
+        
         this.addBackground('public/images/outro/success.jpg');
         this.addBackground('public/images/outro/fail.jpg');
-
+        
         // this.startButton = new ButtonSprite();
         // this.startButton.layer = 4;
         // this.startButton.minSize = 90;

@@ -13,8 +13,6 @@ export class AbstractRootStage extends AbstractStage {
 	maxQuantity = 20;
 	currentQuantity = 0;
 
-	isFirstUse = false;
-
 	cleaningValue = 5;
 	robot = null;
 	robotChargeDif = 0;
@@ -65,7 +63,8 @@ export class AbstractRootStage extends AbstractStage {
 		this.onStart(() => {
 			this.visualizerSpawn();
 
-            if (this.isFirstUse && this.gameState.teachingMode) {
+            if (this.gameState.visits[this.getRoomType()] && this.gameState.teachingMode) {
+				this.gameState.visits[this.getRoomType()] = false;
 				this.helper.show(this.getHelpText(), 'Boss');
 				this.helper.setButtonText('Дальше');
 				this.helper.onClick(()=>{
@@ -308,7 +307,6 @@ export class AbstractRootStage extends AbstractStage {
 		this.helper.onClick(()=>{
 			this.helper.show(GameState.getInstance().getHeroAnswer('Normal') + ', босс!', 'Hero');
 			this.helper.setButtonText('Конец');
-			this.isFirstUse = false;
 			this.helper.onClick(()=>{this.helper.hide()});
 		});
 	}

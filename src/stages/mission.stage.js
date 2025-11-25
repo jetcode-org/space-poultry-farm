@@ -8,6 +8,7 @@ export class MissionStage extends AbstractSlideStageStage {
     static instance;
     textBlockHeight = 180;
     nextButtonLabel = 'Задание';
+    isTheEnd = false;
 
     static getInstance() {
         if (!MissionStage.instance) {
@@ -107,9 +108,11 @@ export class MissionStage extends AbstractSlideStageStage {
             this.slides.push({
                 'text': nextMission['task']
             });
+            this.isTheEnd = false;
 
         } else {
-            this.helper.onClick(this.restartGame.bind(this));
+            this.isTheEnd = true;
+            
         }
 
         if (finishMessages !== null) {
@@ -123,10 +126,18 @@ export class MissionStage extends AbstractSlideStageStage {
 
     onNextSlide() {
         if (this.currentSlide === this.slides.length - 1) {
-            this.helper.onClick(()=>{
-                this.runGame();
-                this.helper.hide();
-            });
+            if (this.isTheEnd) {
+                this.helper.onClick(()=>{
+                    this.restartGame();
+                    this.helper.hide();
+                });
+            }
+            else {
+                this.helper.onClick(()=>{
+                    this.runGame();
+                    this.helper.hide();
+                });
+            }
             this.helper.setButtonText('Принято');
             // this.startButton.hidden = false;
         } else {

@@ -104,7 +104,7 @@ export class MonitorStage extends AbstractStage {
         this.licenceProgress.setWidth(60);
 
         //создание роботов
-        this.createDrones(6);
+        // this.createDrones(6);
 
         // Создание комнат
         this.createRooms();
@@ -184,6 +184,10 @@ export class MonitorStage extends AbstractStage {
     }
 
     createDrones(count) {
+        for (const drone of this.gameState.drones) {
+            drone.delete();
+        }
+
         for (let i = 0; i < count; i++) {
             const drone = new RobotSprite(this);
 
@@ -398,6 +402,7 @@ export class MonitorStage extends AbstractStage {
 
             this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, changeRating, null, finishMessage);
             this.gameState.currentMission += 1;
+            this.createDrones(this.gameState.currentMission * 2);
 
             this.gameState.resetViolations();
         }

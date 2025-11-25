@@ -11,8 +11,6 @@ export class RoomFactory {
     static build(roomType) {
         const room = RoomFactory.getRoomByType(roomType);
 
-        room.isFirstUse = true;
-
         return room;
     }
 
