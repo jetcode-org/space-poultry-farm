@@ -9,6 +9,8 @@ import {RoomFactory} from "../services/room.factory";
 import { ShipSprite } from '../sprites/ship.sprite';
 import { ProgressBarSprite } from '../sprites/progress-bar.sprite';
 import {OutroStage} from "./outro.stage";
+import { ShipProgressBarSprite } from '../sprites/ship-progress-bar.sprite';
+import { LicenceProgressBarSprite } from '../sprites/licence-progress-bar.sprite';
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -54,22 +56,26 @@ export class MonitorStage extends AbstractStage {
         this.sliderPlanet1.addCostume('public/images/icons/space_progress/planet_1.png');
         this.sliderPlanet1.x = 170;
         this.sliderPlanet1.y = 500;
+        this.sliderPlanet1.layer = 3;
 
         this.sliderPlanet2 = new Sprite();
         this.sliderPlanet2.addCostume('public/images/icons/space_progress/planet_2.png');
         this.sliderPlanet2.x = 300;
         this.sliderPlanet2.y = 500;
+        this.sliderPlanet2.layer = 3;
 
         this.sliderPlanet3 = new Sprite();
         this.sliderPlanet3.addCostume('public/images/icons/space_progress/planet_3.png');
         this.sliderPlanet3.x = 420;
         this.sliderPlanet3.y = 500;
+        this.sliderPlanet3.layer = 3;
 
         this.sliderPlanet4 = new Sprite();
         this.sliderPlanet4.addCostume('public/images/icons/space_progress/planet_4.png');
         this.sliderPlanet4.x = 515;
         this.sliderPlanet4.y = 505;
         this.sliderPlanet4.size = 200;
+        this.sliderPlanet4.layer = 3;
 
         this.game.onUserInteracted(() => {
             this.playSound('background_music', {
@@ -84,27 +90,28 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.size = 100;
         this.progressSlider.layer = 4;
         this.progressSlider.currentValue = 50;
-        this.progressSlider.lessColor = 'red';
-        this.progressSlider.moreColor = 'red';
 		this.progressSlider.setWidth(470);
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
 
+        this.progressProgress = new ShipProgressBarSprite();
+        this.progressProgress.x = 290;
+        this.progressProgress.y = 502;
+        this.progressProgress.layer = 2;
+        this.progressProgress.showValue = false;
+        this.progressProgress.setWidth(470);
+        this.progressProgress.targetValue = 200;
+
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
+        this.progressProgress.maxValue = GameState.getInstance().limitTime;
 
         // спрайт готовности
         this.readySprite = new Sprite();
         this.readySprite.addCostume('public/images/icons/room_is_ready.png')
         this.readySprite.size = 50
         this.readySprite.hidden = true;
-
-        //ПрогрессБар для лицензии (пока что регулируется с помощью a и d)
-        this.licenceProgress = new ProgressBarSprite();
-        this.licenceProgress.x = 200;
-        this.licenceProgress.y = 50;
-        this.licenceProgress.setWidth(60);
 
         //создание роботов
         // this.createDrones(6);
@@ -272,6 +279,7 @@ export class MonitorStage extends AbstractStage {
         }
 
         this.progressSlider.setCurrentValue(this.gameState.passedTime);
+        this.progressProgress.targetValue = this.gameState.passedTime;
 
         this.drawReadyRooms();
 	}

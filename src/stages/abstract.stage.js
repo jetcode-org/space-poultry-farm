@@ -3,6 +3,7 @@ import {GameState} from "../services/game.state";
 import {HelperSprite } from "../sprites/helper.sprite.js";
 import {FpsCounterSprite} from "../sprites/fps-counter.sprite";
 import {BlankButtonSprite} from "../sprites/blank-button.sprite";
+import {LicenceProgressBarSprite} from '../sprites/licence-progress-bar.sprite.js';
 
 export class AbstractStage extends Stage {
 	init() {
@@ -15,6 +16,19 @@ export class AbstractStage extends Stage {
 		if (this.game.showFps) {
 			this.createFpsCounter();
 		}
+
+		//ПрогрессБар для лицензии (пока что регулируется с помощью a и d)
+        this.licenceProgress = new LicenceProgressBarSprite();
+        this.licenceProgress.x = 246;
+        this.licenceProgress.y = 40;
+        this.licenceProgress.layer = 3;
+        this.licenceProgress.thickness = 16;
+        this.licenceProgress.triangleWidth = 8;
+        this.licenceProgress.setWidth(76);
+
+		this.forever(()=>{
+			this.licenceProgress.targetValue = this.gameState.rating;
+		});
 	}
 
 	createCounters() {

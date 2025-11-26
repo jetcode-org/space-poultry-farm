@@ -41,7 +41,7 @@ export class AbstractSliderSprite extends Sprite {
                 context.stroke();
             }
         }, 10);
-        this.pen(this.setLabel, 10);
+        this.pen(this.setLabel.bind(this), 10);
     }
 
     control() {
@@ -70,12 +70,12 @@ export class AbstractSliderSprite extends Sprite {
 
     }
 
-    setLabel(context, sprite) {
-        if (sprite.drawValue) {
+    setLabel(context) {
+        if (this.drawValue) {
             context.font = '10px Arial';
             context.fillStyle = 'white';
             context.textAlign = 'center';
-            context.fillText(sprite.currentValue, sprite.x, sprite.y + 3);
+            context.fillText(this.currentValue, this.x, this.y + 3);
         }
     }
 

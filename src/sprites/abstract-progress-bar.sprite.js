@@ -12,13 +12,17 @@ export class AbstractProgressBarSprite extends Sprite {
     minValue = 0;
     maxValue = 100;
 
+    thickness = 20
+
+    showValue = true;
+
     minX = 0;
     maxX = 0;
 
     init() {
         this.forever(this.control);
-        this.pen(this.drawProgress.bind(this), 10);
-        this.pen(this.setLabel.bind(this), 11);
+        this.pen(this.drawProgress.bind(this), this.layer);
+        this.pen(this.setLabel.bind(this), this.layer);
     }
 
     control() {
@@ -45,18 +49,18 @@ export class AbstractProgressBarSprite extends Sprite {
 
     drawProgress(context) {
         context.fillStyle = this.valueColor;
-        context.fillRect(this.minX, this.y - 10, (this.maxX - this.minX) * (this.currentValue / this.maxValue), 20);
+        context.fillRect(this.minX, this.y - (this.thickness / 2), (this.maxX - this.minX) * (this.currentValue / this.maxValue), this.thickness);
         if (this.targetValue > this.currentValue) {
             context.fillStyle = this.moreColor;
         } else {
             context.fillStyle = this.lessColor;
         }
-        context.fillRect(this.minX + (this.maxX - this.minX) * (this.currentValue / this.maxValue), this.y - 10, (this.maxX - this.minX) * ((this.targetValue - this.currentValue) / this.maxValue), 20)
+        context.fillRect(this.minX + (this.maxX - this.minX) * (this.currentValue / this.maxValue), this.y - (this.thickness / 2), (this.maxX - this.minX) * ((this.targetValue - this.currentValue) / this.maxValue), this.thickness)
 
     }
 
     setLabel(context) {
-        if (this.touchMouse()) {
+        if (this.touchMouse() && this.showValue) {
             context.font = '10px Arial';
             context.fillStyle = this.textColor;
             context.textAlign = 'center';
