@@ -1,11 +1,10 @@
 import {AbstractButtonSprite} from "./abstract-button.sprite";
 
 export class InfoButtonSprite extends AbstractButtonSprite {
-    minSize = 200;
-    maxSize = 225;
-
     init(){
-        this.addCostume('public/images/icons/info.png');
+        this.addCostume('public/images/ui/standard_button/default.png');
+        this.addCostume('public/images/ui/standard_button/hovered.png');
+        this.addCostume('public/images/ui/standard_button/disabled.png');
 
         super.init();
     }

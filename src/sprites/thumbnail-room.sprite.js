@@ -1,8 +1,6 @@
 import {AbstractButtonSprite} from "./abstract-button.sprite";
 
 export class ThumbnailRoomSprite extends AbstractButtonSprite {
-    minSize = 400;
-    maxSize = 415;
     active = false;
 
     init() {

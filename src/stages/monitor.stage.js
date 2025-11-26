@@ -34,17 +34,20 @@ export class MonitorStage extends AbstractStage {
 
         this.gameState = GameState.getInstance();
 
-        this.addBackground('public/images/common/main_monitor.png');
+        this.addBackground('public/images/rooms/background_space.png');
         this.addSound('public/sounds/background_music.mp3', 'background_music');
 
-        // слой с схемой-космическим кораблем
-        this.bgShipSprite = new Sprite();
-        this.bgShipSprite.addCostume('public/images/monitor/main_screen.png');
-        this.bgShipSprite.leftX = 300;
-        this.bgShipSprite.setAlpha = 0.5;
-        this.bgShipSprite.br = 0;
-        this.bgShipSprite.time = 0.9;
-        //this.bgShipSprite.filter = 'brightness(0.9)';
+        // Создание звезд
+        this.createStars()
+
+        const monitorBg = new Sprite(this, 1);
+        monitorBg.addCostume('public/images/common/main_monitor.png');
+
+        // Корабль
+        const ship = new Sprite(this, 1);
+        ship.addCostume('public/images/monitor/ship.png');
+        ship.topY = 290;
+        ship.leftX = 300;
 
         // Картинки для прогресса миссии на слайдер
         this.sliderPlanet1 = new Sprite();
@@ -113,7 +116,7 @@ export class MonitorStage extends AbstractStage {
         const eggQualityInfoButton = new InfoButtonSprite(this, 1);
         eggQualityInfoButton.x = 550;
         eggQualityInfoButton.y = 455;
-        eggQualityInfoButton.hidden = false;
+        eggQualityInfoButton.hidden = true;
 
         eggQualityInfoButton.onClick(() => {
             const nextEggQualityClass = this.gameState.getNextEggQualityClass();
@@ -140,7 +143,7 @@ export class MonitorStage extends AbstractStage {
         });
 
         this.forever(this.gameTick, 1000);
-        this.pen(this.drawHelpBlock.bind(this));
+        this.pen(this.drawHelpBlock.bind(this), 4);
     }
 
     addPlus(value) {
@@ -214,7 +217,7 @@ export class MonitorStage extends AbstractStage {
             );
             this.gameState.currentMission++;
         }
-        
+
         if (this.gameState.isReadingHelper) {
             return;
         }
@@ -311,19 +314,11 @@ export class MonitorStage extends AbstractStage {
             context.fillText('Планета: ' + mission['name'], 70, 380)
             context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
             context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
-            context.fillText('Загрязненность: ' + this.gameState.pollution + '%', 70, 455)
         }
+        context.fillText('Загрязненность: ' + this.gameState.pollution + '%', 70, 455)
 
-        context.fillText('Рейтинг: ' + this.gameState.rating, 320, 410);
-        context.fillText('Деньги: ' + this.gameState.money + '$', 320, 435);
         context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , 320, 460);
-
-        // для монитора декор
-        this.bgShipSprite.time += 0.01
-        this.bgShipSprite.br = Math.sin(this.bgShipSprite.time) * 20
-        //this.bgShipSprite.filter = 'brightness('+ this.bgShipSprite.br +')';
-        this.bgShipSprite.filter = 'hue-rotate('+this.bgShipSprite.br+'deg) opacity(80%)';
-	}
+    }
 
     showMission(currentQuota, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {
         MissionStage.getInstance().setMissionSlides(
@@ -351,22 +346,24 @@ export class MonitorStage extends AbstractStage {
     }
 
     drawHelpBlock(context) {
-        if (!this.helpText) {
-            return;
-        }
+        context.font = '14px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'left';
 
         this.helpTextLifetime--;
         if (this.helpTextLifetime <= 0) {
             this.helpText = null;
-            return;
         }
 
-        context.font = 'bold 18px Arial';
-        context.fillStyle = '#a8e2c0ff';
-        context.fillText('Справка:', 610, 400)
+        let helpText = 'Наведите курсор мыши на игровой элемент для получения подробной информации';
+        context.fillStyle = '#c0c0c0';
 
-        context.font = '14px Arial';
-        this.drawMultilineText(context, this.helpText, 610, 430, 165, 20);
+        if (this.helpText) {
+            context.fillStyle = 'white';
+            helpText = this.helpText;
+        }
+
+        this.drawMultilineText(context, helpText, 620, 195, 155, 20);
     }
 
     missionProcess() {

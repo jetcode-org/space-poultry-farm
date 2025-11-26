@@ -27,24 +27,21 @@ export class AbstractRootStage extends AbstractStage {
 			this.monitorStage = MonitorStage.getInstance();
 		})
 
-		this.addBackground('public/images/common/main_monitor.png');
+		this.addBackground('public/images/rooms/background_space.png');
+
 		this.addSound('public/sounds/ready.mp3', 'ready');
 		this.addSound('public/sounds/activation.mp3', 'activation');
 
-		this.bgSpace = new Sprite()
-		this.bgSpace.addCostume('public/images/rooms/background_space.png')
-		this.bgSpace.leftX = 300;
-		this.bgSpace.layer = 3;
+		// Создание звезд
+		this.createStars()
 
-		this.bgStar = new Sprite();
-		this.bgStar.addCostume('public/images/rooms/star.png');
-		this.bgStar.hidden = true;
+		const backgroundSprite = new Sprite(this, 1);
+		backgroundSprite.addCostume(this.getBackgroundImage());
+		backgroundSprite.x = 400;
+		backgroundSprite.y = 300
 
-		this.backgroundSprite = new Sprite();
-		this.backgroundSprite.addCostume(this.getBackgroundImage());
-		this.backgroundSprite.layer = 5;
-		this.backgroundSprite.x = 300;
-		this.backgroundSprite.y = 300
+		const monitorBg = new Sprite(this, 2);
+		monitorBg.addCostume('public/images/common/main_monitor.png');
 
 		this.createBackButton();
 		this.createInstructionButton();
@@ -57,7 +54,6 @@ export class AbstractRootStage extends AbstractStage {
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
 
-		this.forever(this.spawStars, 2)
 		this.pen(this.drawHelpBlock.bind(this));
 
 		this.onStart(() => {
@@ -272,23 +268,6 @@ export class AbstractRootStage extends AbstractStage {
 	//Перезаписать в классе комнаты, чтобы задать нужные костюмы в спрайт Visualiser
 	setVisCostumes() {
 
-	}
-
-	spawStars() {
-		let c = this.bgStar.createClone();
-		c.x =  575;
-		c.y = this.game.getRandom(30, 570);
-		c.layer = 4;
-		c.size = this.game.getRandom(50, 100);
-		c.hidden = false
-
-		c.forever(function() {
-			c.x -= c.size / 20
-
-			if(c.x < 30) {
-				c.delete()
-			}
-		})
 	}
 
 	drawHelpBlock(context) {

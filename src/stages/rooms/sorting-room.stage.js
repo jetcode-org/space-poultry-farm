@@ -27,8 +27,6 @@ export class SortingRoomStage extends AbstractRootStage {
 
         //Холодильник
         this.coolerButton = new ButtonSprite();
-        this.coolerButton.minSize = 90;
-        this.coolerButton.maxSize = 100;
         this.coolerButton.onClick(()=>{
             const moveQuantity = this.quantitySlider.currentValue;
             if (moveQuantity === 0) {
@@ -44,13 +42,11 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.y = 300;
         this.coolerButton.layer = 10;
         this.coolerButton.onReady(()=>{
-            this.coolerButton.setLabel('Холодильник', undefined, 70);
+            this.coolerButton.setLabel('Холодильник', undefined, 16);
         })
 
         //инкубатор
         this.incubatorButton = new ButtonSprite();
-        this.incubatorButton.minSize = 90;
-        this.incubatorButton.maxSize = 100;
         this.incubatorButton.onClick(()=>{
             const moveQuantity = this.quantitySlider.currentValue;
             if (moveQuantity === 0) {
@@ -81,7 +77,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.incubatorButton.y = 200;
         this.incubatorButton.layer = 10;
         this.incubatorButton.onReady(()=>{
-            this.incubatorButton.setLabel('Инкубатор', undefined, 70);
+            this.incubatorButton.setLabel('Инкубатор', undefined, 16);
         })
 
         this.quantitySlider.hidden = true;
