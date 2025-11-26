@@ -117,6 +117,7 @@ export class HelperSprite extends Sprite {
 
             context.fillStyle = '#ffffff';
             context.font = this.fontSize + 'px Arial';
+            context.textAlign = 'start';
             if (this.showPerson) {
                 this.drawMultilineText(context, this.currentText, 200, 450, 550, 30);
             } else {
