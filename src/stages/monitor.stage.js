@@ -51,42 +51,50 @@ export class MonitorStage extends AbstractStage {
         ship.topY = 290;
         ship.leftX = 300;
 
+        // Площадка для дронов
+        const dronePlatform = new Sprite(this, 1);
+        dronePlatform.addCostume('public/images/monitor/drone_default.png');
+        dronePlatform.x = ship.x + 140;
+        dronePlatform.y = ship.y + 140;
+
         // Картинки для прогресса миссии на слайдер
+
+        this.progressProgress = new ShipProgressBarSprite();
+        this.progressProgress.x = 290;
+        this.progressProgress.y = 550;
+        this.progressProgress.layer = 2;
+        this.progressProgress.showValue = false;
+        this.progressProgress.setWidth(470);
+        this.progressProgress.targetValue = 200;
+
         this.sliderPlanet1 = new Sprite();
-        this.sliderPlanet1.addCostume('public/images/icons/space_progress/planet_1.png');
+        this.sliderPlanet1.addCostume('public/images/ui/space_progress/planet_1.png');
         this.sliderPlanet1.x = 170;
-        this.sliderPlanet1.y = 500;
+        this.sliderPlanet1.y = 550;
         this.sliderPlanet1.layer = 3;
 
         this.sliderPlanet2 = new Sprite();
-        this.sliderPlanet2.addCostume('public/images/icons/space_progress/planet_2.png');
+        this.sliderPlanet2.addCostume('public/images/ui/space_progress/planet_2.png');
         this.sliderPlanet2.x = 300;
-        this.sliderPlanet2.y = 500;
+        this.sliderPlanet2.y = 550;
         this.sliderPlanet2.layer = 3;
 
         this.sliderPlanet3 = new Sprite();
-        this.sliderPlanet3.addCostume('public/images/icons/space_progress/planet_3.png');
+        this.sliderPlanet3.addCostume('public/images/ui/space_progress/planet_3.png');
         this.sliderPlanet3.x = 420;
-        this.sliderPlanet3.y = 500;
+        this.sliderPlanet3.y = 550;
         this.sliderPlanet3.layer = 3;
 
         this.sliderPlanet4 = new Sprite();
-        this.sliderPlanet4.addCostume('public/images/icons/space_progress/planet_4.png');
+        this.sliderPlanet4.addCostume('public/images/ui/space_progress/planet_4.png');
         this.sliderPlanet4.x = 515;
-        this.sliderPlanet4.y = 505;
-        this.sliderPlanet4.size = 200;
+        this.sliderPlanet4.y = 550;
         this.sliderPlanet4.layer = 3;
-
-        this.game.onUserInteracted(() => {
-            this.playSound('background_music', {
-                loop: true
-            });
-        })
 
         // слайдер для кораблика
         this.progressSlider = new ShipSprite();
         this.progressSlider.x = 290;
-        this.progressSlider.y = 500;
+        this.progressSlider.y = 550;
         this.progressSlider.size = 100;
         this.progressSlider.layer = 4;
         this.progressSlider.currentValue = 50;
@@ -94,14 +102,6 @@ export class MonitorStage extends AbstractStage {
         this.progressSlider.canMove = false;
         this.progressSlider.drawLine = false;
         this.progressSlider.drawValue = false;
-
-        this.progressProgress = new ShipProgressBarSprite();
-        this.progressProgress.x = 290;
-        this.progressProgress.y = 502;
-        this.progressProgress.layer = 2;
-        this.progressProgress.showValue = false;
-        this.progressProgress.setWidth(470);
-        this.progressProgress.targetValue = 200;
 
         // получаем данные из состояния игры
         this.progressSlider.maxValue = GameState.getInstance().limitTime;
@@ -148,6 +148,12 @@ export class MonitorStage extends AbstractStage {
 
             this.showModal(text);
         });
+
+        this.game.onUserInteracted(() => {
+            this.playSound('background_music', {
+                loop: true
+            });
+        })
 
         this.forever(this.gameTick, 1000);
         this.pen(this.drawHelpBlock.bind(this), 4);
@@ -323,9 +329,6 @@ export class MonitorStage extends AbstractStage {
             context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
             context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
         }
-        context.fillText('Загрязненность: ' + this.gameState.pollution + '%', 70, 455)
-
-        context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , 320, 460);
     }
 
     showMission(currentQuota, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {

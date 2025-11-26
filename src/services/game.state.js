@@ -56,84 +56,69 @@ export class GameState {
         [
             {
                 'type': GameState.SORTING_ROOM_TYPE,
-                'x': 206,
-                'y': 152,
+                'x': 315,
+                'y': 198,
             },
             {
                 'type': GameState.INCUBATOR_ROOM_TYPE,
-                'x': 292,
-                'y': 152,
+                'x': 192,
+                'y': 257,
             },
             {
                 'type': GameState.NURSERY_ROOM_TYPE,
-                'x': 377,
-                'y': 152,
+                'x': 291,
+                'y': 257,
             },
             {
                 'type': GameState.COOP_ROOM_TYPE,
-                'x': 477,
-                'y': 200,
+                'x': 391,
+                'y': 257,
             },
             {
                 'type': GameState.FARM_ROOM_TYPE,
-                'x': 477,
-                'y': 357,
+                'x': 491,
+                'y': 257,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 206,
-                'y': 244,
+                'x': 192,
+                'y': 314,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 292,
-                'y': 198,
+                'x': 291,
+                'y': 314,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 378,
-                'y': 198,
+                'x': 391,
+                'y': 314,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 377,
-                'y': 357,
+                'x': 491,
+                'y': 314,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 206,
-                'y': 198,
+                'x': 192,
+                'y': 373,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 292,
-                'y': 244,
+                'x': 291,
+                'y': 373,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 377,
-                'y': 244,
+                'x': 391,
+                'y': 373,
             },
             {
                 'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 476,
-                'y': 244,
+                'x': 491,
+                'y': 373,
             },
-            {
-                'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 206,
-                'y': 288,
-            },
-            {
-                'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 330,
-                'y': 291,
-            },
-            {
-                'type': GameState.EMPTY_ROOM_TYPE,
-                'x': 422,
-                'y': 291,
-            }
         ]
     ];
     currentShip = 0;
@@ -204,7 +189,10 @@ export class GameState {
             'helpText': 'Незанятый модуль, готовый к преобразованию в любой производственный отсек.',
             'instructionText': 'Изучите доступные варианты и создайте отсек, который максимально соответствует вашим текущим производственным задачам',
             'backgroundImage': 'public/images/rooms/backgrounds/empty.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/empty.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/empty_default.png',
+                'public/images/rooms/thumbnails/empty_hovered.png'
+            ],
             'shopImage': null,
         },
         [GameState.SORTING_ROOM_TYPE]: {
@@ -213,7 +201,10 @@ export class GameState {
             'helpText': 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.',
             'instructionText': 'Распределяйте яйца между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)',
             'backgroundImage': 'public/images/rooms/backgrounds/sorting.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/sorting.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/sorting_room_default.png',
+                'public/images/rooms/thumbnails/sorting_room_hovered.png'
+            ],
             'shopImage': null,
         },
         [GameState.INCUBATOR_ROOM_TYPE]: {
@@ -222,7 +213,10 @@ export class GameState {
             'helpText': 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.',
             'instructionText': 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе',
             'backgroundImage': 'public/images/rooms/backgrounds/incubator.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/incubator.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/incubator_default.png',
+                'public/images/rooms/thumbnails/incubator_hovered.png'
+            ],
             'shopImage': 'public/images/rooms/shop/incubator.png',
         },
         [GameState.NURSERY_ROOM_TYPE]: {
@@ -231,7 +225,10 @@ export class GameState {
             'helpText': 'Цыплятник - модуль для выращивания молодняка до взрослых особей.',
             'instructionText': 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета',
             'backgroundImage': 'public/images/rooms/backgrounds/nursery.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/nursery.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/nursery_default.png',
+                'public/images/rooms/thumbnails/nursery_hovered.png'
+            ],
             'shopImage': 'public/images/rooms/shop/nursery.png',
         },
         [GameState.COOP_ROOM_TYPE]: {
@@ -240,7 +237,10 @@ export class GameState {
             'helpText': 'Стадо - основное помещение содержания взрослых кур-несушек.',
             'instructionText': 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек',
             'backgroundImage': 'public/images/rooms/backgrounds/coop.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/coop.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/coop_default.png',
+                'public/images/rooms/thumbnails/coop_hovered.png'
+            ],
             'shopImage': 'public/images/rooms/shop/coop.png',
         },
         [GameState.FARM_ROOM_TYPE]: {
@@ -249,7 +249,10 @@ export class GameState {
             'helpText': 'Ферма - гидропонный комплекс производства кормовых культур.',
             'instructionText': 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур',
             'backgroundImage': 'public/images/rooms/backgrounds/farm.png',
-            'thumbnailImage': 'public/images/rooms/thumbnails/farm.png',
+            'thumbnailImages': [
+                'public/images/rooms/thumbnails/farm_default.png',
+                'public/images/rooms/thumbnails/farm_hovered.png'
+            ],
             'shopImage': 'public/images/rooms/shop/farm.png',
         },
     };
@@ -413,7 +416,7 @@ export class GameState {
     isReadingHelper = false;
 
     // Рейтинг (Лицензия Таврос)
-    rating = 50;
+    rating =50;
 
     // Деньги - основная игровая валюта
     money = 20000;

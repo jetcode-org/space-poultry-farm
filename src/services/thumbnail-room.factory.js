@@ -8,20 +8,20 @@ import {GameState} from "./game.state";
 export class ThumbnailRoomFactory {
     static build(monitorStage, room, x, y, chargeDif = 5) {
         const label = room.getLabel();
-        const thumbnailImage = room.getThumbnailImage();
+        const thumbnailImages = room.getThumbnailImages();
 
-        const thumbnail = new ThumbnailRoomSprite(monitorStage, 1, [thumbnailImage]);
+        const thumbnail = new ThumbnailRoomSprite(monitorStage, 1, thumbnailImages);
         thumbnail.x = x;
         thumbnail.y = y;
 
         if (room.getRoomType() !== GameState.EMPTY_ROOM_TYPE) {
-            const robotSlot = new RobotStationSprite(monitorStage);
-            robotSlot.x = x - 30;
-            robotSlot.y = y - 15;
-            robotSlot.layer = 4;
-            robotSlot.addTag('cleanStation');
-            robotSlot.size = 40;
-            robotSlot.room = room;
+            // const robotSlot = new RobotStationSprite(monitorStage);
+            // robotSlot.x = x - 30;
+            // robotSlot.y = y - 15;
+            // robotSlot.layer = 4;
+            // robotSlot.addTag('cleanStation');
+            // robotSlot.size = 40;
+            // robotSlot.room = room;
         }
 
         room.robotChargeDif = chargeDif;

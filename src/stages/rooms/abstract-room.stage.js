@@ -3,6 +3,7 @@ import {ButtonSprite} from "../../sprites/button.sprite";
 import {MonitorStage} from "../monitor.stage";
 import {AbstractStage} from "../abstract.stage";
 import {GameState} from "../../services/game.state";
+import {BlankButtonSprite} from "../../sprites/blank-button.sprite";
 
 export class AbstractRootStage extends AbstractStage {
 	thumbnail;
@@ -44,7 +45,6 @@ export class AbstractRootStage extends AbstractStage {
 		monitorBg.addCostume('public/images/common/main_monitor.png');
 
 		this.createBackButton();
-		this.createInstructionButton();
 		this.createGetManureButton();
 
 		this.forever(this.gameTickAllRooms, 1000);
@@ -99,14 +99,14 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	createBackButton() {
-		const backButton = new ButtonSprite();
-		backButton.layer = 10;
-		backButton.x = 690;
-		backButton.y = 130;
+		const backButton = new BlankButtonSprite(this, 3, [
+			'public/images/ui/back_button/default.png',
+			'public/images/ui/back_button/hovered.png'
+		]);
 
-		backButton.onReady(()=>{
-			backButton.setLabel('Назад');
-		});
+		backButton.layer = 10;
+		backButton.x = 555;
+		backButton.y = 95;
 
 		backButton.onClick(() => {
 			if (this.helper.active) {
@@ -117,21 +117,8 @@ export class AbstractRootStage extends AbstractStage {
 		});
 	}
 
-	createInstructionButton() {
-		const button = new ButtonSprite();
-		button.layer = 8;
-		button.minSize = 70;
-		button.maxSize = 80;
-		button.x = 655;
-		button.y = 540;
-
-		button.onReady(()=>{
-			button.setLabel('Помощь');
-		});
-
-		button.onClick(() => {
-			this.showInstructionDialog();
-		});
+	helpOnClick() {
+		this.showInstructionDialog();
 	}
 
 	showInstructionModal() {
@@ -166,8 +153,8 @@ export class AbstractRootStage extends AbstractStage {
 		return this.getRoomConfigParam('backgroundImage');
 	}
 
-	getThumbnailImage() {
-		return this.getRoomConfigParam('thumbnailImage');
+	getThumbnailImages() {
+		return this.getRoomConfigParam('thumbnailImages');
 	}
 
 	getShopImage() {

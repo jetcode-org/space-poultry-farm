@@ -3,7 +3,7 @@ import { GameState } from "../services/game.state";
 import { AbstractProgressBarSprite } from "./abstract-progress-bar.sprite";
 
 export class LicenceProgressBarSprite extends AbstractProgressBarSprite {
-
+    valueColor = '#42b7b7';
     triangleWidth = 10;
     showValue = false;
 

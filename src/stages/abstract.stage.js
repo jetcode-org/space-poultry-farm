@@ -9,6 +9,7 @@ export class AbstractStage extends Stage {
 	init() {
 		this.createCounters();
 		this.createPause();
+		this.createHelp();
 
 		this.helper = new HelperSprite();
 		this.helper.onClick(this.helper.hide);
@@ -95,10 +96,13 @@ export class AbstractStage extends Stage {
 			context.fillStyle = 'white';
 			context.textAlign = 'start';
 
-
 			// Деньги и Рейтинг
 			context.font = 'bold 15px Arial';
 			context.fillText(this.gameState.money + '$', money.x - 15, money.y + 5);
+
+			context.lineWidth = 2;
+			context.strokeStyle = 'black';
+			context.strokeText(this.gameState.rating, rating.x, rating.y + 5); // Сначала обводка
 			context.fillText(this.gameState.rating, rating.x, rating.y + 5);
 
 			// Цель
@@ -117,15 +121,18 @@ export class AbstractStage extends Stage {
 			context.font = 'bold 18px Arial';
 			context.fillText('Справка', referencePanel.x - 90, referencePanel.y - 87)
 
+			// Ресурсы
+			context.font = 'bold 12px Arial';
+			context.fillStyle = '#9da8b0';
 
-			context.fillText('Качество яйца: ' + this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , 320, 460);
-
-			context.fillText(GameState.getInstance().frozenEggs, 70, 555);
-			context.fillText(GameState.getInstance().chick, 140, 555);
-			context.fillText(GameState.getInstance().chicken, 210, 555);
-			context.fillText(GameState.getInstance().food.toFixed(1), 280, 555);
-			context.fillText(GameState.getInstance().manure, 370, 555);
-			context.fillText(GameState.getInstance().eggshell, 440, 555);
+			context.fillText(this.gameState.frozenEggs + ' шт.', egg.x + 18, egg.y + 6);
+			context.fillText(this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , eggQuality.x + 18, eggQuality.y + 6);
+			context.fillText(this.gameState.chick + ' шт.', chick.x + 18, chick.y + 6);
+			context.fillText(this.gameState.chicken + ' шт.', chicken.x + 18, chicken.y + 6);
+			context.fillText(this.gameState.food.toFixed(1), food.x + 18, food.y + 6);
+			context.fillText(this.gameState.manure, shit.x + 18, shit.y + 6);
+			context.fillText(this.gameState.pollution + ' %.', pollution.x + 18, pollution.y + 6);
+			context.fillText(this.gameState.eggshell + ' шт.', eggshell.x + 18, eggshell.y + 6);
 		}, 10);
 	}
 
@@ -140,6 +147,21 @@ export class AbstractStage extends Stage {
 		pauseButton.onClick(() => {
 			showModal('Пауза', () => this.stop(), () => this.run());
 		});
+	}
+
+	createHelp() {
+		const helpButton = new BlankButtonSprite(this, 3, [
+			'public/images/ui/help_button/default.png',
+			'public/images/ui/help_button/hovered.png'
+		]);
+		helpButton.x = 778;
+		helpButton.y = 355;
+
+		helpButton.onClick(this.helpOnClick.bind(this));
+	}
+
+	helpOnClick() {
+		showModal('Помощь', () => this.stop(), () => this.run());
 	}
 
     drawMultilineText(context, text, x, y, maxWidth, lineHeight) {
@@ -173,28 +195,14 @@ export class AbstractStage extends Stage {
         mainResPanel.addCostume('public/images/icons/top_panel_base.png')
 	}
 
-	drawCounters(context) {
-		context.font = '18px Arial';
-		context.fillStyle = '#4444ff';
-		context.textAlign = 'start';
-
-		// показатели на панели ресурсов у иконок
-		context.fillText(GameState.getInstance().frozenEggs, 70, 555);
-		context.fillText(GameState.getInstance().chick, 140, 555);
-		context.fillText(GameState.getInstance().chicken, 210, 555);
-		context.fillText(GameState.getInstance().food.toFixed(1), 280, 555);
-		context.fillText(GameState.getInstance().manure, 370, 555);
-		context.fillText(GameState.getInstance().eggshell, 440, 555);
-	}
-
 	drawParameters() {
 
 	}
 
 	createFpsCounter() {
 		const fpsCounter = new FpsCounterSprite(this, 10);
-		fpsCounter.x = 720;
-		fpsCounter.y = 545;
+		fpsCounter.x = 730;
+		fpsCounter.y = 596;
 	}
 
 	createStars() {
