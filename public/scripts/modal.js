@@ -3,6 +3,7 @@
  */
 const modalWrapper = document.querySelector('[data-modal]');
 const overlayWrapper = document.querySelector('[data-modal-overlay]');
+const modalHeader = document.querySelector('[data-modal-header]');
 const modalContent = document.querySelector('[data-modal-content]');
 const button = modalWrapper.querySelector('button');
 
@@ -17,9 +18,10 @@ button.addEventListener('click', () => {
     }
 });
 
-function showModal(text, onShow, onClose) {
+function showModal(header, text, onShow, onClose) {
     modalWrapper.classList.add('active');
     overlayWrapper.classList.add('active');
+    modalHeader.innerHTML = header;
     modalContent.innerHTML = text;
 
     if (onShow) {

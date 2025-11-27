@@ -70,7 +70,7 @@ export class EmptyRoomStage extends AbstractRootStage {
 
     createRoom(roomType, cost) {
         if (this.gameState.money < cost) {
-            showModal('Недостаточно денег', () => this.stop(), () => this.run());
+            showModal('Ошибка', 'Недостаточно денег', () => this.stop(), () => this.run());
 
             return false;
         }

@@ -145,7 +145,7 @@ export class AbstractStage extends Stage {
 		pauseButton.y = 40;
 
 		pauseButton.onClick(() => {
-			showModal('Пауза', () => this.stop(), () => this.run());
+			showModal('Пауза', 'Игра временно приостановлена', () => this.stop(), () => this.run());
 		});
 	}
 
@@ -161,7 +161,7 @@ export class AbstractStage extends Stage {
 	}
 
 	helpOnClick() {
-		showModal('Помощь', () => this.stop(), () => this.run());
+		showModal('Помощь', 'Помощь', () => this.stop(), () => this.run());
 	}
 
     drawMultilineText(context, text, x, y, maxWidth, lineHeight) {

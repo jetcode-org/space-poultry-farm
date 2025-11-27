@@ -46,7 +46,7 @@ export class NurseryRoomStage extends AbstractRootStage {
 				}
             }
 
-            showModal('Недостаточно места в стаде, не всех куриц удалось перевести', () => this.stop(), () => this.run());
+            showModal('Внимание', 'Недостаточно места в стаде, не всех куриц удалось перевести', () => this.stop(), () => this.run());
             this.failRoom();
 
             return false;

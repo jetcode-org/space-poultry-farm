@@ -615,7 +615,7 @@ export class GameState {
 
     buy(cost) {
         if (this.money < cost) {
-            showModal('Недостаточно денег');
+            showModal('Ошибка', 'Недостаточно денег');
 
             return false;
         }

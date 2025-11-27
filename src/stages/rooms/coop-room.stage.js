@@ -42,7 +42,7 @@ export class CoopRoomStage extends AbstractRootStage {
                 }
             }
 
-            showModal('Недостаточно места в сортировке, не все яйца удалось перенести', () => this.stop(), () => this.run());
+            showModal('Внимание', 'Недостаточно места в сортировке, не все яйца удалось перенести', () => this.stop(), () => this.run());
 
             return false;
         })

@@ -122,7 +122,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	showInstructionModal() {
-		showModal(this.getInstructionText(), () => this.stop(), () => this.run());
+		showModal('Справка', this.getInstructionText(), () => this.stop(), () => this.run());
 	}
 
 	getRoomType() {

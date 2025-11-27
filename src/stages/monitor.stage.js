@@ -7,10 +7,8 @@ import {MissionStage} from "./mission.stage";
 import {InfoButtonSprite} from "../sprites/info-button.sprite";
 import {RoomFactory} from "../services/room.factory";
 import { ShipSprite } from '../sprites/ship.sprite';
-import { ProgressBarSprite } from '../sprites/progress-bar.sprite';
 import {OutroStage} from "./outro.stage";
 import { ShipProgressBarSprite } from '../sprites/ship-progress-bar.sprite';
-import { LicenceProgressBarSprite } from '../sprites/licence-progress-bar.sprite';
 
 export class MonitorStage extends AbstractStage {
     static instance;
@@ -128,6 +126,8 @@ export class MonitorStage extends AbstractStage {
         eggQualityInfoButton.onClick(() => {
             const nextEggQualityClass = this.gameState.getNextEggQualityClass();
 
+            const header = 'Качество яйца';
+
             let text = '<table border="0">';
             const qualityInfo = this.gameState.getEggQualityInfo();
             text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
@@ -146,7 +146,7 @@ export class MonitorStage extends AbstractStage {
                 text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
             }
 
-            this.showModal(text);
+            this.showModal(header, text);
         });
 
         this.game.onUserInteracted(() => {
@@ -471,21 +471,19 @@ export class MonitorStage extends AbstractStage {
                 this.gameState.changeRating(changeRating);
 
                 if (correct) {
-                    let text = '<h2>Молодец! Правильно!</h2>';
-                    text += '<p>' + comment + '</p>'
-                    text += '<p>Рейтинг изменился на: +' + changeRating + '</p>'
+                    let text = '<p>' + comment + '</p>'
+                    text += '<p class="accent-color">Рейтинг изменился на: +' + changeRating + '</p>'
 
-                    this.showModal(text);
+                    this.showModal('Молодец! Правильно!', text);
 
                 } else {
                     const correctAnswer = this.gameState.getEventCorrectAnswer(eventId);
 
-                    let text = '<h2>Ответ неправильный</h2>';
-                    text += '<p>' + comment + '</p>'
-                    text += '<p>Правильный ответ: ' + correctAnswer + '</p>'
-                    text += '<p>Рейтинг изменился на: ' + changeRating + '</p>'
+                    let text = '<p>' + comment + '</p>'
+                    text += '<p><span class="success-color"><strong>Правильный ответ: </strong></span> ' + correctAnswer + '</p>'
+                    text += '<p class="accent-color">Рейтинг изменился на: ' + changeRating + '</p>'
 
-                    this.showModal(text);
+                    this.showModal('Ответ неправильный', text);
                 }
             });
 
@@ -493,15 +491,14 @@ export class MonitorStage extends AbstractStage {
         }
     }
 
-    showModal(text) {
-        showModal(text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
+    showModal(header, text) {
+        showModal(header, text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
     }
 
     showViolationModal(header, message) {
-        let text = '<h2>' + header + '</h2>';
-        text += '<p>' + message + '</p>';
+        const text = '<p>' + message + '</p>';
 
-        this.showModal(text);
+        this.showModal(header, text);
     }
 
     showEventModal(eventId, onButtonClick) {
@@ -513,7 +510,7 @@ export class MonitorStage extends AbstractStage {
         const buttons = event.variants.map(variant => variant.answer);
 
         let text = '<p>' + description + '</p>';
-        text += '<p><strong>' + question + '</strong></p>';
+        text += '<p class="accent-color"><strong>' + question + '</strong></p>';
 
         showEventModal(header, text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
             this.game.getActiveStage().run();
