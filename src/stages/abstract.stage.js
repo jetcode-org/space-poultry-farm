@@ -234,11 +234,6 @@ export class AbstractStage extends Stage {
             context.fillText(lineArray[i], x, y + i * lineHeight);
         }
     }
-    // хз как это вызывать, отсюда напишу пока в монитор стрейжд
-    drawResoursesPanel() {
-        let mainResPanel = new Sprite()
-        mainResPanel.addCostume('public/images/icons/top_panel_base.png')
-	}
 
 	drawParameters() {
 

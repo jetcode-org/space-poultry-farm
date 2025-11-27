@@ -107,8 +107,8 @@ export class MonitorStage extends AbstractStage {
 
         // спрайт готовности
         this.readySprite = new Sprite();
-        this.readySprite.addCostume('public/images/icons/room_is_ready.png')
-        this.readySprite.size = 50
+        this.readySprite.addCostume('public/images/ui/notifier.png')
+        this.readySprite.size = 100
         this.readySprite.hidden = true;
 
         //создание роботов

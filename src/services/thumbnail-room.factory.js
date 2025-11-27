@@ -15,13 +15,13 @@ export class ThumbnailRoomFactory {
         thumbnail.y = y;
 
         let robotSlot;
-        if (room.getRoomType() !== GameState.EMPTY_ROOM_TYPE) {
+        if (room.getRoomType() !== GameState.EMPTY_ROOM_TYPE && room.getRoomType() !== GameState.SORTING_ROOM_TYPE) {
             robotSlot = new RobotStationSprite(monitorStage);
             robotSlot.x = x - 30;
             robotSlot.y = y - 15;
             robotSlot.layer = 4;
             robotSlot.addTag('cleanStation');
-            robotSlot.size = 40;
+            robotSlot.size = 70;
             robotSlot.room = room;
         }
 
@@ -34,9 +34,9 @@ export class ThumbnailRoomFactory {
 
         thumbnail.onClick(() => {
             if (robotSlot && robotSlot.touchMouse()) {
-                console.log('click')
-                return
+                return;
             }
+
             monitorStage.game.run(room);
         });
 
