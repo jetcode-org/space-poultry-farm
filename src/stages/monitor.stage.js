@@ -9,11 +9,10 @@ import {RoomFactory} from "../services/room.factory";
 import { ShipSprite } from '../sprites/ship.sprite';
 import {OutroStage} from "./outro.stage";
 import { ShipProgressBarSprite } from '../sprites/ship-progress-bar.sprite';
+import {HelpSprite} from "../sprites/help.sprite";
 
 export class MonitorStage extends AbstractStage {
     static instance;
-    helpText = null;
-    helpTextLifetime = 0;
 
     static getInstance() {
         if (!MonitorStage.instance) {
@@ -50,10 +49,11 @@ export class MonitorStage extends AbstractStage {
         ship.leftX = 300;
 
         // Площадка для дронов
-        const dronePlatform = new Sprite(this, 1);
+        const dronePlatform = new HelpSprite(this, 1);
         dronePlatform.addCostume('public/images/monitor/drone_default.png');
         dronePlatform.x = ship.x + 140;
         dronePlatform.y = ship.y + 140;
+        dronePlatform.help = 'Дрон-станция: зарядка и обслуживание автоматических помощников. Новые дроны разблокируются по мере выполнения миссий';
 
         // Картинки для прогресса миссии на слайдер
 
@@ -156,7 +156,6 @@ export class MonitorStage extends AbstractStage {
         })
 
         this.forever(this.gameTick, 1000);
-        this.pen(this.drawHelpBlock.bind(this), 4);
     }
 
     addPlus(value) {
@@ -349,32 +348,6 @@ export class MonitorStage extends AbstractStage {
         OutroStage.getInstance().setResult(result);
 
         this.game.run(OutroStage.getInstance());
-    }
-
-    showHelp(text, lifetime = 10) {
-        this.helpText = text;
-        this.helpTextLifetime = lifetime;
-    }
-
-    drawHelpBlock(context) {
-        context.font = '14px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'left';
-
-        this.helpTextLifetime--;
-        if (this.helpTextLifetime <= 0) {
-            this.helpText = null;
-        }
-
-        let helpText = 'Наведите курсор мыши на игровой элемент для получения подробной информации';
-        context.fillStyle = '#c0c0c0';
-
-        if (this.helpText) {
-            context.fillStyle = 'white';
-            helpText = this.helpText;
-        }
-
-        this.drawMultilineText(context, helpText, 620, 195, 155, 20);
     }
 
     missionProcess() {

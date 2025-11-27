@@ -1,11 +1,14 @@
 import {Sprite, Stage} from 'jetcode-scrubjs';
-import {GameState} from "../services/game.state";
 import {HelperSprite } from "../sprites/helper.sprite.js";
 import {FpsCounterSprite} from "../sprites/fps-counter.sprite";
 import {BlankButtonSprite} from "../sprites/blank-button.sprite";
 import {LicenceProgressBarSprite} from '../sprites/licence-progress-bar.sprite.js';
+import {HelpSprite} from "../sprites/help.sprite";
 
 export class AbstractStage extends Stage {
+	helpText = null;
+	helpTextLifetime = 0;
+
 	init() {
 		this.createCounters();
 		this.createPause();
@@ -30,18 +33,48 @@ export class AbstractStage extends Stage {
 		this.forever(()=>{
 			this.licenceProgress.targetValue = this.gameState.rating;
 		});
+
+		this.pen(this.drawHelpBlock.bind(this), 4);
+	}
+
+	drawHelpBlock(context) {
+		context.font = '14px Arial';
+		context.fillStyle = 'white';
+		context.textAlign = 'left';
+
+		this.helpTextLifetime--;
+		if (this.helpTextLifetime <= 0) {
+			this.helpText = null;
+		}
+
+		let helpText = 'Наведите курсор мыши на игровой элемент для получения подробной информации';
+		context.fillStyle = '#c0c0c0';
+
+		if (this.helpText) {
+			context.fillStyle = 'white';
+			helpText = this.helpText;
+		}
+
+		this.drawMultilineText(context, helpText, 620, 195, 155, 20);
+	}
+
+	showHelp(text, lifetime = 10) {
+		this.helpText = text;
+		this.helpTextLifetime = lifetime;
 	}
 
 	createCounters() {
 		// Деньги
-		const money = new Sprite(this, 3, ['public/images/ui/money.png']);
+		const money = new HelpSprite(this, 3, ['public/images/ui/money.png']);
 		money.x = 90;
 		money.y = 40;
+		money.help = 'Космические кредиты: валюта для строительства новых модулей и улучшения существующих';
 
 		// Рейтинг
-		const rating = new Sprite(this, 3, ['public/images/ui/rating.png']);
+		const rating = new HelpSprite(this, 3, ['public/images/ui/rating.png']);
 		rating.x = 230;
 		rating.y = 40;
+		rating.help = 'Статус в Галактическом Совете: оценивается по эффективности, качеству продукции и выполнению миссий.';
 
 		// Панель цель и таймер
 		const topPanel = new Sprite(this, 3, ['public/images/ui/top_panel.png']);
@@ -59,37 +92,45 @@ export class AbstractStage extends Stage {
 		resourcesPanel.y = 512
 
 		// Иконки ресурсов
-		const egg = new Sprite(this, 4, ['public/images/ui/resources/egg.png']);
+		const egg = new HelpSprite(this, 4, ['public/images/ui/resources/egg.png']);
 		egg.x = 627;
 		egg.y = 463;
+		egg.help = 'Криогенные запасы: яйца для выполнения миссий';
 
-		const eggQuality = new Sprite(this, 3, ['public/images/ui/resources/egg_quality.png']);
+		const eggQuality = new HelpSprite(this, 3, ['public/images/ui/resources/egg_quality.png']);
 		eggQuality.x = 710;
 		eggQuality.y = 463;
+		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость';
 
-		const chick = new Sprite(this, 3, ['public/images/ui/resources/chick.png']);
+		const chick = new HelpSprite(this, 3, ['public/images/ui/resources/chick.png']);
 		chick.x = 627;
 		chick.y = 496;
+		chick.help = 'Цыплята: молодые особи, будущие куры-несушки';
 
-		const chicken = new Sprite(this, 3, ['public/images/ui/resources/chicken.png']);
+		const chicken = new HelpSprite(this, 3, ['public/images/ui/resources/chicken.png']);
 		chicken.x = 710;
 		chicken.y = 496;
+		chicken.help = 'Основное стадо: производители яиц';
 
-		const food = new Sprite(this, 3, ['public/images/ui/resources/feed.png']);
+		const food = new HelpSprite(this, 3, ['public/images/ui/resources/feed.png']);
 		food.x = 627;
 		food.y = 529;
+		food.help = 'Комбикорм: основной рацион птицы';
 
-		const shit = new Sprite(this, 3, ['public/images/ui/resources/shit.png']);
+		const shit = new HelpSprite(this, 3, ['public/images/ui/resources/shit.png']);
 		shit.x = 710;
 		shit.y = 529;
+		shit.help = 'Помет: производится курами. Используется для создания корма на ферме';
 
-		const pollution = new Sprite(this, 3, ['public/images/ui/resources/pollution.png']);
+		const pollution = new HelpSprite(this, 3, ['public/images/ui/resources/pollution.png']);
 		pollution.x = 627;
 		pollution.y = 562;
+		pollution.help = 'Уровень загрязнения: при высоком уровне снижает яйценоскость и здоровье птицы';
 
-		const eggshell = new Sprite(this, 3, ['public/images/ui/resources/eggshell.png']);
+		const eggshell = new HelpSprite(this, 3, ['public/images/ui/resources/eggshell.png']);
 		eggshell.x = 710;
 		eggshell.y = 562;
+		eggshell.help = 'Скорлупа: остается после инкубации. Используется в производстве корма';
 
 		this.pen((context) => {
 			context.font = '18px Arial';
@@ -145,6 +186,7 @@ export class AbstractStage extends Stage {
 		]);
 		pauseButton.x = 555;
 		pauseButton.y = 40;
+		pauseButton.help = 'Приостановить игру';
 
 		pauseButton.onClick(() => {
 			showModal('Пауза', 'Игра временно приостановлена', () => this.stop(), () => this.run());
@@ -158,6 +200,7 @@ export class AbstractStage extends Stage {
 		]);
 		helpButton.x = 778;
 		helpButton.y = 355;
+		helpButton.help = 'Открыть руководство оператора';
 
 		helpButton.onClick(this.helpOnClick.bind(this));
 	}

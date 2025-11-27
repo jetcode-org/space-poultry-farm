@@ -1,7 +1,7 @@
-import {Sprite} from "jetcode-scrubjs";
 import { GameState } from "../services/game.state";
+import {HelpSprite} from "./help.sprite";
 
-export class AbstractButtonSprite extends Sprite {
+export class AbstractButtonSprite extends HelpSprite {
     onClickCallback;
     clickSound = 'public/sounds/click.mp3';
 
@@ -11,6 +11,8 @@ export class AbstractButtonSprite extends Sprite {
     fontSize = 16;
 
     init(){
+        super.init();
+
         this.onReady(this.onReadyCallback.bind(this));
         this.forever(this.control);
         this.pen(this.drawLabel.bind(this));

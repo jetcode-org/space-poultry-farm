@@ -198,7 +198,7 @@ export class GameState {
         [GameState.SORTING_ROOM_TYPE]: {
             'name': 'Сортировка',
             'cost': 0,
-            'helpText': 'Сортировка - отсек для обработки и распределения яиц между криокамерой и инкубатором.',
+            'helpText': 'Сортировка: отсек для обработки и распределения яиц между криокамерой и инкубатором.',
             'instructionText': 'Распределяйте яйца между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)',
             'backgroundImage': 'public/images/rooms/backgrounds/sorting.png',
             'thumbnailImages': [
@@ -210,7 +210,7 @@ export class GameState {
         [GameState.INCUBATOR_ROOM_TYPE]: {
             'name': 'Инкубатор',
             'cost': 5000,
-            'helpText': 'Инкубатор - отсек для искусственного выведения цыплят из яиц в контролируемых условиях.',
+            'helpText': 'Инкубатор: отсек для искусственного выведения цыплят из яиц в контролируемых условиях.',
             'instructionText': 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе',
             'backgroundImage': 'public/images/rooms/backgrounds/incubator.png',
             'thumbnailImages': [
@@ -222,7 +222,7 @@ export class GameState {
         [GameState.NURSERY_ROOM_TYPE]: {
             'name': 'Цыплятник',
             'cost': 9000,
-            'helpText': 'Цыплятник - модуль для выращивания молодняка до взрослых особей.',
+            'helpText': 'Цыплятник: модуль для выращивания молодняка до взрослых особей.',
             'instructionText': 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета',
             'backgroundImage': 'public/images/rooms/backgrounds/nursery.png',
             'thumbnailImages': [
@@ -234,7 +234,7 @@ export class GameState {
         [GameState.COOP_ROOM_TYPE]: {
             'name': 'Стадо',
             'cost': 5000,
-            'helpText': 'Стадо - основное помещение содержания взрослых кур-несушек.',
+            'helpText': 'Стадо: основное помещение содержания взрослых кур-несушек.',
             'instructionText': 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек',
             'backgroundImage': 'public/images/rooms/backgrounds/coop.png',
             'thumbnailImages': [
@@ -246,7 +246,7 @@ export class GameState {
         [GameState.FARM_ROOM_TYPE]: {
             'name': 'Ферма',
             'cost': 15000,
-            'helpText': 'Ферма - гидропонный комплекс производства кормовых культур.',
+            'helpText': 'Ферма: гидропонный комплекс производства кормовых культур.',
             'instructionText': 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур',
             'backgroundImage': 'public/images/rooms/backgrounds/farm.png',
             'thumbnailImages': [

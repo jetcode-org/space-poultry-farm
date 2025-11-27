@@ -107,6 +107,7 @@ export class AbstractRootStage extends AbstractStage {
 		backButton.layer = 10;
 		backButton.x = 555;
 		backButton.y = 95;
+		backButton.help = 'Вернуться на главный экран';
 
 		backButton.onClick(() => {
 			if (this.helper.active) {
