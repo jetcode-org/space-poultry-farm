@@ -16,7 +16,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
         this.addCostume('public/images/sprites/drone/drone_active.png')
         this.addCostume('public/images/sprites/drone/drone_charging.png')
 
-        this.size = 75;
+        this.size = 25;
 
         super.init();
     }
@@ -38,7 +38,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
         this.drawValue = this.touchMouse();
 
         if (this.touchMouse() && this.game.mouseDown()) {
-            this.size = 75;
+            this.size = 25;
             if (this.stationRoom) {
                 this.stationRoom.robot = null;
                 this.stationRoom = null;
@@ -58,7 +58,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
                 this.x = this.startX;
                 this.y = this.startY;
                 this.isCharging = true;
-                this.size = 75;
+                this.size = 50;
                 if (this.stationRoom) {
                     this.stationRoom.robot = null;
                     this.stationRoom = null;

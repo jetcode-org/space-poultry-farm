@@ -2,8 +2,6 @@ import { Sprite } from "jetcode-scrubjs";
 import { GameState } from "../services/game.state";
 
 export class AbstractSliderSprite extends Sprite {
-    minSize = 18;
-    maxSize = 20;
     onClickCallback;
 
     active = false;

@@ -7,16 +7,6 @@ export class LicenceProgressBarSprite extends AbstractProgressBarSprite {
     triangleWidth = 10;
     showValue = false;
 
-    // control() {
-    //     if (this.game.keyPressed('d')) {
-    //         this.targetValue += 5;
-    //     }
-    //     if (this.game.keyPressed('a')) {
-    //         this.targetValue -= 5;
-    //     }
-    //     super.control();
-    // }
-
     drawProgress(context) {
         if (this.currentValue > this.targetValue) {
             this.drawValue(context, this.currentValue, this.lessColor);

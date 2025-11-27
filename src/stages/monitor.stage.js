@@ -114,7 +114,7 @@ export class MonitorStage extends AbstractStage {
         this.readySprite.hidden = true;
 
         //создание роботов
-        // this.createDrones(6);
+        // this.createDrones(3);
 
         // Создание комнат
         this.createRooms();
@@ -208,8 +208,8 @@ export class MonitorStage extends AbstractStage {
             const drone = new RobotSprite(this);
 
             drone.layer = 8;
-            drone.x = 650 + (i % 2 * 75);
-            drone.y = 145 + Math.floor(i / 2) * 75;
+            drone.x = 400 + (i % 3) * 40;
+            drone.y = 430 + Math.floor(i / 3) * 40;
             drone.setStartPos();
             drone.hidden = false;
 
@@ -226,7 +226,7 @@ export class MonitorStage extends AbstractStage {
                 null,
                 null,
                 null,
-                ['Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания. Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции.', 'Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.']
+                ['Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания.', 'Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции.', 'Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.']
             );
             this.gameState.currentMission++;
         }
@@ -410,7 +410,7 @@ export class MonitorStage extends AbstractStage {
 
             this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, changeRating, null, finishMessage);
             this.gameState.currentMission += 1;
-            this.createDrones(this.gameState.currentMission * 2);
+            this.createDrones(this.gameState.currentMission);
 
             this.gameState.resetViolations();
         }
@@ -519,5 +519,18 @@ export class MonitorStage extends AbstractStage {
             this.game.getActiveStage().run();
             onButtonClick(answer)
         });
+    }
+
+    helpOnClick(){
+        this.helper.show('Основная механика игры заключается в управлении пятью производственными отсеками птицефабрики, где каждый модуль требует вашего постоянного внимания.')
+        this.helper.onClick(()=>{
+            this.helper.show('Вам предстоит одновременно следить за инкубацией яиц, выращиванием цыплят, сбором яиц от взрослых кур, производством корма и распределением готовой продукции.')
+            this.helper.onClick(()=>{
+                this.helper.show('Ключевой навык - умение балансировать между этими процессами, не допуская простоев и потерь.')
+                this.helper.onClick(()=>{
+                    this.helper.hide();
+                })
+            })
+        })
     }
 }

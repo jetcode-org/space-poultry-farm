@@ -20,7 +20,7 @@ export class SortingRoomStage extends AbstractRootStage {
 
         this.quantitySlider = new SliderSprite();
         this.quantitySlider.layer = 10;
-        this.quantitySlider.size = 15;
+        this.quantitySlider.size = 50;
         this.quantitySlider.x = 260;
         this.quantitySlider.y = 200;
         this.quantitySlider.setWidth(200);

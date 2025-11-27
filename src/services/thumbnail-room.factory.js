@@ -14,14 +14,15 @@ export class ThumbnailRoomFactory {
         thumbnail.x = x;
         thumbnail.y = y;
 
+        let robotSlot;
         if (room.getRoomType() !== GameState.EMPTY_ROOM_TYPE) {
-            // const robotSlot = new RobotStationSprite(monitorStage);
-            // robotSlot.x = x - 30;
-            // robotSlot.y = y - 15;
-            // robotSlot.layer = 4;
-            // robotSlot.addTag('cleanStation');
-            // robotSlot.size = 40;
-            // robotSlot.room = room;
+            robotSlot = new RobotStationSprite(monitorStage);
+            robotSlot.x = x - 30;
+            robotSlot.y = y - 15;
+            robotSlot.layer = 4;
+            robotSlot.addTag('cleanStation');
+            robotSlot.size = 40;
+            robotSlot.room = room;
         }
 
         room.robotChargeDif = chargeDif;
@@ -32,6 +33,10 @@ export class ThumbnailRoomFactory {
         });
 
         thumbnail.onClick(() => {
+            if (robotSlot && robotSlot.touchMouse()) {
+                console.log('click')
+                return
+            }
             monitorStage.game.run(room);
         });
 
