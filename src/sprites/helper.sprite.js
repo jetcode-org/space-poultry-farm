@@ -37,7 +37,7 @@ export class HelperSprite extends Sprite {
         this.personImage = new Sprite();
         this.personImage.x = 100;
         this.personImage.y = 500;
-        this.personImage.size = 27;
+        this.personImage.size = 100;
         this.personImage.hidden = true;
 
         this.layer = 10;
@@ -126,21 +126,24 @@ export class HelperSprite extends Sprite {
         }
     }
 
-    show(text, person = null, emotion = 'Normal') {
+    show(text, person = null, emotion = GameState.NORMAL_PERSON_EMOTION) {
         GameState.getInstance().isReadingHelper = true;
         this.shouldShow = true;
         this.currentText = '';
         this.currentTextIndex = 0;
         this.needText = text;
         this.showPerson = person != null;
-        if (person && this.currentPerson != person + emotion) {
+
+        if (person && this.currentPerson !== person + emotion) {
             this.clearPersonCostumes();
             this.setPerson(person, emotion);
         }
+
         this.nextButton.onClick(()=>{
             this.currentTextIndex = this.needText.length;
             this.currentText = this.needText;
-        })
+        });
+
         this.nextButton.setLabel('Пропустить');
     }
 
@@ -189,9 +192,10 @@ export class HelperSprite extends Sprite {
     }
 
     setPerson(person, emotion) {
-        for(const costume of GameState.getInstance().personAnimations[person + emotion]) {
+        for (const costume of GameState.getInstance().personAnimations[person][emotion]) {
             this.personImage.addCostume(costume);
         }
+
         this.currentPerson = person + emotion;
     }
 }

@@ -124,50 +124,38 @@ export class GameState {
     currentShip = 0;
 
     /**
-     * Анимации персонажей
+     * Персонажи
      */
+    static HERO_PERSON = 'hero_person';
+    static BOSS_PERSON = 'boss_person';
+    static AI_PERSON = 'ai_person';
+    static CCC_PERSON = 'ccc_person';
+
+    static NORMAL_PERSON_EMOTION = 'normal_person_emotion';
+    static HAPPY_PERSON_EMOTION = 'happy_person_emotion';
+    static ANGRY_PERSON_EMOTION = 'angry_person_emotion';
 
     personAnimations = {
-        'HeroNormal': ['public/images/persons/hero/normal_1.png',
-                       'public/images/persons/hero/normal_2.png',
-                       'public/images/persons/hero/normal_3.png',
-                       'public/images/persons/hero/normal_4.png'
-        ],
-        'BossNormal': ['public/images/persons/boss/normal_1.png',
-                       'public/images/persons/boss/normal_2.png',
-                       'public/images/persons/boss/normal_3.png',
-                       'public/images/persons/boss/normal_4.png'
-        ],
-        'RicoNormal': ['public/images/persons/rico/normal_1.png',
-                       'public/images/persons/rico/normal_2.png',
-                       'public/images/persons/rico/normal_3.png',
-                       'public/images/persons/rico/normal_4.png'
-        ],
-        'CCCNormal': ['public/images/persons/ccc/normal_1.png',
-                      'public/images/persons/ccc/normal_2.png',
-                      'public/images/persons/ccc/normal_3.png',
-                      'public/images/persons/ccc/normal_4.png'
-        ],
-        'HeroAngry':  ['public/images/persons/hero/angry_1.png',
-                       'public/images/persons/hero/angry_2.png',
-                       'public/images/persons/hero/angry_3.png',
-                       'public/images/persons/hero/angry_4.png'
-        ],
-        'BossAngry':  ['public/images/persons/boss/angry_1.png',
-                       'public/images/persons/boss/angry_2.png',
-                       'public/images/persons/boss/angry_3.png',
-                       'public/images/persons/boss/angry_4.png'
-        ],
-        'RicoAngry':  ['public/images/persons/rico/angry_1.png',
-                       'public/images/persons/rico/angry_2.png',
-                       'public/images/persons/rico/angry_3.png',
-                       'public/images/persons/rico/angry_4.png'
-        ],
-        'CCCAngry':  ['public/images/persons/ccc/angry_1.png',
-                      'public/images/persons/ccc/angry_2.png',
-                      'public/images/persons/ccc/angry_3.png',
-                      'public/images/persons/ccc/angry_4.png'
-        ],
+        [GameState.HERO_PERSON]: {
+            [GameState.NORMAL_PERSON_EMOTION]: ['public/images/persons/hero/normal.png'],
+            [GameState.HAPPY_PERSON_EMOTION]: ['public/images/persons/hero/happy.png'],
+            [GameState.ANGRY_PERSON_EMOTION]: ['public/images/persons/hero/angry.png'],
+        },
+        [GameState.BOSS_PERSON]: {
+            [GameState.NORMAL_PERSON_EMOTION]: ['public/images/persons/boss/normal.png'],
+            [GameState.HAPPY_PERSON_EMOTION]: ['public/images/persons/boss/happy.png'],
+            [GameState.ANGRY_PERSON_EMOTION]: ['public/images/persons/boss/angry.png'],
+        },
+        [GameState.AI_PERSON]: {
+            [GameState.NORMAL_PERSON_EMOTION]: ['public/images/persons/ai/normal.png'],
+            [GameState.HAPPY_PERSON_EMOTION]: ['public/images/persons/ai/happy.png'],
+            [GameState.ANGRY_PERSON_EMOTION]: ['public/images/persons/ai/angry.png'],
+        },
+        [GameState.CCC_PERSON]: {
+            [GameState.NORMAL_PERSON_EMOTION]: ['public/images/persons/ccc/normal.png'],
+            [GameState.HAPPY_PERSON_EMOTION]: ['public/images/persons/ccc/happy.png'],
+            [GameState.ANGRY_PERSON_EMOTION]: ['public/images/persons/ccc/angry.png'],
+        },
     }
 
     /**
@@ -175,8 +163,8 @@ export class GameState {
      */
 
     heroAnswers = {
-        'Normal': ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
-        'Angry': ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
+        [GameState.NORMAL_PERSON_EMOTION]: ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
+        [GameState.ANGRY_PERSON_EMOTION]: ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
     }
 
     /**
@@ -627,6 +615,7 @@ export class GameState {
 
     getHeroAnswer(emotion) {
         const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers[emotion].length);
+
         return this.heroAnswers[emotion][randomAnswerIndex];
     }
 

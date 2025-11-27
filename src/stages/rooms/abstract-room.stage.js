@@ -61,7 +61,8 @@ export class AbstractRootStage extends AbstractStage {
 
             if (this.gameState.visits[this.getRoomType()] && this.gameState.teachingMode) {
 				this.gameState.visits[this.getRoomType()] = false;
-				this.helper.show(this.getHelpText(), 'Boss');
+
+				this.helper.show(this.getHelpText(), GameState.BOSS_PERSON);
 				this.helper.setButtonText('Дальше');
 				this.helper.onClick(()=>{
 					this.showInstructionDialog();
@@ -269,10 +270,11 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	showInstructionDialog() {
-		this.helper.show(this.getInstructionText(), 'Boss');
+		this.helper.show(this.getInstructionText(), GameState.BOSS_PERSON);
 		this.helper.setButtonText('Дальше');
+
 		this.helper.onClick(()=>{
-			this.helper.show(GameState.getInstance().getHeroAnswer('Normal') + ', босс!', 'Hero');
+			this.helper.show(GameState.getInstance().getHeroAnswer(GameState.NORMAL_PERSON_EMOTION) + ', босс!', GameState.HERO_PERSON);
 			this.helper.setButtonText('Конец');
 			this.helper.onClick(()=>{this.helper.hide()});
 		});
