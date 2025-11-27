@@ -55,6 +55,7 @@
     font-family: Arial, sans-serif;
     font-size: 18px;
     font-weight: bold;
+    /*text-shadow: 2px 2px 2px  #0e1e37;*/
 }
 
 .modal__content {
