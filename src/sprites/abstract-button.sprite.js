@@ -17,10 +17,14 @@ export class AbstractButtonSprite extends Sprite {
     }
 
     control(){
+        const html = document.documentElement;
+
         if (this.touchMouse()) {
             if (this.costumes.length > 0) {
                 this.switchCostume(1);
             }
+
+            html.style.cursor = 'pointer';
 
             if (!GameState.getInstance().isDraggableObjectActive && this.game.mouseDownOnce() && this.onClickCallback) {
                 if (this.clickSound) {
@@ -32,8 +36,9 @@ export class AbstractButtonSprite extends Sprite {
                 this.onClickCallback();
             }
 
-        } else {
+        } else if (this.costumeIndex === 1) {
             this.switchCostume(0);
+            html.style.cursor = 'default';
         }
     }
 
