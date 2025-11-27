@@ -31,12 +31,12 @@ export class MissionStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
-        this.addBackground('public/images/missions/mission_0.jpg');
-        this.addBackground('public/images/missions/mission_1.jpg');
-        this.addBackground('public/images/missions/mission_2.jpg');
-        this.addBackground('public/images/missions/mission_3.jpg');
-        this.addBackground('public/images/missions/mission_4.jpg');
-        this.addBackground('public/images/missions/mission_0.jpg');
+        this.addBackground('public/images/missions/mission_0.png');
+        this.addBackground('public/images/missions/mission_1.png');
+        this.addBackground('public/images/missions/mission_2.png');
+        this.addBackground('public/images/missions/mission_3.png');
+        this.addBackground('public/images/missions/mission_4.png');
+        this.addBackground('public/images/missions/mission_0.png');
 
         this.onStart(()=>{
             this.drawTextBlock();
