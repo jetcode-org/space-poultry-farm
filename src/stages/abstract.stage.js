@@ -98,7 +98,9 @@ export class AbstractStage extends Stage {
 
 			// Деньги и Рейтинг
 			context.font = 'bold 15px Arial';
-			context.fillText(this.gameState.money + '$', money.x - 15, money.y + 5);
+
+			const formatter = new Intl.NumberFormat('ru-RU');
+			context.fillText(formatter.format(this.gameState.money) + '₽', money.x - 15, money.y + 5);
 
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';
@@ -126,7 +128,7 @@ export class AbstractStage extends Stage {
 			context.fillStyle = '#9da8b0';
 
 			context.fillText(this.gameState.frozenEggs + ' шт.', egg.x + 18, egg.y + 6);
-			context.fillText(this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '$)' , eggQuality.x + 18, eggQuality.y + 6);
+			context.fillText(this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '₽)' , eggQuality.x + 18, eggQuality.y + 6);
 			context.fillText(this.gameState.chick + ' шт.', chick.x + 18, chick.y + 6);
 			context.fillText(this.gameState.chicken + ' шт.', chicken.x + 18, chicken.y + 6);
 			context.fillText(this.gameState.food.toFixed(1), food.x + 18, food.y + 6);

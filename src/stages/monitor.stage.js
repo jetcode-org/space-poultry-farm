@@ -131,7 +131,7 @@ export class MonitorStage extends AbstractStage {
             let text = '<table border="0">';
             const qualityInfo = this.gameState.getEggQualityInfo();
             text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '$</td></tr>';
+            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
 
             text += '<tr><td colspan="2"><hr></td></tr>';
 

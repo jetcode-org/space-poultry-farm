@@ -72,7 +72,7 @@ export class MissionStage extends AbstractSlideStageStage {
         }
 
         if (soldEggs !== null && earnedMoney !== null && changeRating !== null) {
-            let resultMessage = 'Мы продали: ' + soldEggs + ' яиц и заработали ' + earnedMoney + '$. ';
+            let resultMessage = 'Мы продали: ' + soldEggs + ' яиц и заработали ' + earnedMoney + '₽. ';
 
             if (changeRating > 0) {
                 resultMessage += 'Наш рейтинг увеличился на ' + changeRating + '.';
@@ -99,7 +99,7 @@ export class MissionStage extends AbstractSlideStageStage {
 
         } else {
             this.isTheEnd = true;
-            
+
         }
 
         if (finishMessages !== null) {
