@@ -159,8 +159,8 @@ export class AbstractRootStage extends AbstractStage {
 		return this.getRoomConfigParam('thumbnailImages');
 	}
 
-	getShopImage() {
-		return this.getRoomConfigParam('shopImage');
+	getShopImages() {
+		return this.getRoomConfigParam('shopImages');
 	}
 
 	getCost() {

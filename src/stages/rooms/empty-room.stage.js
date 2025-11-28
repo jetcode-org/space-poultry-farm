@@ -1,14 +1,15 @@
 import {AbstractRootStage} from "./abstract-room.stage";
-import { ButtonSprite } from "../../sprites/button.sprite";
 import {ThumbnailRoomSprite} from "../../sprites/thumbnail-room.sprite";
 import {GameState} from "../../services/game.state";
-import {RoomFactory} from "../../services/room.factory";
 import {MonitorStage} from "../monitor.stage";
+import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class EmptyRoomStage extends AbstractRootStage {
     maxQuantity = 100;
 
-    rooms = [
+    shopRooms = [];
+
+    roomsConfig = [
         GameState.INCUBATOR_ROOM_TYPE,
         GameState.NURSERY_ROOM_TYPE,
         GameState.COOP_ROOM_TYPE,
@@ -18,34 +19,61 @@ export class EmptyRoomStage extends AbstractRootStage {
     init() {
         super.init();
 
+        this.buyButton = new LongButtonSprite(this, 5);
+        this.buyButton.x = 273;
+        this.buyButton.y = 540;
+        this.buyButton.hidden = true;
+        this.buyButton.setLabel('Выберите здание ...');
+
         this.forever(this.control());
+        this.pen(this.drawBlock.bind(this), 3);
+
+        this.addSound('public/sounds/buy_room.mp3', 'buy');
 
         this.onReady(() => {
             this.createShopRooms();
         });
-
-        this.addSound('public/sounds/buy_room.mp3', 'buy');
     }
 
     createShopRooms() {
         let inRow = 0;
-        let x = 100;
-        let y = 340;
+        const startX = 200;
+        const startY = 270;
+        const gap = 150;
 
-        for (const roomType of this.rooms) {
+        let x = startX;
+        let y = startY;
+
+        for (const roomType of this.roomsConfig) {
             const roomConfig = this.gameState.roomsConfig[roomType];
 
-            const shopRoom = new ThumbnailRoomSprite(this, 5, [
-                roomConfig.shopImage
-            ]);
+            const shopRoom = new ThumbnailRoomSprite(this, 5, roomConfig.shopImages);
+            this.shopRooms.push(shopRoom);
 
             shopRoom.minSize = 200;
             shopRoom.maxSize = 210;
             shopRoom.x = x;
             shopRoom.y = y;
+            shopRoom.name = roomConfig.name;
+            shopRoom.help = roomConfig.helpText;
 
             shopRoom.onClick(() => {
-                this.createRoom(roomType, roomConfig.cost);
+                for (const anyShopRoom of this.shopRooms) {
+                    if (anyShopRoom === shopRoom) {
+                        anyShopRoom.setDisabled(true);
+
+                        this.buyButton.hidden = false;
+                        this.buyButton.setLabel('Построить ' + shopRoom.name);
+                        this.buyButton.help = 'Построить ' + shopRoom.name + ' за ' + roomConfig.cost;
+
+                        this.buyButton.onClick(() => {
+                            this.createRoom(roomType, roomConfig.cost);
+                        });
+
+                    } else {
+                        anyShopRoom.setDisabled(false);
+                    }
+                }
             });
 
             shopRoom.pen((context, thumbnailRoom) => {
@@ -53,16 +81,16 @@ export class EmptyRoomStage extends AbstractRootStage {
                 context.fillStyle = 'white';
                 context.textAlign = 'start';
 
-                context.fillText(roomConfig.name, thumbnailRoom.x - 35, thumbnailRoom.y - 25);
-                context.fillText(roomConfig.cost, thumbnailRoom.x - 30, thumbnailRoom.y + 35);
+                context.fillText(roomConfig.name, thumbnailRoom.x - 50, thumbnailRoom.y - 35);
+                context.fillText('Цена: ' + roomConfig.cost + '₽', thumbnailRoom.x - 50, thumbnailRoom.y + 42);
             });
 
-            x += 100;
+            x += gap;
             inRow++;
 
-            if (inRow % 3 === 0) {
-                x = 100;
-                y += 100;
+            if (inRow % 2 === 0) {
+                x = startX;
+                y += gap;
             }
         }
     }
@@ -108,5 +136,22 @@ export class EmptyRoomStage extends AbstractRootStage {
 
     getParameters() {
         return [];
+    }
+
+    drawBlock(context) {
+        context.fillStyle = "rgba(0, 0, 0, 0.5)";
+        context.fillRect(0, 0, 600, 600);
+
+        context.font = '20px Arial';
+        context.fillStyle = 'white';
+        context.textAlign = 'start';
+
+        context.fillText('Выберите модуль:', 136, 180);
+    }
+
+    getParameters() {
+        return [
+            ['Свободный отсек', 'преобразуется в один из производственных модулей. Выбор зависит от вашей стратегии развития фермы.'],
+        ];
     }
 }

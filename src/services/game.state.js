@@ -181,7 +181,7 @@ export class GameState {
                 'public/images/rooms/thumbnails/empty_default.png',
                 'public/images/rooms/thumbnails/empty_hovered.png'
             ],
-            'shopImage': null,
+            'shopImages': [],
         },
         [GameState.SORTING_ROOM_TYPE]: {
             'name': 'Сортировка',
@@ -193,7 +193,7 @@ export class GameState {
                 'public/images/rooms/thumbnails/sorting_room_default.png',
                 'public/images/rooms/thumbnails/sorting_room_hovered.png'
             ],
-            'shopImage': null,
+            'shopImages': [],
         },
         [GameState.INCUBATOR_ROOM_TYPE]: {
             'name': 'Инкубатор',
@@ -205,7 +205,11 @@ export class GameState {
                 'public/images/rooms/thumbnails/incubator_default.png',
                 'public/images/rooms/thumbnails/incubator_hovered.png'
             ],
-            'shopImage': 'public/images/rooms/shop/incubator.png',
+            'shopImages': [
+                'public/images/rooms/shop/incubator_default.png',
+                'public/images/rooms/shop/incubator_hovered.png',
+                'public/images/rooms/shop/incubator_pressed.png',
+            ],
         },
         [GameState.NURSERY_ROOM_TYPE]: {
             'name': 'Цыплятник',
@@ -217,7 +221,11 @@ export class GameState {
                 'public/images/rooms/thumbnails/nursery_default.png',
                 'public/images/rooms/thumbnails/nursery_hovered.png'
             ],
-            'shopImage': 'public/images/rooms/shop/nursery.png',
+            'shopImages': [
+                'public/images/rooms/shop/nursery_default.png',
+                'public/images/rooms/shop/nursery_hovered.png',
+                'public/images/rooms/shop/nursery_pressed.png',
+            ],
         },
         [GameState.COOP_ROOM_TYPE]: {
             'name': 'Стадо',
@@ -229,7 +237,11 @@ export class GameState {
                 'public/images/rooms/thumbnails/coop_default.png',
                 'public/images/rooms/thumbnails/coop_hovered.png'
             ],
-            'shopImage': 'public/images/rooms/shop/coop.png',
+            'shopImages': [
+                'public/images/rooms/shop/coop_default.png',
+                'public/images/rooms/shop/coop_hovered.png',
+                'public/images/rooms/shop/coop_pressed.png',
+            ],
         },
         [GameState.FARM_ROOM_TYPE]: {
             'name': 'Ферма',
@@ -241,7 +253,11 @@ export class GameState {
                 'public/images/rooms/thumbnails/farm_default.png',
                 'public/images/rooms/thumbnails/farm_hovered.png'
             ],
-            'shopImage': 'public/images/rooms/shop/farm.png',
+            'shopImages': [
+                'public/images/rooms/shop/farm_default.png',
+                'public/images/rooms/shop/farm_hovered.png',
+                'public/images/rooms/shop/farm_pressed.png',
+            ],
         },
     };
 

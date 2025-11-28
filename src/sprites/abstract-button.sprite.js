@@ -9,6 +9,7 @@ export class AbstractButtonSprite extends HelpSprite {
     label = '';
     color = 'white';
     fontSize = 16;
+    disabled = false;
 
     init(){
         super.init();
@@ -22,6 +23,10 @@ export class AbstractButtonSprite extends HelpSprite {
         const html = document.documentElement;
 
         if (this.touchMouse()) {
+            if (this.disabled) {
+                return;
+            }
+
             if (this.costumes.length > 0) {
                 this.switchCostume(1);
             }
@@ -65,5 +70,20 @@ export class AbstractButtonSprite extends HelpSprite {
         this.label = text;
         this.color = color;
         this.fontSize = fontSize;
+    }
+
+    setDisabled(disabled) {
+        this.disabled = disabled;
+
+        if (disabled) {
+            document.documentElement.style.cursor = 'default';
+
+            if (this.costumes.length > 1) {
+                this.switchCostume(2);
+            }
+
+        } else {
+            this.switchCostume(0);
+        }
     }
 }
