@@ -602,10 +602,14 @@ export class GameState {
         },
     }
 
+    _formatter;
+
     constructor() {
         if (GameState.instance) {
             throw new Error('GameState class: use getInstance() method instead.');
         }
+
+        this._formatter = new Intl.NumberFormat('ru-RU');
     }
 
     static getInstance() {
@@ -763,5 +767,9 @@ export class GameState {
         this.cleanViolation = false;
         this.feedingViolation = false;
         this.conditionViolation = false;
+    }
+
+    getFormattedMoney(money) {
+        return this._formatter.format(money) + '₽';
     }
 }
