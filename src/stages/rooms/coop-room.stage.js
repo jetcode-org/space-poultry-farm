@@ -1,6 +1,7 @@
 import {AbstractRootStage} from "./abstract-room.stage";
 import {GameState} from "../../services/game.state";
 import {LongButtonSprite} from "../../sprites/long-button.sprite";
+import {Sprite} from "jetcode-scrubjs";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
@@ -22,6 +23,8 @@ export class CoopRoomStage extends AbstractRootStage {
         });
 
         this.harvestButton.onClick(() => {
+            this.eggsUnderRoofSprite.hidden = true;
+
             for (let i = 0; i < this.gameState.rooms.length; i++) {
                 if (this.gameState.rooms[i].getRoomType() === GameState.SORTING_ROOM_TYPE) {
                     const potentialSort = this.gameState.rooms[i];
@@ -46,6 +49,20 @@ export class CoopRoomStage extends AbstractRootStage {
             return false;
         })
 
+        this.foodSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/coop/food.png',
+        ]);
+        this.foodSprite.hidden = true;
+
+        this.trashSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/coop/trash.png',
+        ]);
+        this.trashSprite.hidden = true;
+
+        this.eggsUnderRoofSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/coop/eggs_under_roof.png',
+        ]);
+        this.eggsUnderRoofSprite.hidden = true;
     }
 
     control() {
@@ -93,6 +110,10 @@ export class CoopRoomStage extends AbstractRootStage {
 
             this.pollution = Math.min(this.pollution, 100);
         }
+
+        this.trashSprite.hidden = this.pollution < 10;
+        this.foodSprite.hidden = this.gameState.food < 10;
+        this.eggsUnderRoofSprite.hidden = this.eggsAmount === 0;
     }
 
     getParameters() {

@@ -4,6 +4,7 @@ import { ButtonSprite } from "../../sprites/button.sprite";
 import { SliderSprite } from "../../sprites/slider.sprite";
 import { IncubatorRoomStage } from "./incubator-room.stage";
 import {GameState} from "../../services/game.state";
+import {Sprite} from "jetcode-scrubjs";
 
 export class SortingRoomStage extends AbstractRootStage {
 
@@ -22,7 +23,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.quantitySlider.layer = 10;
         this.quantitySlider.size = 50;
         this.quantitySlider.x = 260;
-        this.quantitySlider.y = 200;
+        this.quantitySlider.y = 210;
         this.quantitySlider.setWidth(200);
 
         //Холодильник
@@ -74,7 +75,7 @@ export class SortingRoomStage extends AbstractRootStage {
             return false;
         });
         this.incubatorButton.x = 500;
-        this.incubatorButton.y = 200;
+        this.incubatorButton.y = 210;
         this.incubatorButton.layer = 10;
         this.incubatorButton.onReady(()=>{
             this.incubatorButton.setLabel('Инкубатор', null, 16);
@@ -83,6 +84,15 @@ export class SortingRoomStage extends AbstractRootStage {
         this.quantitySlider.hidden = true;
         this.coolerButton.hidden = true;
         this.incubatorButton.hidden = true;
+
+        const conveyor = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/sorting/conveyor_1.png',
+            'public/images/rooms/backgrounds/details/sorting/conveyor_2.png',
+            'public/images/rooms/backgrounds/details/sorting/conveyor_3.png',
+        ]);
+        conveyor.forever(() => {
+            conveyor.nextCostume();
+        }, 120);
 
         this.forever(this.control());
     }

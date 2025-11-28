@@ -1,6 +1,7 @@
 import {AbstractRootStage} from "./abstract-room.stage";
 import {GameState} from "../../services/game.state";
 import {LongButtonSprite} from "../../sprites/long-button.sprite";
+import {Sprite} from "jetcode-scrubjs";
 
 export class FarmRoomStage extends AbstractRootStage {
     maxQuantity = 100;
@@ -18,7 +19,15 @@ export class FarmRoomStage extends AbstractRootStage {
         this.harvestButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
             this.currentQuantity = 0;
+            this.plant.hidden = true;
         })
+
+        this.plant = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/farm/plant_1.png',
+            'public/images/rooms/backgrounds/details/farm/plant_2.png',
+            'public/images/rooms/backgrounds/details/farm/plant_3.png',
+        ]);
+        this.plant.hidden = true;
 
         this.forever(this.control());
     }
@@ -49,13 +58,25 @@ export class FarmRoomStage extends AbstractRootStage {
             }
         }
 
-        if (this.currentQuantity > 0) {
-            this.isRoomReady = true;
-        } else {
-            this.isRoomReady = false;
-        }
-
+        this.isRoomReady = this.currentQuantity > 0;
         this.pollution = Math.min(this.pollution, 100);
+
+        if (this.currentQuantity > 0) {
+            this.plant.hidden = false;
+
+            let plantCostume = 0;
+            if (this.currentQuantity >= 60) {
+                plantCostume = 2;
+
+            } else if (this.currentQuantity >= 30) {
+                plantCostume = 1;
+            }
+
+            this.plant.switchCostume(plantCostume);
+
+        } else {
+            this.plant.hidden = true;
+        }
     }
 
     getParameters() {

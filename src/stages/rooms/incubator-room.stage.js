@@ -1,6 +1,7 @@
 import { AbstractRootStage } from "./abstract-room.stage";
 import {GameState} from "../../services/game.state";
 import {LongButtonSprite} from "../../sprites/long-button.sprite";
+import {Sprite} from "jetcode-scrubjs";
 
 export class IncubatorRoomStage extends AbstractRootStage {
     static INCUBATOR_CYCLE_TIMER = 10;
@@ -47,6 +48,14 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 }
             }
         });
+
+        this.windowsSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/incubator/windows.png',
+        ]);
+
+        this.eggshellSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/incubator/eggshell.png',
+        ]);
     }
 
     control() {
@@ -112,6 +121,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
             this.pollution = Math.min(this.pollution, 100);
         }
+
+        this.eggshellSprite.hidden = this.pollution < 10;
     }
 
     getParameters() {

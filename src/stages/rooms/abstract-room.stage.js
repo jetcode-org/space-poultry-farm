@@ -89,15 +89,14 @@ export class AbstractRootStage extends AbstractStage {
 		getManureButton.onClick(() => {
 			this.gameState.manure += Math.floor(this.pollution * 0.5);
 			this.pollution = 0;
+
+			if (this.trashSprite) {
+				this.trashSprite.hidden = true;
+			}
 		});
 
 		getManureButton.forever(() => {
-			if (this.pollution >= 1) {
-				getManureButton.hidden = false;
-
-			} else {
-				getManureButton.hidden = true;
-			}
+			getManureButton.hidden = this.pollution < 10;
 		})
 	}
 

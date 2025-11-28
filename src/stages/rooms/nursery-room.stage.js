@@ -1,6 +1,7 @@
 import { AbstractRootStage } from "./abstract-room.stage";
 import {GameState} from "../../services/game.state";
 import {LongButtonSprite} from "../../sprites/long-button.sprite";
+import {Sprite} from "jetcode-scrubjs";
 
 export class NurseryRoomStage extends AbstractRootStage {
     static NURSERY_CYCLE_TIMER = 10;
@@ -50,6 +51,16 @@ export class NurseryRoomStage extends AbstractRootStage {
 
             return false;
         });
+
+        this.foodSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/nursery/food.png',
+        ]);
+        this.foodSprite.hidden = true;
+
+        this.trashSprite = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/nursery/trash.png',
+        ]);
+        this.trashSprite.hidden = true;
     }
 
     control() {
@@ -129,6 +140,9 @@ export class NurseryRoomStage extends AbstractRootStage {
 
             this.pollution = Math.min(this.pollution, 100);
         }
+
+        this.trashSprite.hidden = this.pollution < 10;
+        this.foodSprite.hidden = this.gameState.food < 10;
     }
 
     getParameters() {
