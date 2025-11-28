@@ -1,4 +1,4 @@
-import {Sprite} from 'jetcode-scrubjs';
+import {Game, Sprite} from 'jetcode-scrubjs';
 import {ButtonSprite} from "../../sprites/button.sprite";
 import {MonitorStage} from "../monitor.stage";
 import {AbstractStage} from "../abstract.stage";
@@ -22,6 +22,7 @@ export class AbstractRootStage extends AbstractStage {
 	isCleaningByRobot = false;
 
 	isVisualized = false;
+
 
 	init() {
 		super.init()
@@ -54,7 +55,6 @@ export class AbstractRootStage extends AbstractStage {
 		this.forever(this.updateHelpText);
 
 		this.visualiser = new Sprite();
-		this.setVisCostumes();
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
 
@@ -75,6 +75,12 @@ export class AbstractRootStage extends AbstractStage {
 		this.onReady(() => {
 			this.resetRoom();
 		});
+
+		this.forever(()=>{
+			if (this.currentQuantity <= 0) {
+				this.isVisualized = false;
+			}
+		})
 	}
 
 	createGetManureButton() {
@@ -214,10 +220,12 @@ export class AbstractRootStage extends AbstractStage {
 
 		for (let i = 0; i < this.currentQuantity; i++) {
 			let visClone = this.visualiser.createClone();
+
+
 			visClone.hidden = false;
 			visClone.x = this.game.getRandom(200, 400)
-			visClone.y = this.game.getRandom(200, 400)
-			visClone.layer = 10
+			visClone.y = this.game.getRandom(200, 350)
+			visClone.layer = 4
 			visClone.rotateStyle = 'leftRight'
 			visClone.size = 150
 			visClone.xSpeed = this.game.getRandom(-10, 10) / 10
@@ -241,15 +249,15 @@ export class AbstractRootStage extends AbstractStage {
 						visClone.direction = 90;
 					}
 
-					if (visClone.x > 400) {
+					if (visClone.x > 450) {
 						visClone.xSpeed *= -1
 					}
 
-					if (visClone.x < 100) {
+					if (visClone.x < 150) {
 						visClone.xSpeed *= -1
 					}
 
-					if (visClone.y > 400) {
+					if (visClone.y > 380) {
 						visClone.ySpeed *= -1
 					}
 
@@ -272,7 +280,7 @@ export class AbstractRootStage extends AbstractStage {
 
 	//Перезаписать в классе комнаты, чтобы задать нужные костюмы в спрайт Visualiser
 	setVisCostumes() {
-
+		
 	}
 
 	showInstructionDialog() {

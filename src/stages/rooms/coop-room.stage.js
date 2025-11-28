@@ -1,7 +1,7 @@
-import {AbstractRootStage} from "./abstract-room.stage";
-import {GameState} from "../../services/game.state";
-import {LongButtonSprite} from "../../sprites/long-button.sprite";
-import {Sprite} from "jetcode-scrubjs";
+import { AbstractRootStage } from "./abstract-room.stage";
+import { GameState } from "../../services/game.state";
+import { LongButtonSprite } from "../../sprites/long-button.sprite";
+import { Sprite } from "jetcode-scrubjs";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
@@ -10,10 +10,13 @@ export class CoopRoomStage extends AbstractRootStage {
     maxQuantity = 50; // Максимальное количество куриц
     comfortQuantity = 40; // Комфортное количество куриц
 
+    targetQuantity = 0;
+    targetFlag = false; //Нужно, чтобы в первый раз просто приравнять количество куриц для правильного отображения (костыль)
+
     init() {
         super.init();
 
-        this.forever(this.control());
+        this.forever(this.control.bind(this));
 
         this.harvestButton = new LongButtonSprite(this, 5);
         this.harvestButton.x = 150;
@@ -21,6 +24,13 @@ export class CoopRoomStage extends AbstractRootStage {
         this.harvestButton.onReady(() => {
             this.harvestButton.setLabel('Собрать яйца')
         });
+
+        this.onStart(()=>{
+            if (!this.targetFlag) {
+                this.targetQuantity = this.currentQuantity;
+                this.targetFlag = true;
+            }
+        })
 
         this.harvestButton.onClick(() => {
             this.eggsUnderRoofSprite.hidden = true;
@@ -63,16 +73,75 @@ export class CoopRoomStage extends AbstractRootStage {
             'public/images/rooms/backgrounds/details/coop/eggs_under_roof.png',
         ]);
         this.eggsUnderRoofSprite.hidden = true;
+
     }
 
     control() {
-        return () => {
-            if (this.eggsAmount > 0) {
-                this.harvestButton.hidden = false;
+        if (this.eggsAmount > 0) {
+            this.harvestButton.hidden = false;
 
-            } else {
-                this.harvestButton.hidden = true;
+        } else {
+            this.harvestButton.hidden = true;
+        }
+        if (this.targetQuantity > this.currentQuantity) {
+            this.targetQuantity = this.currentQuantity;
+        }
+        if (this.targetQuantity < this.currentQuantity && this.isVisualized) {
+            for (let i = this.targetQuantity; i < this.currentQuantity; i++) {
+                let visClone = this.visualiser.createClone();
+                visClone.hidden = false;
+                visClone.x = this.game.getRandom(200, 400)
+                visClone.y = this.game.getRandom(200, 400)
+                visClone.layer = 10
+                visClone.rotateStyle = 'leftRight'
+                visClone.size = 150
+                visClone.xSpeed = this.game.getRandom(-10, 10) / 10
+                visClone.ySpeed = this.game.getRandom(-10, 10) / 10
+                visClone.number = i + 1;
+
+                let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
+                visClone.switchCostume(randCos)
+
+
+                if (this.visualiser.moving) {
+
+                    visClone.forever(function () {
+
+                        visClone.x += visClone.xSpeed
+                        visClone.y += visClone.ySpeed
+
+                        if (visClone.xSpeed > 0) {
+                            visClone.direction = -90;
+                        } else {
+                            visClone.direction = 90;
+                        }
+
+                        if (visClone.x > 400) {
+                            visClone.xSpeed *= -1
+                        }
+
+                        if (visClone.x < 100) {
+                            visClone.xSpeed *= -1
+                        }
+
+                        if (visClone.y > 400) {
+                            visClone.ySpeed *= -1
+                        }
+
+                        if (visClone.y < 200) {
+                            visClone.ySpeed *= -1
+                        }
+
+                    })
+                }
+                visClone.forever(() => {
+                    if (visClone.number > this.currentQuantity) {
+                        visClone.delete();
+                    }
+                })
+
             }
+            this.targetQuantity = this.currentQuantity;
         }
     }
 
@@ -80,7 +149,7 @@ export class CoopRoomStage extends AbstractRootStage {
         return GameState.COOP_ROOM_TYPE;
     }
 
-    roomTick () {
+    roomTick() {
         super.roomTick();
 
         if (this.gameState.food >= this.currentQuantity * this.foodConsumption / 5) {
@@ -125,11 +194,13 @@ export class CoopRoomStage extends AbstractRootStage {
         ];
     }
 
-	setVisCostumes() {
-		super.setVisCostumes();
+    setVisCostumes() {
+        super.setVisCostumes();
 
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png');
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png');
-		this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png');
-	}
+        this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png');
+        this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png');
+        this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png');
+
+        
+    }
 }

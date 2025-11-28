@@ -112,7 +112,7 @@ export class MonitorStage extends AbstractStage {
         this.readySprite.hidden = true;
 
         //создание роботов
-        this.createDrones(3);
+        // this.createDrones(1);
 
         // Создание комнат
         this.createRooms();
