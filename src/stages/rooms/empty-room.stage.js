@@ -7,17 +7,17 @@ import {LongButtonSprite} from "../../sprites/long-button.sprite";
 export class EmptyRoomStage extends AbstractRootStage {
     maxQuantity = 100;
 
-    shopRooms = [];
-
-    roomsConfig = [
-        GameState.INCUBATOR_ROOM_TYPE,
-        GameState.NURSERY_ROOM_TYPE,
-        GameState.COOP_ROOM_TYPE,
-        GameState.FARM_ROOM_TYPE
-    ];
-
     init() {
         super.init();
+
+        this.shopRooms = [];
+
+        this.roomsConfig = [
+            GameState.INCUBATOR_ROOM_TYPE,
+            GameState.NURSERY_ROOM_TYPE,
+            GameState.COOP_ROOM_TYPE,
+            GameState.FARM_ROOM_TYPE
+        ];
 
         this.buyButton = new LongButtonSprite(this, 5);
         this.buyButton.x = 273;
@@ -25,14 +25,12 @@ export class EmptyRoomStage extends AbstractRootStage {
         this.buyButton.hidden = true;
         this.buyButton.setLabel('Выберите здание ...');
 
+        this.createShopRooms();
+
         this.forever(this.control());
         this.pen(this.drawBlock.bind(this), 3);
 
         this.addSound('public/sounds/buy_room.mp3', 'buy');
-
-        this.onReady(() => {
-            this.createShopRooms();
-        });
     }
 
     createShopRooms() {
