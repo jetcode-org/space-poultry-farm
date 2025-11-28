@@ -1,6 +1,6 @@
 import {AbstractRootStage} from "./abstract-room.stage";
-import { ButtonSprite } from "../../sprites/button.sprite";
 import {GameState} from "../../services/game.state";
+import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
@@ -13,13 +13,12 @@ export class CoopRoomStage extends AbstractRootStage {
         super.init();
 
         this.forever(this.control());
-		this.pen(this.drawParameters, 4);
 
-        this.harvestButton = new ButtonSprite(this, 5);
-        this.harvestButton.x = 160;
-        this.harvestButton.y = 490;
+        this.harvestButton = new LongButtonSprite(this, 5);
+        this.harvestButton.x = 150;
+        this.harvestButton.y = 540;
         this.harvestButton.onReady(() => {
-            this.harvestButton.setLabel('Собрать яйца', undefined)
+            this.harvestButton.setLabel('Собрать яйца')
         });
 
         this.harvestButton.onClick(() => {
@@ -98,20 +97,14 @@ export class CoopRoomStage extends AbstractRootStage {
         }
     }
 
-	drawParameters(context, room) {
-		super.drawParameters(context)
-
-        context.font = '16px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'start';
-
-        context.fillText('Сколько куриц: ' + room.currentQuantity + ' шт.', 610, 190);
-        context.fillText('Макс. кол-во: ' + room.maxQuantity + ' шт.', 610, 215);
-        context.fillText('Комфорт. кол-во: ' + room.comfortQuantity + ' шт.', 610, 240);
-        context.fillText('Сколько яиц: ' + room.eggsAmount + ' шт.', 610, 265);
-        context.fillText('Макс. яиц: ' + room.maxEggsAmount + ' шт.', 610, 290);
-        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 315);
-	}
+    getParameters() {
+        return [
+            ['Кол-во куриц', this.currentQuantity + '/' + this.maxQuantity],
+            ['Комфорт. кол-во', this.comfortQuantity],
+            ['Кол-во яиц', this.eggsAmount + '/' + this.maxEggsAmount],
+            ['Загрязненность', this.pollution + '%'],
+        ];
+    }
 
 	setVisCostumes() {
 		super.setVisCostumes();
@@ -119,9 +112,5 @@ export class CoopRoomStage extends AbstractRootStage {
 		this.visualiser.addCostume('public/images/sprites/chicken/chicken_1.png');
 		this.visualiser.addCostume('public/images/sprites/chicken/chicken_2.png');
 		this.visualiser.addCostume('public/images/sprites/chicken/chicken_3.png');
-	}
-
-    drawHelp(context) {
-		super.drawHelp(context);
 	}
 }

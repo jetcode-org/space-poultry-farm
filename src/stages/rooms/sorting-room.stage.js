@@ -42,7 +42,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.y = 300;
         this.coolerButton.layer = 10;
         this.coolerButton.onReady(()=>{
-            this.coolerButton.setLabel('Холодильник', undefined, 16);
+            this.coolerButton.setLabel('Холодильник', null, 16);
         })
 
         //инкубатор
@@ -77,7 +77,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.incubatorButton.y = 200;
         this.incubatorButton.layer = 10;
         this.incubatorButton.onReady(()=>{
-            this.incubatorButton.setLabel('Инкубатор', undefined, 16);
+            this.incubatorButton.setLabel('Инкубатор', null, 16);
         })
 
         this.quantitySlider.hidden = true;
@@ -85,7 +85,6 @@ export class SortingRoomStage extends AbstractRootStage {
         this.incubatorButton.hidden = true;
 
         this.forever(this.control());
-        this.pen(this.drawParameters, 10)
     }
 
     control() {
@@ -126,19 +125,10 @@ export class SortingRoomStage extends AbstractRootStage {
         this.pollution = Math.min(this.pollution, 100);
     }
 
-	drawParameters(context, room) {
-		super.drawParameters(context)
-
-        context.font = '16px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'start';
-
-        context.fillText('Количество яиц: ' + room.currentQuantity + ' шт.', 610, 190);
-        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
-        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 240);
+    getParameters() {
+        return [
+            ['Кол-во яиц', this.currentQuantity + '/' + this.maxQuantity],
+            ['Загрязненность', this.pollution + '%'],
+        ];
     }
-
-    drawHelp(context) {
-		super.drawHelp(context);
-	}
 }

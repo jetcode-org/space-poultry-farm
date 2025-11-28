@@ -18,7 +18,6 @@ export class EmptyRoomStage extends AbstractRootStage {
     init() {
         super.init();
 
-        this.pen(this.drawParameters, 1);
         this.forever(this.control());
 
         this.onReady(() => {
@@ -107,21 +106,7 @@ export class EmptyRoomStage extends AbstractRootStage {
 
     roomTick () {}
 
-    drawParameters(context, sort) {
-		super.drawParameters(context);
-
-        context.fillStyle = "rgba(0, 0, 0, 0.2)";
-        context.fillRect(50, 250, 500, 300);
-
-        context.font = '20px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'start';
-
-        context.fillText('Выберите комнату:', 65, 280);
+    getParameters() {
+        return [];
     }
-
-    drawHelp(context) {
-		super.drawHelp(context);
-    }
-
 }

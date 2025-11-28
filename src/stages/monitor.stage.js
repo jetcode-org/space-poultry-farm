@@ -308,28 +308,6 @@ export class MonitorStage extends AbstractStage {
         }
     }
 
-	drawParameters(context) {
-		super.drawParameters(context);
-
-        context.font = 'bold 18px Arial';
-        context.fillStyle = '#fff';
-        context.fillText('Дроны-уборщики:', 610, 100)
-
-        context.font = '18px Arial';
-		context.fillStyle = '#a8e2c0ff';
-		context.textAlign = 'start';
-
-        const currentMission = this.gameState.currentMission;
-        const mission = this.gameState.missions[currentMission];
-
-        if (mission) {
-            context.fillStyle = '#f1f1f1ff';
-            context.fillText('Планета: ' + mission['name'], 70, 380)
-            context.fillText('Нужно яиц: ' + mission['eggQuota'], 70, 405)
-            context.fillText('Осталось время: ' + (mission['distance'] - this.gameState.passedTime), 70, 430)
-        }
-    }
-
     showMission(currentQuota, success, soldEggs = null, earnedMoney = null, changeRating = null, startMessage = null, finishMessage = null) {
         MissionStage.getInstance().setMissionSlides(
             currentQuota,

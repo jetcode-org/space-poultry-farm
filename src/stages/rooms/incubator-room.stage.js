@@ -1,7 +1,6 @@
-import { ButtonSprite } from "../../sprites/button.sprite";
 import { AbstractRootStage } from "./abstract-room.stage";
-import { MonitorStage } from "../monitor.stage";
 import {GameState} from "../../services/game.state";
+import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class IncubatorRoomStage extends AbstractRootStage {
     static INCUBATOR_CYCLE_TIMER = 10;
@@ -16,17 +15,16 @@ export class IncubatorRoomStage extends AbstractRootStage {
         super.init();
 
         this.forever(this.control());
-        this.pen(this.drawParameters, 4);
 
-        this.moveButton = new ButtonSprite(this, 5);
-        this.moveButton.x = 160;
-        this.moveButton.y = 490;
+        this.moveButton = new LongButtonSprite(this, 5);
+        this.moveButton.x = 150;
+        this.moveButton.y = 540;
         this.moveButton.hidden = true;
 
         this.visualiser.moving = false;
 
         this.moveButton.onReady(() => {
-            this.moveButton.setLabel('Цыплят в ясли', undefined, 70)
+            this.moveButton.setLabel('Цыплят в ясли')
         });
 
         this.moveButton.onClick(() => {
@@ -115,21 +113,12 @@ export class IncubatorRoomStage extends AbstractRootStage {
         }
     }
 
-	drawParameters(context, room) {
-		super.drawParameters(context);
-
-        context.font = '16px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'start';
-
-        context.fillText('Сколько яиц: ' + room.currentQuantity + ' шт.', 610, 190);
-        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
-        context.fillText('Загрязненность: ' + room.pollution + '%', 610, 240);
-        context.fillText('Готовность: ' + (room.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%', 610, 265);
-
-        // if (incubator.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) {
-        //     context.fillText('Осталось: ' + (IncubatorRoomStage.INCUBATOR_CYCLE_TIMER - incubator.currentReadyProgress), 615, 300);
-        // }
+    getParameters() {
+        return [
+            ['Кол-во яиц', this.currentQuantity + '/' + this.maxQuantity],
+            ['Загрязненность', this.pollution + '%'],
+            ['Готовность', (this.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%'],
+        ];
     }
 
     setVisCostumes() {
@@ -138,9 +127,5 @@ export class IncubatorRoomStage extends AbstractRootStage {
 		this.visualiser.addCostume('public/images/sprites/egg/egg_1.png')
 		this.visualiser.addCostume('public/images/sprites/egg/egg_2.png')
 		this.visualiser.addCostume('public/images/sprites/egg/egg_3.png')
-	}
-
-    drawHelp(context) {
-		super.drawHelp(context);
 	}
 }

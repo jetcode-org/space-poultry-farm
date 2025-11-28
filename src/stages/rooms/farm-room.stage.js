@@ -1,6 +1,6 @@
 import {AbstractRootStage} from "./abstract-room.stage";
-import { ButtonSprite } from "../../sprites/button.sprite";
 import {GameState} from "../../services/game.state";
+import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class FarmRoomStage extends AbstractRootStage {
     maxQuantity = 100;
@@ -8,19 +8,17 @@ export class FarmRoomStage extends AbstractRootStage {
     init() {
         super.init();
 
-        this.harvestButton = new ButtonSprite(this, 5);
-        this.harvestButton.x = 160;
-        this.harvestButton.y = 490;
+        this.harvestButton = new LongButtonSprite(this, 5);
+        this.harvestButton.x = 150;
+        this.harvestButton.y = 540;
         this.harvestButton.onReady(() => {
-            this.harvestButton.setLabel('Собрать урожай', undefined, 65)
+            this.harvestButton.setLabel('Собрать урожай')
         });
 
         this.harvestButton.onClick(() => {
             this.gameState.food += this.currentQuantity;
             this.currentQuantity = 0;
         })
-
-        this.pen(this.drawParameters, 5);
 
         this.forever(this.control());
     }
@@ -60,18 +58,9 @@ export class FarmRoomStage extends AbstractRootStage {
         this.pollution = Math.min(this.pollution, 100);
     }
 
-    drawParameters(context, room) {
-		super.drawParameters(context)
-
-        context.font = '16px Arial';
-        context.fillStyle = 'white';
-        context.textAlign = 'start';
-
-        context.fillText('Урожай: ' + room.currentQuantity + ' шт.', 610, 190);
-        context.fillText('Вместимость: ' + room.maxQuantity + ' шт.', 610, 215);
+    getParameters() {
+        return [
+            ['Урожай', this.currentQuantity + '/' + this.maxQuantity],
+        ];
     }
-
-    drawHelp(context) {
-		super.drawHelp(context);
-	}
 }

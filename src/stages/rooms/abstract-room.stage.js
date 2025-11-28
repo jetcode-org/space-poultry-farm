@@ -4,6 +4,7 @@ import {MonitorStage} from "../monitor.stage";
 import {AbstractStage} from "../abstract.stage";
 import {GameState} from "../../services/game.state";
 import {BlankButtonSprite} from "../../sprites/blank-button.sprite";
+import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class AbstractRootStage extends AbstractStage {
 	thumbnail;
@@ -48,13 +49,12 @@ export class AbstractRootStage extends AbstractStage {
 		this.createGetManureButton();
 
 		this.forever(this.gameTickAllRooms, 1000);
+		this.forever(this.updateHelpText);
 
 		this.visualiser = new Sprite();
 		this.setVisCostumes();
 		this.visualiser.hidden = true;
 		this.visualiser.moving = true;
-
-		this.pen(this.drawHelpBlock.bind(this));
 
 		this.onStart(() => {
 			this.visualizerSpawn();
@@ -76,12 +76,12 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	createGetManureButton() {
-		const getManureButton = new ButtonSprite(this, 5);
-		getManureButton.x = 320;
-		getManureButton.y = 490;
+		const getManureButton = new LongButtonSprite(this, 5);
+		getManureButton.x = 430;
+		getManureButton.y = 540;
 
 		getManureButton.onReady(()=>{
-			getManureButton.setLabel('Собрать помет', undefined, 70);
+			getManureButton.setLabel('Собрать помет');
 		});
 
 		getManureButton.onClick(() => {
@@ -259,16 +259,6 @@ export class AbstractRootStage extends AbstractStage {
 
 	}
 
-	drawHelpBlock(context) {
-		context.textAlign = 'left';
-		context.font = 'bold 18px Arial';
-		context.fillStyle = '#a8e2c0ff';
-		context.fillText('Справка:', 610, 400)
-
-		context.font = '14px Arial';
-		this.drawMultilineText(context, this.getHelpText(), 610, 430, 165, 20);
-	}
-
 	showInstructionDialog() {
 		this.helper.show(this.getInstructionText(), GameState.BOSS_PERSON);
 		this.helper.setButtonText('Дальше');
@@ -278,5 +268,25 @@ export class AbstractRootStage extends AbstractStage {
 			this.helper.setButtonText('Конец');
 			this.helper.onClick(()=>{this.helper.hide()});
 		});
+	}
+
+	getParameters() {
+		console.error('Метод не определен.');
+	}
+
+	updateHelpText() {
+		const parameters = this.getParameters();
+
+		if (!parameters.length) {
+			return;
+		}
+
+		const helpText = [];
+
+		for (const item of parameters) {
+			helpText.push(item[0] + ': ' + item[1]);
+		}
+
+		this.showHelp(helpText);
 	}
 }

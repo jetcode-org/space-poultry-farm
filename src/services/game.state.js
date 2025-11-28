@@ -500,7 +500,7 @@ export class GameState {
     isReadingHelper = false;
 
     // Рейтинг (Лицензия Таврос)
-    rating =50;
+    rating  = 50;
 
     // Деньги - основная игровая валюта
     money = 20000;

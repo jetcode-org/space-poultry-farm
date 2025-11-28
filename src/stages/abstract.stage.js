@@ -55,7 +55,17 @@ export class AbstractStage extends Stage {
 			helpText = this.helpText;
 		}
 
-		this.drawMultilineText(context, helpText, 620, 195, 155, 20);
+		let y = 195;
+		if (Array.isArray(helpText)) {
+			const yStep = 22;
+			for (const item of helpText) {
+				this.drawMultilineText(context, item, 620, y, 155, 20);
+
+				y += yStep;
+			}
+		} else {
+			this.drawMultilineText(context, helpText, 620, y, 155, 20);
+		}
 	}
 
 	showHelp(text, lifetime = 10) {
@@ -156,13 +166,13 @@ export class AbstractStage extends Stage {
 				context.font = 'bold 18px Arial';
 
 				// context.fillText('Планета: ' + mission['name'], 70, 380)
-				context.fillText('Цель: ' + mission['eggQuota'] + ' яиц', topPanel.x - 70, topPanel.y - 10)
-				context.fillText('Таймер: ' + (mission['distance'] - this.gameState.passedTime) + ' с', topPanel.x - 70, topPanel.y + 20)
+				context.fillText('Цель: ' + mission['eggQuota'] + ' яиц', topPanel.x - 70, topPanel.y - 10);
+				context.fillText('Таймер: ' + (mission['distance'] - this.gameState.passedTime) + ' с', topPanel.x - 70, topPanel.y + 20);
 			}
 
 			// Справка
-			context.font = 'bold 18px Arial';
-			context.fillText('Справка', referencePanel.x - 90, referencePanel.y - 87)
+			context.font = 'bold 16px Arial';
+			context.fillText('Информация', referencePanel.x - 81, referencePanel.y - 87)
 
 			// Ресурсы
 			context.font = 'bold 12px Arial';
@@ -234,10 +244,6 @@ export class AbstractStage extends Stage {
             context.fillText(lineArray[i], x, y + i * lineHeight);
         }
     }
-
-	drawParameters() {
-
-	}
 
 	createFpsCounter() {
 		const fpsCounter = new FpsCounterSprite(this, 10);
