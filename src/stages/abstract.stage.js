@@ -150,8 +150,7 @@ export class AbstractStage extends Stage {
 			// Деньги и Рейтинг
 			context.font = 'bold 15px Arial';
 
-			const formatter = new Intl.NumberFormat('ru-RU');
-			context.fillText(formatter.format(this.gameState.money) + '₽', money.x - 15, money.y + 5);
+			context.fillText(this.gameState.getFormattedMoney(this.gameState.money), money.x - 15, money.y + 5);
 
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';

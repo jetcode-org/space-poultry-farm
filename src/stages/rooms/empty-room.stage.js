@@ -61,8 +61,8 @@ export class EmptyRoomStage extends AbstractRootStage {
                         anyShopRoom.setDisabled(true);
 
                         this.buyButton.hidden = false;
-                        this.buyButton.setLabel('Построить ' + shopRoom.name);
-                        this.buyButton.help = 'Построить ' + shopRoom.name + ' за ' + roomConfig.cost;
+                        this.buyButton.setLabel('Построить "' + shopRoom.name + '"');
+                        this.buyButton.help = 'Построить модуль "' + shopRoom.name + '" за ' + this.gameState.getFormattedMoney(roomConfig.cost);
 
                         this.buyButton.onClick(() => {
                             this.createRoom(roomType, roomConfig.cost);
@@ -75,12 +75,15 @@ export class EmptyRoomStage extends AbstractRootStage {
             });
 
             shopRoom.pen((context, thumbnailRoom) => {
-                context.font = '16px Arial';
-                context.fillStyle = 'white';
                 context.textAlign = 'start';
 
+                context.font = 'bold 16px Arial';
+                context.fillStyle = '#50d7df';
                 context.fillText(roomConfig.name, thumbnailRoom.x - 50, thumbnailRoom.y - 35);
-                context.fillText('Цена: ' + roomConfig.cost + '₽', thumbnailRoom.x - 50, thumbnailRoom.y + 42);
+
+                context.font = '14px Arial';
+                context.fillStyle = 'white';
+                context.fillText('Цена: ' + this.gameState.getFormattedMoney(roomConfig.cost), thumbnailRoom.x - 50, thumbnailRoom.y + 42);
             });
 
             x += gap;
