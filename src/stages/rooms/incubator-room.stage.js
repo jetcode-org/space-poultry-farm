@@ -41,7 +41,6 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
                         this.gameState.eggshell += Math.floor(quantityToMove / 2);
                         this.failRoom();
-                        this.visualizerSpawn();
 
                         return true;
                     }
@@ -79,6 +78,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.currentReadyProgress = 0;
         this.currentQuantity = 0;
         this.isRoomReady = false;
+        this.visualiser.deleteClones();
+        this.isVisualized = false;
     }
 
     roomTick() {

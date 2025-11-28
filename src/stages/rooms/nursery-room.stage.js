@@ -81,7 +81,7 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.currentReadyProgress = 0;
         this.currentQuantity = 0;
 		this.isRoomReady = false;
-		this.visualizerSpawn();
+        this.isVisualized = false;
     }
 
     roomTick() {
@@ -93,7 +93,6 @@ export class NurseryRoomStage extends AbstractRootStage {
         } else {
             const withoutFood = this.currentQuantity - Math.floor(this.gameState.food * (1 / this.foodConsumption));
             this.currentQuantity = Math.floor(this.gameState.food * (1 / this.foodConsumption) + 0.95 * withoutFood);
-            this.visualizerSpawn();
             this.gameState.food = 0;
 
             if (this.currentQuantity <= 0) {

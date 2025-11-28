@@ -16,24 +16,29 @@ export class AbstractDragAndDropSprite extends Sprite {
     init() {
         this.forever(this.control);
         this.pen(this.setLabel.bind(this), 4);
+        
+        window.addEventListener('mouseup', this.disactivate.bind(this));
+        window.addEventListener('mousedown', this.activate.bind(this));
     }
 
     control() {
-        if (this.touchMouse()) {
-            if (this.game.mouseDown() && !GameState.getInstance().isDraggableObjectActive) {
-                this.active = true;
-                GameState.getInstance().isDraggableObjectActive = true;
-            }
-        }
-        if (!this.game.mouseDown()) {
-            this.active = false;
-            GameState.getInstance().isDraggableObjectActive = false;
-        }
         if (this.active) {
             if (this.canMove) {
                 this.x = this.game.getMousePoint().x;
                 this.y = this.game.getMousePoint().y;
             }
+        }
+    }
+
+    disactivate(){
+        this.active = false;
+        GameState.getInstance().isDraggableObjectActive = false;
+    }
+
+    activate() {
+        if (this.touchMouse() && !GameState.getInstance().isDraggableObjectActive) {
+            this.active = true;
+            GameState.getInstance().isDraggableObjectActive = true;
         }
     }
 

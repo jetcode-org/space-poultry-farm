@@ -1,9 +1,6 @@
 import { AbstractDragAndDropSprite } from "./abstract-drag-and-drop.sprite";
 
 export class RobotSprite extends AbstractDragAndDropSprite {
-    minSize = 1400;
-    maxSize = 1800;
-
     charge = 100;
 
     isCharging = false;
@@ -14,6 +11,7 @@ export class RobotSprite extends AbstractDragAndDropSprite {
 
     init() {
         this.addCostume('public/images/sprites/drone/drone_active.png')
+        this.addCostume('public/images/sprites/drone/drone_middle.png')
         this.addCostume('public/images/sprites/drone/drone_charging.png')
 
         this.size = 100;
@@ -30,8 +28,10 @@ export class RobotSprite extends AbstractDragAndDropSprite {
 
         if (this.charge <= 0) {
             this.charge = 0;
+            this.switchCostume(2);
+        } else if (this.charge <= 50) {
             this.switchCostume(1);
-        } else {
+        }  else {
             this.switchCostume(0);
         }
 
@@ -50,9 +50,9 @@ export class RobotSprite extends AbstractDragAndDropSprite {
                 station.room.isCleaning = true;
                 this.stationRoom = station.room;
                 this.stationRoom.robot = this;
-                this.x = station.x;
+                this.x = station.x + 1;
                 this.y = station.y;
-                this.size = station.size;
+                this.size = station.size + 10;
                 this.isCharging = false;
             } else {
                 this.x = this.startX;

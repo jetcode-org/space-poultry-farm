@@ -15,11 +15,13 @@ export class AbstractRootStage extends AbstractStage {
 	maxQuantity = 20;
 	currentQuantity = 0;
 
-	cleaningValue = 5;
+	cleaningValue = 10;
 	robot = null;
 	robotChargeDif = 0;
 
 	isCleaningByRobot = false;
+
+	isVisualized = false;
 
 	init() {
 		super.init()
@@ -175,13 +177,16 @@ export class AbstractRootStage extends AbstractStage {
 
 	roomTick () {
 		if (this.robot) {
-			this.pollution -= this.cleaningValue;
+			if (this.pollution > this.cleaningValue){
+				this.pollution -= this.cleaningValue;
+				this.gameState.manure += this.cleaningValue;
+			} else {
+				this.gameState.manure += this.pollution;
+				this.pollution = 0;
+			}
 			this.robot.charge -= this.robotChargeDif;
 			if (this.robot.charge <= 0) {
 				this.robot = null;
-			}
-			if (this.pollution <= 0) {
-				this.pollution = 0;
 			}
 		}
 
@@ -202,6 +207,10 @@ export class AbstractRootStage extends AbstractStage {
 	// параметр moving должен определять двигаются обьекты или нет (для яиц не нужно)
 	visualizerSpawn() {
 
+		if (this.isVisualized) {
+			return;
+		}
+
 		this.visualiser.deleteClones();
 
 		for (let i = 0; i < this.currentQuantity; i++) {
@@ -214,6 +223,7 @@ export class AbstractRootStage extends AbstractStage {
 			visClone.size = 150
 			visClone.xSpeed = this.game.getRandom(-10, 10) / 10
 			visClone.ySpeed = this.game.getRandom(-10, 10) / 10
+			visClone.number = i + 1;
 
 			let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
 			visClone.switchCostume(randCos)
@@ -221,7 +231,7 @@ export class AbstractRootStage extends AbstractStage {
 
 			if (this.visualiser.moving) {
 
-					visClone.forever(function () {
+				visClone.forever(function () {
 
 					visClone.x += visClone.xSpeed
 					visClone.y += visClone.ySpeed
@@ -250,8 +260,15 @@ export class AbstractRootStage extends AbstractStage {
 
 				})
 			}
+			visClone.forever(()=>{
+				if (visClone.number > this.currentQuantity) {
+					visClone.delete();
+				}
+			})
 
 		}
+
+		this.isVisualized = true;
 	}
 
 	//Перезаписать в классе комнаты, чтобы задать нужные костюмы в спрайт Visualiser
