@@ -65,7 +65,7 @@ export class IntroStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
-        this.addBackground('public/images/intro/background.jpg');
+        this.addBackground('public/images/intro/background.png');
     }
 
     onNextSlide() {
