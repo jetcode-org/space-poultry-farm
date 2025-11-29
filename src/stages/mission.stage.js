@@ -140,6 +140,10 @@ export class MissionStage extends AbstractSlideStageStage {
     }
 
     restartGame() {
+
+
+
+        
         MonitorStage.getInstance().restartGame();
         this.game.run(MenuStage.getInstance());
     }

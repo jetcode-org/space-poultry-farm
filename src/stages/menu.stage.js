@@ -2,8 +2,8 @@ import {Stage} from 'jetcode-scrubjs';
 
 import {LayerBackgroundSprite} from '../sprites/layer-background.sprite.js';
 import {ButtonSprite} from '../sprites/button.sprite.js';
-import {IntroStage} from "./intro.stage";
 import {HelperSprite } from "../sprites/helper.sprite.js";
+import { HelpChoiceStage } from './help-choice.stage.js';
 
 
 export class MenuStage extends Stage {
@@ -28,7 +28,7 @@ export class MenuStage extends Stage {
         });
 
         startButton.onClick(() => {
-            this.game.run(IntroStage.getInstance());
+            this.game.run(HelpChoiceStage.getInstance());
         });
     }
 }
