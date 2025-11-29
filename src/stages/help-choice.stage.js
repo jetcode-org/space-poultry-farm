@@ -1,7 +1,7 @@
 import {Stage} from 'jetcode-scrubjs';
 
 import {LayerBackgroundSprite} from '../sprites/layer-background.sprite.js';
-import {ButtonSprite} from '../sprites/button.sprite.js';
+import {LongButtonSprite} from '../sprites/long-button.sprite.js';
 import {IntroStage} from "./intro.stage.js";
 import {HelperSprite } from "../sprites/helper.sprite.js";
 import { GameState } from '../services/game.state.js';
@@ -21,7 +21,7 @@ export class HelpChoiceStage extends Stage {
     init() {
         LayerBackgroundSprite.create(0, 'public/images/menu/layer_1.jpg');
 
-        const withHelp = new ButtonSprite();
+        const withHelp = new LongButtonSprite();
         withHelp.layer = 4;
         withHelp.y -= 25
         withHelp.hidden = true;
@@ -36,7 +36,7 @@ export class HelpChoiceStage extends Stage {
             this.game.run(IntroStage.getInstance());
         });
 
-        const withoutHelp = new ButtonSprite();
+        const withoutHelp = new LongButtonSprite();
         withoutHelp.layer = 4;
         withoutHelp.y += 25;
         withoutHelp.hidden = true;
