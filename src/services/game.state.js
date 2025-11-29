@@ -580,11 +580,12 @@ export class GameState {
 
     objectAnimations = {
         [GameState.OBJECT_EGG] : {
-            'stay' : [['public/images/sprites/egg/egg_1.png'], ['public/images/sprites/egg/egg_2.png'], ['public/images/sprites/egg/egg_3.png']],
+            'normal' : [['public/images/sprites/egg/normal/egg_incubator_1.png'], ['public/images/sprites/egg/normal/egg_incubator_2.png']],
+            'broken' : [['public/images/sprites/egg/broken/egg_incubator_1_broken.png'], ['public/images/sprites/egg/broken/egg_incubator_2_broken.png']],
         },
         [GameState.OBJECT_CHICK] : {
-            'walking' : [['public/images/sprites/small_chicken/small_chicken_1.png'],
-                         ['public/images/sprites/small_chicken/small_chicken_2.png']]
+            'walking' : [['public/images/sprites/small_chicken/walking/baby_chick_walking_1.png', 'public/images/sprites/small_chicken/walking/baby_chick_walking_2.png'],],
+            'eating' : [['public/images/sprites/small_chicken/eating/baby_chick_eating_1.png', 'public/images/sprites/small_chicken/eating/baby_chick_eating_2.png', 'public/images/sprites/small_chicken/eating/baby_chick_eating_3.png', 'public/images/sprites/small_chicken/eating/baby_chick_eating_2.png']]
         },
         [GameState.OBJECT_CHICKEN] : {
             'walking' : [['public/images/sprites/chicken/walking/chicken_1_walking_1.png', 'public/images/sprites/chicken/walking/chicken_1_walking_2.png', 'public/images/sprites/chicken/walking/chicken_1_walking_3.png', 'public/images/sprites/chicken/walking/chicken_1_walking_2.png', 'public/images/sprites/chicken/walking/chicken_1_walking_1.png'],
@@ -595,24 +596,34 @@ export class GameState {
     }
 
     objectTypesCount = {
-        [GameState.OBJECT_EGG] : 3,
-        [GameState.OBJECT_CHICK] : 2,
+        [GameState.OBJECT_EGG] : 2,
+        [GameState.OBJECT_CHICK] : 1,
         [GameState.OBJECT_CHICKEN] : 2
     }
 
     objectAnimationInfo = {
         [GameState.OBJECT_EGG]: {
-            'stay' : {
+            'normal' : {
                 'min' : 0,
                 'max' : 0,
+                'moving': false,
+            },
+            'broken' : {
+                'min' : 1,
+                'max' : 1,
                 'moving': false,
             },
         },
         [GameState.OBJECT_CHICK]: {
             'walking' : {
                 'min' : 0,
-                'max' : 0,
+                'max' : 1,
                 'moving': true,
+            },
+            'eating' : {
+                'min' : 2,
+                'max' : 5,
+                'moving': false,
             },
 
         },
@@ -633,11 +644,11 @@ export class GameState {
     getAnimationsNames(objectType) {
         switch(objectType) {
             case GameState.OBJECT_EGG:
-                return ['stay'];
+                return ['normal', 'broken'];
             case GameState.OBJECT_CHICK:
-                return ['walking'];
+                return ['walking', 'eating'];
             case GameState.OBJECT_CHICKEN:
-                return ['walking', 'eating']
+                return ['walking', 'eating'];
         }
     }
 

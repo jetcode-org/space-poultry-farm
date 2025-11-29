@@ -53,6 +53,16 @@ export class SortingRoomStage extends AbstractRootStage {
             if (moveQuantity === 0) {
                 return;
             }
+            if (moveQuantity > 70) {
+                this.helper.show('Не нужно перекладывать в инкубатор больше яиц, чем он может вместить (максимум 70)', GameState.BOSS_PERSON, GameState.ANGRY_PERSON_EMOTION);
+                this.helper.onClick(()=>{
+                    this.helper.show(this.gameState.getHeroAnswer(GameState.NORMAL_PERSON_EMOTION) + ', босс!', GameState.HERO_PERSON)
+                    this.helper.onClick(()=>{
+                        this.helper.hide();
+                    }, 'Конец')
+                }, 'Дальше')
+                return
+            }
 
             for (let i = 0; i < this.gameState.rooms.length; i++){
                 if (this.gameState.rooms[i].getRoomType() === GameState.INCUBATOR_ROOM_TYPE) {

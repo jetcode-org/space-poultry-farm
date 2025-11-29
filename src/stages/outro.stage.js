@@ -50,7 +50,7 @@ export class OutroStage extends AbstractSlideStageStage {
     init() {
         super.init();
         
-        this.addBackground('public/images/outro/success.jpg');
+        this.addBackground('public/images/outro/success.png');
         this.addBackground('public/images/outro/fail.jpg');
         
     }

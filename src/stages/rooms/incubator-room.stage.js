@@ -1,7 +1,7 @@
 import { AbstractRootStage } from "./abstract-room.stage";
-import {GameState} from "../../services/game.state";
-import {LongButtonSprite} from "../../sprites/long-button.sprite";
-import {Sprite} from "jetcode-scrubjs";
+import { GameState } from "../../services/game.state";
+import { LongButtonSprite } from "../../sprites/long-button.sprite";
+import { Sprite } from "jetcode-scrubjs";
 
 export class IncubatorRoomStage extends AbstractRootStage {
     static INCUBATOR_CYCLE_TIMER = 10;
@@ -15,7 +15,49 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
     visualizerType = GameState.OBJECT_EGG
 
+    maxQuantity = 70;
+
+
+
     init() {
+        this.eggsPoses = [];
+
+        for (let y = 360; y <= 370; y += 10) {
+            for (let x = 30; x < 140; x += 20) {
+                this.eggsPoses.push({ 'x': x, 'y': y })
+            }
+        }
+
+        for (let y = 360; y <= 370; y += 10) {
+            for (let x = 425; x < 560; x += 20) {
+                this.eggsPoses.push({ 'x': x, 'y': y })
+            }
+        }
+
+        for (let y = 500; y <= 510; y += 10) {
+            for (let x = 35; x < 180; x += 20) {
+                this.eggsPoses.push({ 'x': x, 'y': y })
+            }
+        }
+
+        for (let y = 500; y <= 510; y += 10) {
+            for (let x = 380; x < 550; x += 20) {
+                this.eggsPoses.push({ 'x': x, 'y': y })
+            }
+        }
+
+
+        for (let x = 95; x < 180; x += 20) {
+            this.eggsPoses.push({ 'x': x, 'y': 560 })
+        }
+
+
+
+        for (let x = 380; x < 480; x += 20) {
+            this.eggsPoses.push({ 'x': x, 'y': 560 })
+        }
+
+
         super.init();
 
         this.forever(this.control());
@@ -37,7 +79,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 if (this.gameState.rooms[i].getRoomType() === GameState.NURSERY_ROOM_TYPE) {
                     const potentialNursery = this.gameState.rooms[i];
 
-					if (!potentialNursery.inProgress) {
+                    if (!potentialNursery.inProgress) {
                         potentialNursery.inProgress = true;
                         potentialNursery.currentQuantity = quantityToMove;
 
@@ -49,6 +91,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
                 }
             }
         });
+
 
         this.windowsSprite = new Sprite(this, 1, [
             'public/images/rooms/backgrounds/details/incubator/windows.png',
@@ -134,10 +177,26 @@ export class IncubatorRoomStage extends AbstractRootStage {
     }
 
     setVisCostumes() {
-		super.setVisCostumes()
+        super.setVisCostumes()
 
-		this.visualiser.addCostume('public/images/sprites/egg/egg_1.png')
-		this.visualiser.addCostume('public/images/sprites/egg/egg_2.png')
-		this.visualiser.addCostume('public/images/sprites/egg/egg_3.png')
-	}
+        this.visualiser.addCostume('public/images/sprites/egg/egg_1.png')
+        this.visualiser.addCostume('public/images/sprites/egg/egg_2.png')
+        this.visualiser.addCostume('public/images/sprites/egg/egg_3.png')
+    }
+
+    prepareVis(sprite) {
+        super.prepareVis(sprite);
+
+        sprite.x = this.eggsPoses[sprite.number - 1].x;
+        sprite.y = this.eggsPoses[sprite.number - 1].y;
+        sprite.size = 75;
+    }
+
+    visualiserLogic(visClone) {
+        if (this.currentProgress >= IncubatorRoomStage.INCUBATOR_CYCLE_TIMER / 2) {
+            visClone.currentActivity = 1;
+        } else {
+            visClone.currentActivity = 0;
+        }
+    }
 }

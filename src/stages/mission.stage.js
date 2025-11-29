@@ -3,6 +3,7 @@ import {AbstractSlideStageStage} from "./abstract-slide-stage.stage";
 import {MonitorStage} from "./monitor.stage";
 import {MenuStage} from "./menu.stage";
 import {GameState} from "../services/game.state";
+import { OutroStage } from './outro.stage.js';
 
 export class MissionStage extends AbstractSlideStageStage {
     static instance;
@@ -115,7 +116,8 @@ export class MissionStage extends AbstractSlideStageStage {
         if (this.currentSlide === this.slides.length - 1) {
             if (this.isTheEnd) {
                 this.helper.onClick(()=>{
-                    this.restartGame();
+                    OutroStage.getInstance().setResult(this.gameState.successfulCompletedMissions >= 3)
+                    this.game.run(OutroStage.getInstance())
                     this.helper.hide();
                 });
             }

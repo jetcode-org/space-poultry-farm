@@ -178,7 +178,7 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	resetRoom() {
-		this.currentQuantity = 1;
+		this.currentQuantity = 0;
 		this.isRoomReady = false;
 		this.pollution = 0;
 	}
@@ -244,48 +244,17 @@ export class AbstractRootStage extends AbstractStage {
 
 			this.prepareVis(visClone);
 
+			visClone.forever(this.visualiserLogic.bind(this));
+			visClone.forever(this.visualiserAnimLogic.bind(this), 100);
+
 			// let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
 			// visClone.switchCostume(randCos)
 
-			visClone.forever(() => {
-				if (this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].moving){
-
-					visClone.x += visClone.xSpeed
-					visClone.y += visClone.ySpeed
-					
-					if (visClone.xSpeed > 0) {
-						visClone.direction = -90;
-					} else {
-						visClone.direction = 90;
-					}
-					
-					if (visClone.x > 450) {
-						visClone.xSpeed *= -1
-					}
-					
-					if (visClone.x < 150) {
-						visClone.xSpeed *= -1
-					}
-					
-					if (visClone.y > 380) {
-						visClone.ySpeed *= -1
-					}
-					
-					if (visClone.y < 200) {
-						visClone.ySpeed *= -1
-					}
-				}
+			visClone.forever(()=>{
 				if (visClone.number > this.currentQuantity) {
 					visClone.delete();
 				}
 			})
-
-			visClone.forever(()=>{
-				visClone.nextCostume(this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].min, this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max);
-				if (visClone.getCostumeIndex() == this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max) {
-					visClone.currentActivity = this.game.getRandom(0, visClone.activities.length - 1)
-				}
-			}, 100)
 
 			visClone.onReady(()=>{
 				visClone.run(); //Да, костыль, но не работает по другому
@@ -346,4 +315,41 @@ export class AbstractRootStage extends AbstractStage {
         sprite.xSpeed = sprite.game.getRandom(-10, 10) / 10
         sprite.ySpeed = sprite.game.getRandom(-10, 10) / 10
     }
+
+	visualiserLogic(visClone) {
+		if (this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].moving){
+
+			visClone.x += visClone.xSpeed
+			visClone.y += visClone.ySpeed
+			
+			if (visClone.xSpeed > 0) {
+				visClone.direction = -90;
+			} else {
+				visClone.direction = 90;
+			}
+			
+			if (visClone.x > 450) {
+				visClone.xSpeed *= -1
+			}
+			
+			if (visClone.x < 150) {
+				visClone.xSpeed *= -1
+			}
+			
+			if (visClone.y > 380) {
+				visClone.ySpeed *= -1
+			}
+			
+			if (visClone.y < 200) {
+				visClone.ySpeed *= -1
+			}
+		}
+	}
+
+	visualiserAnimLogic(visClone) {
+		visClone.nextCostume(this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].min, this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max);
+		if (visClone.getCostumeIndex() == this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max) {
+			visClone.currentActivity = this.game.getRandom(0, visClone.activities.length - 1)
+		}
+	}
 }

@@ -14,6 +14,8 @@ export class NurseryRoomStage extends AbstractRootStage {
     foodConsumption = 0.25;
 
     visualizerType = GameState.OBJECT_CHICK
+    
+    maxQuantity = 70;
 
     init() {
         super.init();
