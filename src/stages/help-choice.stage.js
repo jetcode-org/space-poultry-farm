@@ -23,7 +23,7 @@ export class HelpChoiceStage extends Stage {
 
         const withHelp = new LongButtonSprite();
         withHelp.layer = 4;
-        withHelp.y -= 25
+        withHelp.y -= 30;
         withHelp.hidden = true;
 
         withHelp.onReady(()=>{
@@ -38,7 +38,7 @@ export class HelpChoiceStage extends Stage {
 
         const withoutHelp = new LongButtonSprite();
         withoutHelp.layer = 4;
-        withoutHelp.y += 25;
+        withoutHelp.y += 30;
         withoutHelp.hidden = true;
 
         withoutHelp.onReady(()=>{

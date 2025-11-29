@@ -51,7 +51,7 @@ export class OutroStage extends AbstractSlideStageStage {
         super.init();
         
         this.addBackground('public/images/outro/success.png');
-        this.addBackground('public/images/outro/fail.jpg');
+        this.addBackground('public/images/outro/fail.png');
         
     }
 
@@ -64,6 +64,7 @@ export class OutroStage extends AbstractSlideStageStage {
             this.slides = this.failSlides;
             this.switchBackground(1);
         }
+        this.currentSlide = 0;
     }
 
     onNextSlide() {

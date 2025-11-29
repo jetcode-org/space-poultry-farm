@@ -16,9 +16,12 @@ export class AbstractDragAndDropSprite extends Sprite {
     init() {
         this.forever(this.control);
         this.pen(this.setLabel.bind(this), 4);
+
+        this.boundActivate = this.activate.bind(this);
+        this.boundDisactivate = this.disactivate.bind(this);
         
-        window.addEventListener('mousedown', this.activate.bind(this));
-        window.addEventListener('mouseup', this.disactivate.bind(this));
+        window.addEventListener('mousedown', this.boundActivate);
+        window.addEventListener('mouseup', this.boundDisactivate);
     }
 
     control() {
@@ -36,12 +39,12 @@ export class AbstractDragAndDropSprite extends Sprite {
     }
 
     activate() {
-        if (!this.deleted) {
+        // if (!this.deleted) {
             if (this.touchMouse() && !GameState.getInstance().isDraggableObjectActive) {
                 this.active = true;
                 GameState.getInstance().isDraggableObjectActive = true;
             }
-        }
+        // }
     }
 
     setLabel(context) {
@@ -54,6 +57,8 @@ export class AbstractDragAndDropSprite extends Sprite {
     }
 
     delete() {
+        window.removeEventListener('mousedown', this.boundActivate);
+        window.removeEventListener('mouseup', this.boundDisactivate);
         super.delete();
     }
 }
