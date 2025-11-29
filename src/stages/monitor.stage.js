@@ -339,6 +339,10 @@ export class MonitorStage extends AbstractStage {
         const missionDistance = mission['distance'];
 
         if (this.gameState.passedTime >= missionDistance) {
+            for (const drone of this.gameState.drones) {
+                drone.delete();
+            }
+
             const missionEggQuota = mission['eggQuota'];
             const success = this.gameState.frozenEggs >= missionEggQuota;
 
