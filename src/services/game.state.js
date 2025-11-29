@@ -165,6 +165,7 @@ export class GameState {
     heroAnswers = {
         [GameState.NORMAL_PERSON_EMOTION]: ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
         [GameState.ANGRY_PERSON_EMOTION]: ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
+        [GameState.HAPPY_PERSON_EMOTION]: ['Вас понял', 'Хорошо', 'Приму к сведению', 'Спасибо за информацию'],
     }
 
     /**
@@ -564,6 +565,85 @@ export class GameState {
         [GameState.EGG_QUALITY_C1]: 70,
         [GameState.EGG_QUALITY_C0]: 80
     };
+
+    /**
+     * Виды объектов
+     */
+
+    static OBJECT_EGG = 'Яйцо';
+    static OBJECT_CHICK = 'Цыпленок';
+    static OBJECT_CHICKEN = 'Курица';
+
+    /**
+     * Анимации объектов
+     */
+
+    objectAnimations = {
+        [GameState.OBJECT_EGG] : {
+            'stay' : [['public/images/sprites/egg/egg_1.png'], ['public/images/sprites/egg/egg_2.png'], ['public/images/sprites/egg/egg_3.png']],
+        },
+        [GameState.OBJECT_CHICK] : {
+            'walking' : [['public/images/sprites/small_chicken/small_chicken_1.png'],
+                         ['public/images/sprites/small_chicken/small_chicken_2.png']]
+        },
+        [GameState.OBJECT_CHICKEN] : {
+            'walking' : [['public/images/sprites/chicken/walking/chicken_1_walking_1.png', 'public/images/sprites/chicken/walking/chicken_1_walking_2.png', 'public/images/sprites/chicken/walking/chicken_1_walking_3.png', 'public/images/sprites/chicken/walking/chicken_1_walking_2.png', 'public/images/sprites/chicken/walking/chicken_1_walking_1.png'],
+                         ['public/images/sprites/chicken/walking/chicken_2_walking_1.png', 'public/images/sprites/chicken/walking/chicken_2_walking_2.png', 'public/images/sprites/chicken/walking/chicken_2_walking_3.png', 'public/images/sprites/chicken/walking/chicken_2_walking_2.png', 'public/images/sprites/chicken/walking/chicken_2_walking_1.png']],
+            'eating' : [['public/images/sprites/chicken/eating/chicken_1_eating_1.png', 'public/images/sprites/chicken/eating/chicken_1_eating_2.png', 'public/images/sprites/chicken/eating/chicken_1_eating_3.png', 'public/images/sprites/chicken/eating/chicken_1_eating_2.png', 'public/images/sprites/chicken/eating/chicken_1_eating_1.png'],
+                        ['public/images/sprites/chicken/eating/chicken_2_eating_1.png', 'public/images/sprites/chicken/eating/chicken_2_eating_2.png', 'public/images/sprites/chicken/eating/chicken_2_eating_3.png', 'public/images/sprites/chicken/eating/chicken_2_eating_2.png', 'public/images/sprites/chicken/eating/chicken_2_eating_1.png']],
+        }
+    }
+
+    objectTypesCount = {
+        [GameState.OBJECT_EGG] : 3,
+        [GameState.OBJECT_CHICK] : 2,
+        [GameState.OBJECT_CHICKEN] : 2
+    }
+
+    objectAnimationInfo = {
+        [GameState.OBJECT_EGG]: {
+            'stay' : {
+                'min' : 0,
+                'max' : 0,
+                'moving': false,
+            },
+        },
+        [GameState.OBJECT_CHICK]: {
+            'walking' : {
+                'min' : 0,
+                'max' : 0,
+                'moving': true,
+            },
+
+        },
+        [GameState.OBJECT_CHICKEN]: {
+            'walking' : {
+                'min' : 0,
+                'max' : 4,
+                'moving': true,
+            },
+            'eating' : {
+                'min' : 5,
+                'max' : 9,
+                'moving': false,
+            },
+        }
+    }
+
+    getAnimationsNames(objectType) {
+        switch(objectType) {
+            case GameState.OBJECT_EGG:
+                return ['stay'];
+            case GameState.OBJECT_CHICK:
+                return ['walking'];
+            case GameState.OBJECT_CHICKEN:
+                return ['walking', 'eating']
+        }
+    }
+
+    getAnimationCostumes(objectType, animationName, typeNum = 0) {
+        return this.objectAnimations[objectType][animationName][typeNum]
+    }
 
     /**
      * Нарушения

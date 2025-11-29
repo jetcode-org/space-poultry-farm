@@ -13,6 +13,8 @@ export class CoopRoomStage extends AbstractRootStage {
     targetQuantity = 0;
     targetFlag = false; //Нужно, чтобы в первый раз просто приравнять количество куриц для правильного отображения (костыль)
 
+    visualizerType = GameState.OBJECT_CHICKEN
+
     init() {
         super.init();
 
@@ -88,59 +90,69 @@ export class CoopRoomStage extends AbstractRootStage {
         }
         if (this.targetQuantity < this.currentQuantity && this.isVisualized) {
             for (let i = this.targetQuantity; i < this.currentQuantity; i++) {
-                let visClone = this.visualiser.createClone();
-                visClone.hidden = false;
-                visClone.x = this.game.getRandom(200, 400)
-                visClone.y = this.game.getRandom(200, 400)
-                visClone.layer = 10
-                visClone.rotateStyle = 'leftRight'
-                visClone.size = 150
-                visClone.xSpeed = this.game.getRandom(-10, 10) / 10
-                visClone.ySpeed = this.game.getRandom(-10, 10) / 10
-                visClone.number = i + 1;
+                const visClone = new Sprite(this);
 
-                let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
-                visClone.switchCostume(randCos)
+                visClone.typeNum = this.game.getRandom(0, this.gameState.objectTypesCount[this.visualizerType] - 1);
+                visClone.activities = this.gameState.getAnimationsNames(this.visualizerType);
+                for(const activity of visClone.activities) {
+                    for(const costume of this.gameState.getAnimationCostumes(this.visualizerType, activity, visClone.typeNum))
+                    {
+                        visClone.addCostume(costume)
+                    }
+                }
 
+                visClone.currentActivity = 0;	
 
-                if (this.visualiser.moving) {
+                this.prepareVis(visClone);
 
-                    visClone.forever(function () {
+                // let randCos = this.game.getRandom(0, this.visualiser.costumes.length)
+                // visClone.switchCostume(randCos)
+
+                visClone.forever(() => {
+                    if (this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].moving){
 
                         visClone.x += visClone.xSpeed
                         visClone.y += visClone.ySpeed
-
+                        
                         if (visClone.xSpeed > 0) {
                             visClone.direction = -90;
                         } else {
                             visClone.direction = 90;
                         }
-
-                        if (visClone.x > 400) {
+                        
+                        if (visClone.x > 450) {
                             visClone.xSpeed *= -1
                         }
-
-                        if (visClone.x < 100) {
+                        
+                        if (visClone.x < 150) {
                             visClone.xSpeed *= -1
                         }
-
-                        if (visClone.y > 400) {
+                        
+                        if (visClone.y > 380) {
                             visClone.ySpeed *= -1
                         }
-
+                        
                         if (visClone.y < 200) {
                             visClone.ySpeed *= -1
                         }
-
-                    })
-                }
-                visClone.forever(() => {
+                    }
                     if (visClone.number > this.currentQuantity) {
                         visClone.delete();
                     }
                 })
 
-            }
+                visClone.forever(()=>{
+                    visClone.nextCostume(this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].min, this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max);
+                    if (visClone.getCostumeIndex() == this.gameState.objectAnimationInfo[this.visualizerType][visClone.activities[visClone.currentActivity]].max) {
+                        visClone.currentActivity = this.game.getRandom(0, visClone.activities.length - 1)
+                    }
+                }, 100)
+
+                visClone.onReady(()=>{
+                    visClone.run(); //Да, костыль, но не работает по другому
+                })
+                this.visualizers.push(visClone)
+            }	
             this.targetQuantity = this.currentQuantity;
         }
     }

@@ -11,6 +11,9 @@ export class IncubatorRoomStage extends AbstractRootStage {
     currentProgress = 0;
     currentReadyProgress = 0;
     tickMaxCount = 0;
+    visualiserMoving = false;
+
+    visualizerType = GameState.OBJECT_EGG
 
     init() {
         super.init();
@@ -21,8 +24,6 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.moveButton.x = 150;
         this.moveButton.y = 540;
         this.moveButton.hidden = true;
-
-        this.visualiser.moving = false;
 
         this.moveButton.onReady(() => {
             this.moveButton.setLabel('Цыплят в ясли')
@@ -87,7 +88,6 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.currentReadyProgress = 0;
         this.currentQuantity = 0;
         this.isRoomReady = false;
-        this.visualiser.deleteClones();
         this.isVisualized = false;
     }
 
