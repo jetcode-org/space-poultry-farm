@@ -28,7 +28,7 @@ export class CoopRoomStage extends AbstractRootStage {
         });
 
         this.onStart(()=>{
-            if (!this.targetFlag) {
+            if (!this.targetFlag && this.isVisualized) {
                 this.targetQuantity = this.currentQuantity;
                 this.targetFlag = true;
             }
@@ -88,7 +88,7 @@ export class CoopRoomStage extends AbstractRootStage {
         if (this.targetQuantity > this.currentQuantity) {
             this.targetQuantity = this.currentQuantity;
         }
-        if (this.targetQuantity < this.currentQuantity && this.isVisualized) {
+        if (this.targetQuantity < this.currentQuantity && this.isVisualized && this.targetFlag) {
             for (let i = this.targetQuantity; i < this.currentQuantity; i++) {
                 const visClone = new Sprite(this);
 
@@ -121,6 +121,9 @@ export class CoopRoomStage extends AbstractRootStage {
                 this.visualizers.push(visClone)
             }
             this.targetQuantity = this.currentQuantity;
+        }
+        if (this.currentQuantity <= 0) {
+            this.targetFlag = false;
         }
     }
 

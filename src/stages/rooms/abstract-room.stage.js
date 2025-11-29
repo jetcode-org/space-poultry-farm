@@ -223,6 +223,10 @@ export class AbstractRootStage extends AbstractStage {
 			return
 		}
 
+		if (this.currentQuantity == 0) {
+			return
+		}
+
 		for (const vis of this.visualizers) {
 			vis.delete();
 		}
