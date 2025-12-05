@@ -118,36 +118,36 @@ export class MonitorStage extends AbstractStage {
         this.createRooms();
 
         // Info Icon
-        const eggQualityInfoButton = new InfoButtonSprite(this, 1);
-        eggQualityInfoButton.x = 550;
-        eggQualityInfoButton.y = 455;
-        eggQualityInfoButton.hidden = true;
-
-        eggQualityInfoButton.onClick(() => {
-            const nextEggQualityClass = this.gameState.getNextEggQualityClass();
-
-            const header = 'Качество яйца';
-
-            let text = '<table border="0">';
-            const qualityInfo = this.gameState.getEggQualityInfo();
-            text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-            text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
-
-            text += '<tr><td colspan="2"><hr></td></tr>';
-
-            text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
-            text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
-            text += '</table>';
-            text += '<hr>';
-
-            if (nextEggQualityClass) {
-                text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
-            }
-
-            this.showModal(header, text);
-        });
+        // const eggQualityInfoButton = new InfoButtonSprite(this, 1);
+        // eggQualityInfoButton.x = 550;
+        // eggQualityInfoButton.y = 455;
+        // eggQualityInfoButton.hidden = true;
+        //
+        // eggQualityInfoButton.onClick(() => {
+        //     const nextEggQualityClass = this.gameState.getNextEggQualityClass();
+        //
+        //     const header = 'Качество яйца';
+        //
+        //     let text = '<table border="0">';
+        //     const qualityInfo = this.gameState.getEggQualityInfo();
+        //     text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+        //     text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
+        //
+        //     text += '<tr><td colspan="2"><hr></td></tr>';
+        //
+        //     text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
+        //     text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
+        //     text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
+        //     text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
+        //     text += '</table>';
+        //     text += '<hr>';
+        //
+        //     if (nextEggQualityClass) {
+        //         text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
+        //     }
+        //
+        //     this.showModal(header, text);
+        // });
 
         this.game.onUserInteracted(() => {
             this.playSound('background_music', {

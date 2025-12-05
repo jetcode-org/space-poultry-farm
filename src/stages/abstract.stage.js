@@ -107,10 +107,36 @@ export class AbstractStage extends Stage {
 		egg.y = 463;
 		egg.help = 'Криогенные запасы: яйца для выполнения миссий';
 
-		const eggQuality = new HelpSprite(this, 3, ['public/images/ui/resources/egg_quality.png']);
-		eggQuality.x = 710;
+		const eggQuality = new BlankButtonSprite(this, 3, ['public/images/ui/resources/egg_quality.png', 'public/images/ui/resources/egg_quality.png']);
+		eggQuality.x = 705;
 		eggQuality.y = 463;
 		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость';
+
+		eggQuality.onClick(() => {
+			const nextEggQualityClass = this.gameState.getNextEggQualityClass();
+
+			const header = 'Качество яйца';
+
+			let text = '<table border="0">';
+			const qualityInfo = this.gameState.getEggQualityInfo();
+			text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+			text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
+
+			text += '<tr><td colspan="2"><hr></td></tr>';
+
+			text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
+			text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
+			text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
+			text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
+			text += '</table>';
+			text += '<hr>';
+
+			if (nextEggQualityClass) {
+				text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
+			}
+
+			this.showModal(header, text);
+		});
 
 		const chick = new HelpSprite(this, 3, ['public/images/ui/resources/chick.png']);
 		chick.x = 627;
@@ -118,7 +144,7 @@ export class AbstractStage extends Stage {
 		chick.help = 'Цыплята: молодые особи, будущие куры-несушки';
 
 		const chicken = new HelpSprite(this, 3, ['public/images/ui/resources/chicken.png']);
-		chicken.x = 710;
+		chicken.x = 705;
 		chicken.y = 496;
 		chicken.help = 'Основное стадо: производители яиц';
 
@@ -128,7 +154,7 @@ export class AbstractStage extends Stage {
 		food.help = 'Комбикорм: основной рацион птицы';
 
 		const shit = new HelpSprite(this, 3, ['public/images/ui/resources/shit.png']);
-		shit.x = 710;
+		shit.x = 705;
 		shit.y = 529;
 		shit.help = 'Помет: производится курами. Используется для создания корма на ферме';
 
@@ -138,7 +164,7 @@ export class AbstractStage extends Stage {
 		pollution.help = 'Уровень загрязнения: при высоком уровне снижает яйценоскость и здоровье птицы';
 
 		const eggshell = new HelpSprite(this, 3, ['public/images/ui/resources/eggshell.png']);
-		eggshell.x = 710;
+		eggshell.x = 705;
 		eggshell.y = 562;
 		eggshell.help = 'Скорлупа: остается после инкубации. Используется в производстве корма';
 
