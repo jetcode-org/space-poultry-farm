@@ -224,8 +224,7 @@ export class MonitorStage extends AbstractStage {
                 true,
                 null,
                 null,
-                null,
-                ['Итак, наше первое задание:']
+                null
             );
             this.gameState.currentMission++;
         }
