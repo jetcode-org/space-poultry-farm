@@ -3,6 +3,7 @@ import {Stage} from 'jetcode-scrubjs';
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractStage} from "./abstract.stage";
 import { HelperSprite } from '../sprites/helper.sprite.js';
+import {GameState} from "../services/game.state";
 
 export class AbstractSlideStageStage extends AbstractStage {
     currentSlide = 0;
@@ -29,7 +30,13 @@ export class AbstractSlideStageStage extends AbstractStage {
             return;
         }
 
-        this.helper.show(this.slides[this.currentSlide].text);
+        const slide = this.slides[this.currentSlide];
+
+        const text = slide.text;
+        const person = slide.person !== undefined ? slide.person : null;
+        const emotion = slide.emotion !== undefined ? slide.emotion : GameState.NORMAL_PERSON_EMOTION;
+
+        this.helper.show(text, person, emotion);
     }
 
     nextSlide() {

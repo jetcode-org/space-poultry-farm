@@ -34,15 +34,21 @@ export class HelperSprite extends Sprite {
         this.nextButton.y = this.game.height - this.nextButton.height / 2 - 50;
         this.nextButton.hidden = true;
 
-        this.personImage = new Sprite();
-        this.personImage.x = 100;
-        this.personImage.y = 500;
-        this.personImage.size = 100;
-        this.personImage.hidden = true;
+        this.person = new Sprite();
+        this.person.x = 100;
+        this.person.y = 500;
+        this.person.size = 60;
+        this.person.hidden = true;
+
+        const personFrame = new Sprite();
+        personFrame.addCostume('public/images/persons/frame.png');
+        personFrame.setParent(this.person);
+        personFrame.layer = -1;
+        personFrame.hidden = true;
 
         this.layer = 10;
         this.nextButton.layer = 11;
-        this.personImage.layer = 11;
+        this.person.layer = 11;
 
         this.y = 700
 
@@ -59,7 +65,7 @@ export class HelperSprite extends Sprite {
                 this.active = true;
                 this.nextButton.hidden = false;
                 if (this.showPerson) {
-                    this.personImage.hidden = false;
+                    this.person.hidden = false;
                 }
             }
         } else {
@@ -107,11 +113,11 @@ export class HelperSprite extends Sprite {
                 this.currentTextIndex += 1;
                 this.imageTick += 1;
                 if (this.imageTick >= this.imageTickSpeed) {
-                    this.personImage.nextCostume();
+                    this.person.nextCostume();
                     this.imageTick = 0;
                 }
             } else {
-                this.personImage.switchCostume(0);
+                this.person.switchCostume(0);
                 this.setReady();
             }
 
@@ -152,7 +158,7 @@ export class HelperSprite extends Sprite {
         this.shouldShow = false;
         this.active = false;
         this.nextButton.hidden = true;
-        this.personImage.hidden = true;
+        this.person.hidden = true;
         this.showPerson = false;
     }
 
@@ -183,17 +189,17 @@ export class HelperSprite extends Sprite {
     }
 
     clearPersonCostumes() {
-        if (this.personImage.getCostume() == null){
+        if (this.person.getCostume() == null){
             return;
         }
-        while(this.personImage.getCostume() != null) {
-            this.personImage.removeCostume(this.personImage.getCostumeIndex())
+        while(this.person.getCostume() != null) {
+            this.person.removeCostume(this.person.getCostumeIndex())
         }
     }
 
     setPerson(person, emotion) {
         for (const costume of GameState.getInstance().personAnimations[person][emotion]) {
-            this.personImage.addCostume(costume);
+            this.person.addCostume(costume);
         }
 
         this.currentPerson = person + emotion;

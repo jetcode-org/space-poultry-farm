@@ -30,7 +30,6 @@ export class HelpChoiceStage extends Stage {
             withHelp.setLabel('С подсказками');
         });
 
-
         withHelp.onClick(() => {
             GameState.getInstance().teachingMode = true;
             this.game.run(IntroStage.getInstance());
@@ -52,7 +51,7 @@ export class HelpChoiceStage extends Stage {
 
         const helper = new HelperSprite()
         this.onStart(()=>{
-            helper.show('Выберите, нужны ли вам посказки?', GameState.AI_PERSON, GameState.HAPPY_PERSON_EMOTION);
+            helper.show('Выберите, нужны ли вам подсказки?', GameState.AI_PERSON, GameState.HAPPY_PERSON_EMOTION);
             helper.onClick(()=>{
                 helper.hide();
                 withHelp.hidden = false;

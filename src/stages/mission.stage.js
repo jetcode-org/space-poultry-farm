@@ -11,6 +11,76 @@ export class MissionStage extends AbstractSlideStageStage {
     nextButtonLabel = 'Задание';
     isTheEnd = false;
 
+    bossFinalMessages = [
+        'Удачи, инженер!',
+        'Успехов в выполнении!',
+        'Желаю удачной смены!',
+        'Пусть все системы работают исправно!',
+        'Надеюсь на вашу эффективность!',
+        'Удачного управления фермой!',
+        'Счастливого пути по коридорам станции!',
+        'Покажите, на что способен лучший инженер!',
+        'Звезды ждут ваших успехов!',
+        'Колонисты надеются на вас!',
+        'Сделайте этот день продуктивным!',
+        'Ваш труд приближает будущее!',
+        'Каждое яйцо - шаг к освоению космоса!',
+        'Запускайте производство на полную!',
+        'Превратите эту ферму в образец эффективности!',
+        'Пусть ваши решения будут безупречны!',
+        'Докажите, что человек и машина - идеальная команда!',
+        'Пусть КПД стремится к максимуму!',
+        'Возвращайся с хорошими новостями!',
+        'Пусть помет летит только в нужном направлении!',
+        'Сделай сегодня лучше, чем вчера!',
+        'Я верю в твои инженерные навыки!',
+        'Вместе мы справимся с любой задачей!',
+        'Судьба колонии в ваших руках. Не подведите!',
+        'Высокие ставки. Проявите все свои навыки!',
+        'Каждое яйцо - маленькая вселенная возможностей!',
+        'Космос ждет твоих решений, инженер!',
+        'В каждом цыпленке - будущее человечества!',
+    ];
+
+    heroAnswers = [
+        'Будет сделано!',
+        'Приступаю к выполнению!',
+        'Принял задание!',
+        'Выполняю!',
+        'Перехожу к реализации!',
+        'Запускаю процесс!',
+        'Начинаю работу!',
+        'Принято к исполнению!',
+        'Передаю на исполнение!',
+        'Уже в работе!',
+        'Спешу выполнить!',
+        'Моментально!',
+        'Немедленно приступаю!',
+        'Срочно берусь за выполнение!',
+        'Бросаю все силы на выполнение!',
+        'Отличное задание, берусь!',
+        'Уже представляю результат!',
+        'С энтузиазмом берусь!',
+        'С радостью займусь этим!',
+        'Наконец-то интересная задача!',
+        'Покажу, на что способен!',
+        'Доверьтесь моему опыту!',
+        'С радостью берусь!',
+        'Отличное задание! Выполняю!',
+        'Спешу сделать на отлично!',
+        'Уже бегу выполнять!',
+        'Миссия принята! Не подведу!',
+        'Гарантирую выполнение!',
+        'От результата не отверчусь!',
+        'Возьму ответственность на себя!',
+        'Доверьтесь, справлюсь!',
+        'Считайте уже выполненным!',
+        'Не подведу доверие!',
+        'Сделаю все возможное!',
+        'Вложу все силы!',
+        'Выполню любой ценой!'
+    ];
+
     static getInstance() {
         if (!MissionStage.instance) {
             MissionStage.instance = new MissionStage();
@@ -41,7 +111,7 @@ export class MissionStage extends AbstractSlideStageStage {
 
         this.onStart(()=>{
             this.drawTextBlock();
-            this.helper.fontSize = 18;
+            this.helper.fontSize = 20;
             this.helper.onClick(()=>{
                 this.nextSlide();
             });
@@ -57,7 +127,9 @@ export class MissionStage extends AbstractSlideStageStage {
         if (startMessages !== null) {
             for(const startMessage of startMessages)
             this.slides.push({
-                'text': startMessage
+                'text': startMessage,
+                'person': GameState.BOSS_PERSON,
+                'emotion': GameState.NORMAL_PERSON_EMOTION,
             });
         }
 
@@ -67,7 +139,9 @@ export class MissionStage extends AbstractSlideStageStage {
 
             if (resultMessage !== undefined) {
                 this.slides.push({
-                    'text': resultMessage
+                    'text': resultMessage,
+                    'person': GameState.BOSS_PERSON,
+                    'emotion': (success ? GameState.HAPPY_PERSON_EMOTION : GameState.ANGRY_PERSON_EMOTION),
                 });
             }
         }
@@ -86,27 +160,49 @@ export class MissionStage extends AbstractSlideStageStage {
             }
 
             this.slides.push({
-                'text': resultMessage
+                'text': resultMessage,
+                'person': GameState.AI_PERSON,
+                'emotion': GameState.NORMAL_PERSON_EMOTION,
             });
         }
 
         const nextMissionIndex = missionIndex + 1;
         const nextMission = this.gameState.missions[nextMissionIndex];
         if (nextMission !== undefined) {
+            const taskMessages = nextMission['task'];
+
+            for (const taskMessage of taskMessages) {
+                this.slides.push({
+                    'text': taskMessage,
+                    'person': GameState.BOSS_PERSON,
+                    'emotion': GameState.NORMAL_PERSON_EMOTION,
+                });
+            }
+
             this.slides.push({
-                'text': nextMission['task']
+                'text': this.getBossFinalMessage(),
+                'person': GameState.BOSS_PERSON,
+                'emotion': GameState.HAPPY_PERSON_EMOTION,
             });
+
+            this.slides.push({
+                'text': this.getHeroAnswer(),
+                'person': GameState.HERO_PERSON,
+                'emotion': GameState.HAPPY_PERSON_EMOTION,
+            });
+
             this.isTheEnd = false;
 
         } else {
             this.isTheEnd = true;
-
         }
 
         if (finishMessages !== null) {
             for (const finishMessage of finishMessages) {
                 this.slides.push({
-                    'text': finishMessage
+                    'text': finishMessage,
+                    'person': GameState.BOSS_PERSON,
+                    'emotion': GameState.NORMAL_PERSON_EMOTION,
                 });
             }
         }
@@ -140,11 +236,19 @@ export class MissionStage extends AbstractSlideStageStage {
     }
 
     restartGame() {
-
-
-
-        
-        MonitorStage.getInstance().restartGame();
+   MonitorStage.getInstance().restartGame();
         this.game.run(MenuStage.getInstance());
+    }
+
+    getHeroAnswer() {
+        const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers.length);
+
+        return this.heroAnswers[randomAnswerIndex];
+    }
+
+    getBossFinalMessage() {
+        const randomAnswerIndex = Math.floor(Math.random() * this.bossFinalMessages.length);
+
+        return this.bossFinalMessages[randomAnswerIndex];
     }
 }

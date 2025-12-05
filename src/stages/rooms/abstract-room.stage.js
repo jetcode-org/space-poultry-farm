@@ -67,7 +67,7 @@ export class AbstractRootStage extends AbstractStage {
 			if (this.gameState.visits[this.getRoomType()] && this.gameState.teachingMode) {
 				this.gameState.visits[this.getRoomType()] = false;
 
-				this.helper.show(this.getHelpText(), GameState.BOSS_PERSON);
+				this.helper.show(this.getHelpText(), GameState.AI_PERSON);
 				this.helper.setButtonText('Дальше');
 				this.helper.onClick(() => {
 					this.showInstructionDialog();
@@ -243,7 +243,7 @@ export class AbstractRootStage extends AbstractStage {
 				}
 			}
 
-			visClone.currentActivity = 0;	
+			visClone.currentActivity = 0;
 			visClone.number = i + 1;
 
 			this.prepareVis(visClone);
@@ -264,7 +264,7 @@ export class AbstractRootStage extends AbstractStage {
 				visClone.run(); //Да, костыль, но не работает по другому
 			})
 			this.visualizers.push(visClone)
-		}	
+		}
 
 		this.isVisualized = true;
 	}
@@ -279,11 +279,11 @@ export class AbstractRootStage extends AbstractStage {
 	}
 
 	showInstructionDialog() {
-		this.helper.show(this.getInstructionText(), GameState.BOSS_PERSON);
+		this.helper.show(this.getInstructionText(), GameState.AI_PERSON);
 		this.helper.setButtonText('Дальше');
 
 		this.helper.onClick(() => {
-			this.helper.show(GameState.getInstance().getHeroAnswer(GameState.NORMAL_PERSON_EMOTION) + ', босс!', GameState.HERO_PERSON);
+			this.helper.show(GameState.getInstance().getHeroAnswer(GameState.NORMAL_PERSON_EMOTION), GameState.HERO_PERSON);
 			this.helper.setButtonText('Конец');
 			this.helper.onClick(() => { this.helper.hide() });
 		});
@@ -325,25 +325,25 @@ export class AbstractRootStage extends AbstractStage {
 
 			visClone.x += visClone.xSpeed
 			visClone.y += visClone.ySpeed
-			
+
 			if (visClone.xSpeed > 0) {
 				visClone.direction = -90;
 			} else {
 				visClone.direction = 90;
 			}
-			
+
 			if (visClone.x > 450) {
 				visClone.xSpeed *= -1
 			}
-			
+
 			if (visClone.x < 150) {
 				visClone.xSpeed *= -1
 			}
-			
+
 			if (visClone.y > 380) {
 				visClone.ySpeed *= -1
 			}
-			
+
 			if (visClone.y < 200) {
 				visClone.ySpeed *= -1
 			}

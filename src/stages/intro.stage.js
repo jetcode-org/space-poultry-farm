@@ -3,6 +3,7 @@ import {Stage} from 'jetcode-scrubjs';
 import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractSlideStageStage} from "./abstract-slide-stage.stage";
 import {MonitorStage} from "./monitor.stage";
+import {GameState} from "../services/game.state";
 
 export class IntroStage extends AbstractSlideStageStage {
     static instance;
