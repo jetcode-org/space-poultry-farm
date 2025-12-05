@@ -8,7 +8,7 @@ import {HelpChoiceStage} from "./stages/help-choice.stage";
 
 export const game = new Game(800, 600, null, false);
 game.context.imageSmoothingEnabled = true;
-game.showFps = true;
+// game.showFps = true;
 // game.debugCollider = true;
 
 HelpChoiceStage.getInstance();
