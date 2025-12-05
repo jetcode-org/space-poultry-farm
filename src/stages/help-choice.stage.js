@@ -19,7 +19,7 @@ export class HelpChoiceStage extends Stage {
     }
 
     init() {
-        LayerBackgroundSprite.create(0, 'public/images/menu/layer_1.jpg');
+        LayerBackgroundSprite.create(0, 'public/images/menu/layer_1.png', 110);
 
         const withHelp = new LongButtonSprite();
         withHelp.layer = 4;

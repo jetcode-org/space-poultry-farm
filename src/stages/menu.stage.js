@@ -18,7 +18,7 @@ export class MenuStage extends Stage {
     }
 
     init() {
-        LayerBackgroundSprite.create(0, 'public/images/menu/layer_1.jpg');
+        LayerBackgroundSprite.create(0, 'public/images/menu/layer_1.png', 110);
 
         const startButton = new ButtonSprite();
         startButton.layer = 4;
