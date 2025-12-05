@@ -267,7 +267,7 @@ export class AbstractStage extends Stage {
 		star.hidden = false
 
 		star.forever(function() {
-			star.x -= star.size / 20
+			star.x -= star.size / 40
 
 			if(star.x < 30) {
 				star.delete()
