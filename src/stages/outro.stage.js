@@ -1,7 +1,6 @@
-import {ButtonSprite} from '../sprites/button.sprite.js';
 import {AbstractSlideStageStage} from "./abstract-slide-stage.stage";
 import {MonitorStage} from "./monitor.stage";
-import {MenuStage} from "./menu.stage";
+import {GameState} from "../services/game.state";
 
 export class OutroStage extends AbstractSlideStageStage {
     static instance;
@@ -9,25 +8,67 @@ export class OutroStage extends AbstractSlideStageStage {
 
     successSlides = [
         {
-            'text': 'Ваш космический птицеводческий комплекс успешно доставил жизненно важный груз яиц на целевые планеты. Благодаря вашему грамотному управлению и своевременному выполнению всех производственных циклов, тысячи свежих яиц пополнили продовольственные запасы колонистов.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Ваш космический птицеводческий комплекс успешно доставил жизненно важный груз яиц на целевые планеты.'
         },
         {
-            'text': 'Признание Галактического Совета не заставило себя ждать - ваша птицефабрика получила статус "Образцовое предприятие космического сельского хозяйства". Технологии, отработанные вами в ходе миссии, станут эталоном для создания подобных комплексов на новых планетах.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Благодаря вашему грамотному управлению и своевременному выполнению всех производственных циклов, тысячи свежих яиц пополнили продовольственные запасы колонистов.'
         },
         {
-            'text': 'Новые горизонты открываются перед вашим предприятием. Успешное завершение миссии привлекло внимание инвесторов и научных организаций. Теперь вам предстоит масштабировать производство, внедрять новые технологии и, возможно, заняться разведением других видов сельскохозяйственных животных в условиях космоса.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Признание Галактического Совета не заставило себя ждать - ваша птицефабрика получила статус "Образцовое предприятие космического сельского хозяйства".'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Технологии, отработанные вами в ходе миссии, станут эталоном для создания подобных комплексов на новых планетах.'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Новые горизонты открываются перед вашим предприятием. Успешное завершение миссии привлекло внимание инвесторов и научных организаций.'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.HAPPY_PERSON_EMOTION,
+            'text': 'Теперь вам предстоит масштабировать производство, внедрять новые технологии и, возможно, заняться разведением других видов сельскохозяйственных животных в условиях космоса.'
         },
     ];
 
     failSlides = [
         {
-            'text': 'Плохая концовка, сообщение 1.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Миссия завершилась полным крахом.'
         },
         {
-            'text': 'Плохая концовка, сообщение 2.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Из-за ваших ошибок производственный комплекс вышел из строя. Большая часть поголовья погибла, оборудование повреждено.'
         },
         {
-            'text': 'Плохая концовка, сообщение 3.'
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Галактический Совет исключил ваше предприятие из списка надежных поставщиков. Лицензия аннулирована без права восстановления.'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Ваши действия поставили под угрозу продовольственную безопасность нескольких колоний. Начато служебное расследование.'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Убытки исчисляются миллионами космических кредитов. Все активы предприятия арестованы для покрытия ущерба.'
+        },
+        {
+            'person': GameState.BOSS_PERSON,
+            'emotion': GameState.ANGRY_PERSON_EMOTION,
+            'text': 'Вам запрещено заниматься любыми видами космической деятельности. История этой птицефабрики станет учебным примером того, как не надо управлять производством.'
         },
     ];
 
@@ -49,10 +90,9 @@ export class OutroStage extends AbstractSlideStageStage {
 
     init() {
         super.init();
-        
+
         this.addBackground('public/images/outro/success.png');
         this.addBackground('public/images/outro/fail.png');
-        
     }
 
     setResult(success) {
@@ -64,13 +104,14 @@ export class OutroStage extends AbstractSlideStageStage {
             this.slides = this.failSlides;
             this.switchBackground(1);
         }
+
         this.currentSlide = 0;
     }
 
     onNextSlide() {
         if (this.currentSlide === this.slides.length - 1) {
             this.helper.onClick(()=>{
-                this.runGame();
+                this.restartGame();
                 this.helper.hide();
             });
             this.helper.setButtonText('Еще раз');
@@ -81,9 +122,9 @@ export class OutroStage extends AbstractSlideStageStage {
         this.drawTextBlock();
     }
 
-    runGame() {
-        MonitorStage.getInstance().restartGame();
+    restartGame() {
+        MonitorStage.getInstance().resetGame();
 
-        this.game.run(MenuStage.getInstance());
+        location.reload();
     }
 }

@@ -235,11 +235,6 @@ export class MissionStage extends AbstractSlideStageStage {
         this.game.run(MonitorStage.getInstance());
     }
 
-    restartGame() {
-   MonitorStage.getInstance().restartGame();
-        this.game.run(MenuStage.getInstance());
-    }
-
     getHeroAnswer() {
         const randomAnswerIndex = Math.floor(Math.random() * this.heroAnswers.length);
 

@@ -162,7 +162,7 @@ export class MonitorStage extends AbstractStage {
         return value > 0 ? '+' + value : value;
     }
 
-    restartGame() {
+    resetGame() {
         this.gameState.reset(); // Обнулить все параметры игры
     }
 
