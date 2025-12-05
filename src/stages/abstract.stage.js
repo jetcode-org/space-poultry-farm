@@ -165,8 +165,8 @@ export class AbstractStage extends Stage {
 				context.font = 'bold 18px Arial';
 
 				// context.fillText('Планета: ' + mission['name'], 70, 380)
-				context.fillText('Цель: ' + mission['eggQuota'] + ' яиц', topPanel.x - 70, topPanel.y - 10);
-				context.fillText('Таймер: ' + (mission['distance'] - this.gameState.passedTime) + ' с', topPanel.x - 70, topPanel.y + 20);
+				context.fillText('Цель: ' + this.gameState.frozenEggs + '/' + mission['eggQuota'] + ' яиц', topPanel.x - 75, topPanel.y - 10);
+				context.fillText('Таймер: ' + (mission['distance'] - this.gameState.passedTime) + ' с', topPanel.x - 75, topPanel.y + 20);
 			}
 
 			// Справка
