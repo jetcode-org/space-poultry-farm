@@ -91,6 +91,7 @@ export class OutroStage extends AbstractSlideStageStage {
     init() {
         super.init();
 
+        this.addBackground('public/images/outro/success.png'); // Костыльное исправление бага со switchBackground()
         this.addBackground('public/images/outro/success.png');
         this.addBackground('public/images/outro/fail.png');
     }
@@ -98,11 +99,11 @@ export class OutroStage extends AbstractSlideStageStage {
     setResult(success) {
         if (success) {
             this.slides = this.successSlides;
-            this.switchBackground(0);
+            this.switchBackground(1);
 
         } else  {
             this.slides = this.failSlides;
-            this.switchBackground(1);
+            this.switchBackground(2);
         }
 
         this.currentSlide = 0;
