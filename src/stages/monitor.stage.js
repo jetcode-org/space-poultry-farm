@@ -64,29 +64,39 @@ export class MonitorStage extends AbstractStage {
         this.progressProgress.setWidth(470);
         this.progressProgress.targetValue = 200;
 
-        this.sliderPlanet1 = new Sprite();
-        this.sliderPlanet1.addCostume('public/images/ui/space_progress/planet_1.png');
-        this.sliderPlanet1.x = 170;
-        this.sliderPlanet1.y = 550;
-        this.sliderPlanet1.layer = 3;
+        const sliderPlanet1 = new Sprite();
+        sliderPlanet1.addCostume('public/images/ui/space_progress/planet_1.png');
+        sliderPlanet1.addCostume('public/images/ui/space_progress/planet_1_completed.png');
+        sliderPlanet1.x = 170;
+        sliderPlanet1.y = 550;
+        sliderPlanet1.layer = 3;
 
-        this.sliderPlanet2 = new Sprite();
-        this.sliderPlanet2.addCostume('public/images/ui/space_progress/planet_2.png');
-        this.sliderPlanet2.x = 300;
-        this.sliderPlanet2.y = 550;
-        this.sliderPlanet2.layer = 3;
+        const sliderPlanet2 = new Sprite();
+        sliderPlanet2.addCostume('public/images/ui/space_progress/planet_2.png');
+        sliderPlanet2.addCostume('public/images/ui/space_progress/planet_2_completed.png');
+        sliderPlanet2.x = 300;
+        sliderPlanet2.y = 550;
+        sliderPlanet2.layer = 3;
 
-        this.sliderPlanet3 = new Sprite();
-        this.sliderPlanet3.addCostume('public/images/ui/space_progress/planet_3.png');
-        this.sliderPlanet3.x = 420;
-        this.sliderPlanet3.y = 550;
-        this.sliderPlanet3.layer = 3;
+        const sliderPlanet3 = new Sprite();
+        sliderPlanet3.addCostume('public/images/ui/space_progress/planet_3.png');
+        sliderPlanet3.addCostume('public/images/ui/space_progress/planet_3_completed.png');
+        sliderPlanet3.x = 420;
+        sliderPlanet3.y = 550;
+        sliderPlanet3.layer = 3;
 
-        this.sliderPlanet4 = new Sprite();
-        this.sliderPlanet4.addCostume('public/images/ui/space_progress/planet_4.png');
-        this.sliderPlanet4.x = 515;
-        this.sliderPlanet4.y = 550;
-        this.sliderPlanet4.layer = 3;
+        const sliderPlanet4 = new Sprite();
+        sliderPlanet4.addCostume('public/images/ui/space_progress/planet_4.png');
+        sliderPlanet4.addCostume('public/images/ui/space_progress/planet_4_completed.png');
+        sliderPlanet4.x = 515;
+        sliderPlanet4.y = 550;
+        sliderPlanet4.layer = 3;
+
+        this.sliderPlanets = [];
+        this.sliderPlanets.push(sliderPlanet1);
+        this.sliderPlanets.push(sliderPlanet2);
+        this.sliderPlanets.push(sliderPlanet3);
+        this.sliderPlanets.push(sliderPlanet4);
 
         // слайдер для кораблика
         this.progressSlider = new ShipSprite();
@@ -326,6 +336,11 @@ export class MonitorStage extends AbstractStage {
             ;
 
             this.showMission(this.gameState.currentMission, success, soldEggs, earnedMoney, changeRating, null, finishMessage);
+
+            if (this.sliderPlanets[this.gameState.currentMission]) {
+                this.sliderPlanets[this.gameState.currentMission].nextCostume();
+            }
+
             this.gameState.currentMission += 1;
             this.createDrones(this.gameState.currentMission);
 
