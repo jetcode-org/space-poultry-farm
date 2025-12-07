@@ -5,8 +5,6 @@ import {MonitorStage} from "../monitor.stage";
 import {LongButtonSprite} from "../../sprites/long-button.sprite";
 
 export class EmptyRoomStage extends AbstractRootStage {
-    maxQuantity = 100;
-
     init() {
         super.init();
 
@@ -98,7 +96,7 @@ export class EmptyRoomStage extends AbstractRootStage {
 
     createRoom(roomType, cost) {
         if (this.gameState.money < cost) {
-            showModal('Ошибка', 'Недостаточно денег', () => this.stop(), () => this.run());
+            this.warningAiMessage('Недостаточно денег.');
 
             return false;
         }

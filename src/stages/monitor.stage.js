@@ -132,7 +132,7 @@ export class MonitorStage extends AbstractStage {
             });
         })
 
-        this.forever(this.gameTick, 1000);
+        this.forever(this.gameTick.bind(this), 1000);
     }
 
     resetGame() {
@@ -192,13 +192,16 @@ export class MonitorStage extends AbstractStage {
     gameTick() {
         // Первая миссия
         if (this.gameState.currentMission === -1) {
-            this.showMission(
-                this.gameState.currentMission,
-                true,
-                null,
-                null,
-                null
-            );
+            if (!this.game.devMode) {
+                this.showMission(
+                    this.gameState.currentMission,
+                    true,
+                    null,
+                    null,
+                    null
+                );
+            }
+
             this.gameState.currentMission++;
         }
 

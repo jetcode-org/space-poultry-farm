@@ -7,8 +7,7 @@ import {GameState} from "../../services/game.state";
 import {Sprite} from "jetcode-scrubjs";
 
 export class SortingRoomStage extends AbstractRootStage {
-
-    maxQuantity = 100;
+    maxQuantity = GameState.SORTING_MAX_QUANTITY;
 
     init() {
         super.init();
@@ -44,7 +43,7 @@ export class SortingRoomStage extends AbstractRootStage {
         this.coolerButton.layer = 10;
         this.coolerButton.onReady(()=>{
             this.coolerButton.setLabel('Холодильник', null, 16);
-        })
+        });
 
         //инкубатор
         this.incubatorButton = new ButtonSprite();
@@ -53,43 +52,37 @@ export class SortingRoomStage extends AbstractRootStage {
             if (moveQuantity === 0) {
                 return;
             }
-            if (moveQuantity > 70) {
-                this.helper.show('Не нужно перекладывать в инкубатор больше яиц, чем он может вместить (максимум 70)', GameState.BOSS_PERSON, GameState.ANGRY_PERSON_EMOTION);
-                this.helper.onClick(()=>{
-                    this.helper.show(this.gameState.getHeroAnswer(GameState.NORMAL_PERSON_EMOTION) + ', босс!', GameState.HERO_PERSON)
-                    this.helper.onClick(()=>{
-                        this.helper.hide();
-                    }, 'Конец')
-                }, 'Дальше')
-                return
+
+            if (moveQuantity > GameState.NURSERY_MAX_QUANTITY) {
+                this.warningAiMessage('Не нужно перекладывать в инкубатор больше яиц, чем он может вместить (максимум ' + GameState.NURSERY_MAX_QUANTITY + ')');
+
+                return;
             }
 
-            for (let i = 0; i < this.gameState.rooms.length; i++){
-                if (this.gameState.rooms[i].getRoomType() === GameState.INCUBATOR_ROOM_TYPE) {
-                    const potentialIncubator = this.gameState.rooms[i];
-
-                    if (!potentialIncubator.inProgress) {
-                        potentialIncubator.inProgress = true;
-                        potentialIncubator.currentQuantity = Math.floor(moveQuantity * 0.95);
-                        this.currentQuantity -= moveQuantity;
-                        this.quantitySlider.maxValue = this.currentQuantity;
-                        this.quantitySlider.setCurrentValue();
-
-                        return true;
-                    }
+            const incubatorRooms = this.gameState.getRoomsByType(GameState.INCUBATOR_ROOM_TYPE);
+            for (const incubatorRoom of incubatorRooms) {
+                if (incubatorRoom.inProgress) {
+                    continue;
                 }
+
+                incubatorRoom.inProgress = true;
+                incubatorRoom.currentQuantity = Math.floor(moveQuantity * 0.95);
+                this.currentQuantity -= moveQuantity;
+                this.quantitySlider.maxValue = this.currentQuantity;
+                this.quantitySlider.setCurrentValue();
+
+                return;
             }
 
-            showModal('Ошибка', 'Нет готовых инкубаторов', () => this.stop(), () => this.run());
-
-            return false;
+            this.warningAiMessage('Нет свободных инкубаторов.');
         });
+
         this.incubatorButton.x = 500;
         this.incubatorButton.y = 210;
         this.incubatorButton.layer = 10;
         this.incubatorButton.onReady(()=>{
             this.incubatorButton.setLabel('Инкубатор', null, 16);
-        })
+        });
 
         this.quantitySlider.hidden = true;
         this.coolerButton.hidden = true;
@@ -120,7 +113,7 @@ export class SortingRoomStage extends AbstractRootStage {
     resetRoom() {
         super.resetRoom();
 
-        this.currentQuantity = 20;
+        this.currentQuantity = GameState.START_EGG;
         this.quantitySlider.hidden = false;
         this.coolerButton.hidden = false;
         this.incubatorButton.hidden = false;

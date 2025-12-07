@@ -23,7 +23,6 @@ export class GameState {
      */
     static CRITICAL_FOOD = 0;
     static CRITICAL_POLLUTION = 75;
-
     static CRITICAL_RATING = 0; // Критичный порог рейтинга, при котором игра заканчивается проигрышем
 
     /**
@@ -37,7 +36,31 @@ export class GameState {
     static FARM_ROOM_TYPE = 'farm_room_type';
 
     /**
-     * Параметры для посмещения комнат
+     * Начальные значения
+     */
+    static START_EGG = 20;
+
+    /**
+     * Максимальные значения в комнатах
+     */
+    static SORTING_MAX_QUANTITY = 100;
+    static INCUBATOR_MAX_QUANTITY = 25;
+    static NURSERY_MAX_QUANTITY = 25;
+    static COOP_MAX_QUANTITY = 50;
+    static FARM_MAX_QUANTITY = 100;
+
+    /**
+     * Другие параметры
+     */
+    static EGGSHELL_COEF = 0.5; // Сколько скорлупы получается из одного яйца
+    static INCUBATOR_EFFICIENCY = 0.9; // Эффективность инкубатора - сколько яиц будет переведено в цыплятник
+    static NURSERY_FOOD_CONSUMPTION = 0.25; // Потребление корма в цыплятами
+    static COOP_FOOD_CONSUMPTION = 0.5; // Потребление корма в курицами
+    static COOP_COMFORT_QUANTITY = 40; // Комфортное количество куриц
+    static COOP_MAX_EGGS = 50; // Максимальное количество яиц
+
+    /**
+     * Параметры для посещения комнат
      */
 
     visits = {
@@ -731,7 +754,7 @@ export class GameState {
 
     reset() {
         this.passedTime = 0;
-        this.limitTime = 100;
+        this.limitTime = 400;
         this.frozenEggs = 0;
         this.currentMission = -1;
 
@@ -880,5 +903,9 @@ export class GameState {
 
     getFormattedMoney(money) {
         return this._formatter.format(money) + '₽';
+    }
+
+    getRoomsByType(type) {
+        return this.rooms.filter(room => room.getRoomType() === type);
     }
 }

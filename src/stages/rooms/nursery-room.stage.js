@@ -11,11 +11,10 @@ export class NurseryRoomStage extends AbstractRootStage {
     currentProgress = 0;
     currentReadyProgress = 0;
     tickMaxCount = 0;
-    foodConsumption = 0.25;
 
-    visualizerType = GameState.OBJECT_CHICK
-    
-    maxQuantity = 70;
+    foodConsumption = GameState.NURSERY_FOOD_CONSUMPTION;
+    visualizerType = GameState.OBJECT_CHICK;
+    maxQuantity = GameState.NURSERY_MAX_QUANTITY;
 
     init() {
         super.init();
@@ -26,34 +25,34 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.moveButton.x = 150;
         this.moveButton.y = 540;
         this.moveButton.onReady(() => {
-            this.moveButton.setLabel('Куриц в загон')
+            this.moveButton.setLabel('Перевести в стадо')
         });
 
         this.moveButton.onClick(() => {
-            for (let i = 0; i < this.gameState.rooms.length; i++) {
-                if (this.gameState.rooms[i].getRoomType() === GameState.COOP_ROOM_TYPE) {
-                    const potentialCoop = this.gameState.rooms[i];
-                    if (potentialCoop.currentQuantity != potentialCoop.maxQuantity) {
-                        if (potentialCoop.maxQuantity - potentialCoop.currentQuantity < this.currentQuantity) {
-                            potentialCoop.currentQuantity += potentialCoop.maxQuantity - potentialCoop.currentQuantity;
-                            this.currentQuantity -= potentialCoop.maxQuantity - potentialCoop.currentQuantity;
+            const coopRooms = this.gameState.getRoomsByType(GameState.COOP_ROOM_TYPE);
 
-                            continue;
-                        } else {
-                            potentialCoop.currentQuantity += this.currentQuantity;
-                        }
+            for (const coopRoom of coopRooms) {
+                if (coopRoom.currentQuantity >= coopRoom.maxQuantity) {
+                    continue;
+                }
 
-                        this.failRoom();
+                if (coopRoom.maxQuantity - coopRoom.currentQuantity < this.currentQuantity) {
+                    coopRoom.currentQuantity += coopRoom.maxQuantity - coopRoom.currentQuantity;
+                    this.currentQuantity -= coopRoom.maxQuantity - coopRoom.currentQuantity;
 
-                        return true;
-                    }
-				}
+                    continue;
+
+                } else {
+                    coopRoom.currentQuantity += this.currentQuantity;
+                }
+
+                this.clearRoom();
+
+                return;
             }
 
-            showModal('Внимание', 'Недостаточно места в стаде, не всех куриц удалось перевести', () => this.stop(), () => this.run());
-            this.failRoom();
-
-            return false;
+            this.dangerAiMessage('Недостаточно места в стаде, к сожалению, не всех куриц удалось перевести.');
+            this.clearRoom();
         });
 
         this.foodSprite = new Sprite(this, 1, [
@@ -90,7 +89,7 @@ export class NurseryRoomStage extends AbstractRootStage {
         this.currentReadyProgress = 0;
     }
 
-    failRoom() {
+    clearRoom() {
         this.inProgress = false;
         this.currentProgress = 0;
         this.currentReadyProgress = 0;
@@ -111,7 +110,7 @@ export class NurseryRoomStage extends AbstractRootStage {
             this.gameState.food = 0;
 
             if (this.currentQuantity <= 0) {
-                this.failRoom();
+                this.clearRoom();
             }
         }
 

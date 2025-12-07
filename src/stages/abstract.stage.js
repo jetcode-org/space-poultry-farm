@@ -5,6 +5,7 @@ import {BlankButtonSprite} from "../sprites/blank-button.sprite";
 import {LicenceProgressBarSprite} from '../sprites/licence-progress-bar.sprite.js';
 import {HelpSprite} from "../sprites/help.sprite";
 import {ButtonSprite} from "../sprites/button.sprite";
+import {GameState} from "../services/game.state";
 
 export class AbstractStage extends Stage {
 	helpText = null;
@@ -342,5 +343,29 @@ export class AbstractStage extends Stage {
 			this.game.getActiveStage().run();
 			onButtonClick(answer)
 		});
+	}
+
+	warningAiMessage(message) {
+		this.helper.show(message, GameState.AI_PERSON, GameState.NORMAL_PERSON_EMOTION);
+
+		this.helper.onClick(()=>{
+			this.helper.show(this.gameState.getHeroAnswer(GameState.NORMAL_PERSON_EMOTION), GameState.HERO_PERSON, GameState.NORMAL_PERSON_EMOTION);
+
+			this.helper.onClick(()=>{
+				this.helper.hide();
+			}, 'Конец');
+		}, 'Дальше');
+	}
+
+	dangerAiMessage(message) {
+		this.helper.show(message, GameState.AI_PERSON, GameState.ANGRY_PERSON_EMOTION);
+
+		this.helper.onClick(()=>{
+			this.helper.show(this.gameState.getHeroAnswer(GameState.ANGRY_PERSON_EMOTION), GameState.HERO_PERSON, GameState.ANGRY_PERSON_EMOTION);
+
+			this.helper.onClick(()=>{
+				this.helper.hide();
+			}, 'Конец');
+		}, 'Дальше');
 	}
 }

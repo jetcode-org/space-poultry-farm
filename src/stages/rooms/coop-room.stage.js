@@ -5,15 +5,14 @@ import { Sprite } from "jetcode-scrubjs";
 
 export class CoopRoomStage extends AbstractRootStage {
     eggsAmount = 0;
-    maxEggsAmount = 50;
-    foodConsumption = 0.5;
-    maxQuantity = 50; // Максимальное количество куриц
-    comfortQuantity = 40; // Комфортное количество куриц
-
     targetQuantity = 0;
     targetFlag = false; //Нужно, чтобы в первый раз просто приравнять количество куриц для правильного отображения (костыль)
 
-    visualizerType = GameState.OBJECT_CHICKEN
+    maxEggsAmount = GameState.COOP_MAX_EGGS;
+    foodConsumption = GameState.COOP_FOOD_CONSUMPTION;
+    maxQuantity = GameState.COOP_MAX_QUANTITY;
+    comfortQuantity = GameState.COOP_COMFORT_QUANTITY;
+    visualizerType = GameState.OBJECT_CHICKEN;
 
     init() {
         super.init();
@@ -37,26 +36,27 @@ export class CoopRoomStage extends AbstractRootStage {
         this.harvestButton.onClick(() => {
             this.eggsUnderRoofSprite.hidden = true;
 
-            for (let i = 0; i < this.gameState.rooms.length; i++) {
-                if (this.gameState.rooms[i].getRoomType() === GameState.SORTING_ROOM_TYPE) {
-                    const potentialSort = this.gameState.rooms[i];
-                    if (potentialSort.currentQuantity != potentialSort.maxQuantity) {
-                        if (potentialSort.maxQuantity - potentialSort.currentQuantity < this.eggsAmount) {
-                            potentialSort.currentQuantity += potentialSort.maxQuantity - potentialSort.currentQuantity;
-                            this.eggsAmount -= potentialSort.maxQuantity - potentialSort.currentQuantity;
-
-                            continue;
-                        } else {
-                            potentialSort.currentQuantity += this.eggsAmount;
-                            this.eggsAmount = 0;
-                        }
-
-                        return true;
-                    }
+            const sortingRooms = this.gameState.getRoomsByType(GameState.SORTING_ROOM_TYPE);
+            for (const sortingRoom of sortingRooms) {
+                if (sortingRoom.currentQuantity >= sortingRoom.maxQuantity) {
+                    continue;
                 }
+
+                if (sortingRoom.maxQuantity - sortingRoom.currentQuantity < this.eggsAmount) {
+                    sortingRoom.currentQuantity += sortingRoom.maxQuantity - sortingRoom.currentQuantity;
+                    this.eggsAmount -= sortingRoom.maxQuantity - sortingRoom.currentQuantity;
+
+                    continue;
+
+                } else {
+                    sortingRoom.currentQuantity += this.eggsAmount;
+                    this.eggsAmount = 0;
+                }
+
+                return true;
             }
 
-            showModal('Внимание', 'Недостаточно места в сортировке, не все яйца удалось перенести', () => this.stop(), () => this.run());
+            this.dangerAiMessage('Недостаточно места в сортировке, не все яйца удалось перенести.');
 
             return false;
         })
@@ -101,7 +101,7 @@ export class CoopRoomStage extends AbstractRootStage {
                     }
                 }
 
-                visClone.currentActivity = 0;	
+                visClone.currentActivity = 0;
                 visClone.number = i + 1;
 
                 this.prepareVis(visClone);
@@ -181,7 +181,5 @@ export class CoopRoomStage extends AbstractRootStage {
 
         this.visualiser.addCostume('public/images/sprites/chicken/walking/chicken_1_walking_1.png');
         this.visualiser.addCostume('public/images/sprites/chicken/walking/chicken_2_walking_1.png');
-
-        
     }
 }

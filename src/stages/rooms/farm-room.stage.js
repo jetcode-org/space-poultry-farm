@@ -4,7 +4,7 @@ import {LongButtonSprite} from "../../sprites/long-button.sprite";
 import {Sprite} from "jetcode-scrubjs";
 
 export class FarmRoomStage extends AbstractRootStage {
-    maxQuantity = 100;
+    maxQuantity = GameState.FARM_MAX_QUANTITY;
 
     init() {
         super.init();
@@ -65,10 +65,10 @@ export class FarmRoomStage extends AbstractRootStage {
             this.plant.hidden = false;
 
             let plantCostume = 0;
-            if (this.currentQuantity >= 60) {
+            if (this.currentQuantity >= this.maxQuantity / 1.5) {
                 plantCostume = 2;
 
-            } else if (this.currentQuantity >= 30) {
+            } else if (this.currentQuantity >= this.maxQuantity / 3) {
                 plantCostume = 1;
             }
 

@@ -13,13 +13,12 @@ export class IncubatorRoomStage extends AbstractRootStage {
     tickMaxCount = 0;
     visualiserMoving = false;
 
-    visualizerType = GameState.OBJECT_EGG
-
-    maxQuantity = 70;
-
-
+    visualizerType = GameState.OBJECT_EGG;
+    maxQuantity = GameState.INCUBATOR_MAX_QUANTITY;
 
     init() {
+        super.init();
+
         this.eggsPoses = [];
 
         for (let y = 360; y <= 370; y += 10) {
@@ -46,19 +45,13 @@ export class IncubatorRoomStage extends AbstractRootStage {
             }
         }
 
-
         for (let x = 95; x < 180; x += 20) {
             this.eggsPoses.push({ 'x': x, 'y': 560 })
         }
 
-
-
         for (let x = 380; x < 480; x += 20) {
             this.eggsPoses.push({ 'x': x, 'y': 560 })
         }
-
-
-        super.init();
 
         this.forever(this.control());
 
@@ -68,28 +61,29 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.moveButton.hidden = true;
 
         this.moveButton.onReady(() => {
-            this.moveButton.setLabel('Цыплят в ясли')
+            this.moveButton.setLabel('Перевести в цыплятник');
         });
 
         this.moveButton.onClick(() => {
             let chicksMultiplayer = 0.02 * Math.floor(this.pollution / 10);
-            let quantityToMove = Math.round(this.currentQuantity * (0.9 - chicksMultiplayer))
+            let quantityToMove = Math.round(this.currentQuantity * (GameState.INCUBATOR_EFFICIENCY - chicksMultiplayer))
 
-            for (let i = 0; i < this.gameState.rooms.length; i++) {
-                if (this.gameState.rooms[i].getRoomType() === GameState.NURSERY_ROOM_TYPE) {
-                    const potentialNursery = this.gameState.rooms[i];
-
-                    if (!potentialNursery.inProgress) {
-                        potentialNursery.inProgress = true;
-                        potentialNursery.currentQuantity = quantityToMove;
-
-                        this.gameState.eggshell += Math.floor(quantityToMove / 2);
-                        this.failRoom();
-
-                        return true;
-                    }
+            const nurseryRooms = this.gameState.getRoomsByType(GameState.NURSERY_ROOM_TYPE);
+            for (const nurseryRoom of nurseryRooms) {
+                if (nurseryRoom.inProgress) {
+                    continue;
                 }
+
+                nurseryRoom.inProgress = true;
+                nurseryRoom.currentQuantity = quantityToMove;
+
+                this.gameState.eggshell += Math.floor(quantityToMove * GameState.EGGSHELL_COEF);
+                this.clearRoom();
+
+                return true;
             }
+
+            this.warningAiMessage('Нет свободных цыплятников.');
         });
 
 
@@ -125,7 +119,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.currentReadyProgress = 0;
     }
 
-    failRoom() {
+    clearRoom() {
         this.inProgress = false;
         this.currentProgress = 0;
         this.currentReadyProgress = 0;
