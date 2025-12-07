@@ -4,6 +4,7 @@ import {FpsCounterSprite} from "../sprites/fps-counter.sprite";
 import {BlankButtonSprite} from "../sprites/blank-button.sprite";
 import {LicenceProgressBarSprite} from '../sprites/licence-progress-bar.sprite.js';
 import {HelpSprite} from "../sprites/help.sprite";
+import {ButtonSprite} from "../sprites/button.sprite";
 
 export class AbstractStage extends Stage {
 	helpText = null;
@@ -75,16 +76,31 @@ export class AbstractStage extends Stage {
 
 	createCounters() {
 		// Деньги
-		const money = new HelpSprite(this, 3, ['public/images/ui/money.png']);
+		const money = new ButtonSprite(this, 3, ['public/images/ui/money.png', 'public/images/ui/money.png']);
 		money.x = 90;
 		money.y = 40;
 		money.help = 'Космические кредиты: валюта для строительства новых модулей и улучшения существующих';
+		money.onClick(this.showHelpInfo('Космические кредиты', '<p>Космические кредиты являются основной валютой вашего космического корабля.</p><p>Эти средства позволяют строить новые модули, улучшать существующее оборудование</p>').bind(this));
 
 		// Рейтинг
-		const rating = new HelpSprite(this, 3, ['public/images/ui/rating.png']);
+		const rating = new ButtonSprite(this, 3, ['public/images/ui/rating.png', 'public/images/ui/rating.png']);
 		rating.x = 230;
 		rating.y = 40;
-		rating.help = 'Статус в Галактическом Совете: оценивается по эффективности, качеству продукции и выполнению миссий.';
+		rating.help = 'Лицензия Таврос: оценивается по эффективности, качеству продукции и выполнению миссий.';
+		rating.onClick(this.showHelpInfo('Лицензия Таврос', '<p>Высший знак качества космического птицеводства.</p><p>Присваивается за безупречное управление фермой, соответствие строгим стандартам и стабильное выполнение миссий.</p>').bind(this));
+
+		// Качество яйца
+		const eggQuality = new ButtonSprite(this, 3, ['public/images/ui/egg_quality.png', 'public/images/ui/egg_quality.png']);
+		eggQuality.x = 370;
+		eggQuality.y = 40;
+		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQuality.onClick(this.showEggQualityInfo.bind(this));
+
+		const eggQualityInfo = new ButtonSprite(this, 3, ['public/images/ui/small_help_button/default.png', 'public/images/ui/small_help_button/hovered.png']);
+		eggQualityInfo.x = 430;
+		eggQualityInfo.y = 40;
+		eggQualityInfo.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQualityInfo.onClick(this.showEggQualityInfo.bind(this));
 
 		// Панель цель и таймер
 		const topPanel = new Sprite(this, 3, ['public/images/ui/top_panel.png']);
@@ -102,86 +118,52 @@ export class AbstractStage extends Stage {
 		resourcesPanel.y = 512
 
 		// Иконки ресурсов
-		const egg = new HelpSprite(this, 4, ['public/images/ui/resources/egg.png']);
-		egg.x = 627;
-		egg.y = 463;
-		egg.help = 'Криогенные запасы: яйца для выполнения миссий';
-
-		const eggQuality = new BlankButtonSprite(this, 3, ['public/images/ui/resources/egg_quality.png', 'public/images/ui/resources/egg_quality.png']);
-		eggQuality.x = 705;
-		eggQuality.y = 463;
-		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость';
-
-		eggQuality.onClick(() => {
-			const nextEggQualityClass = this.gameState.getNextEggQualityClass();
-
-			const header = 'Качество яйца';
-
-			let text = '<table border="0">';
-			const qualityInfo = this.gameState.getEggQualityInfo();
-			text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-			text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
-
-			text += '<tr><td colspan="2"><hr></td></tr>';
-
-			text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
-			text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
-			text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
-			text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
-			text += '</table>';
-			text += '<hr>';
-
-			if (nextEggQualityClass) {
-				text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
-			}
-
-			this.showModal(header, text);
-		});
-
 		const chick = new HelpSprite(this, 3, ['public/images/ui/resources/chick.png']);
-		chick.x = 627;
-		chick.y = 496;
+		chick.x = 632;
+		chick.y = 479;
 		chick.help = 'Цыплята: молодые особи, будущие куры-несушки';
 
 		const chicken = new HelpSprite(this, 3, ['public/images/ui/resources/chicken.png']);
-		chicken.x = 705;
-		chicken.y = 496;
+		chicken.x = 710;
+		chicken.y = 479;
 		chicken.help = 'Основное стадо: производители яиц';
 
 		const food = new HelpSprite(this, 3, ['public/images/ui/resources/feed.png']);
-		food.x = 627;
-		food.y = 529;
+		food.x = 632;
+		food.y = 512;
 		food.help = 'Комбикорм: основной рацион птицы';
 
 		const shit = new HelpSprite(this, 3, ['public/images/ui/resources/shit.png']);
-		shit.x = 705;
-		shit.y = 529;
+		shit.x = 710;
+		shit.y = 512;
 		shit.help = 'Помет: производится курами. Используется для создания корма на ферме';
 
 		const pollution = new HelpSprite(this, 3, ['public/images/ui/resources/pollution.png']);
-		pollution.x = 627;
-		pollution.y = 562;
+		pollution.x = 632;
+		pollution.y = 545;
 		pollution.help = 'Уровень загрязнения: при высоком уровне снижает яйценоскость и здоровье птицы';
 
 		const eggshell = new HelpSprite(this, 3, ['public/images/ui/resources/eggshell.png']);
-		eggshell.x = 705;
-		eggshell.y = 562;
+		eggshell.x = 710;
+		eggshell.y = 545;
 		eggshell.help = 'Скорлупа: остается после инкубации. Используется в производстве корма';
 
 		this.pen((context) => {
-			context.font = '18px Arial';
 			context.fillStyle = 'white';
 			context.textAlign = 'start';
 
-			// Деньги и Рейтинг
-			context.font = 'bold 15px Arial';
+			// Деньги, Рейтинг, Качество яйца
+			context.font = 'bold 14px Arial';
 
-			context.fillText(this.gameState.getFormattedMoney(this.gameState.money), money.x - 15, money.y + 5);
+			context.fillText(this.gameState.getFormattedMoney(this.gameState.money), money.x - 18, money.y + 5);
 
 			context.lineWidth = 2;
 			context.strokeStyle = 'black';
 			context.strokeText(this.gameState.rating, rating.x, rating.y + 5); // Сначала обводка
 			context.fillText(this.gameState.rating, rating.x, rating.y + 5);
+
+			context.fillText(this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '₽)' , eggQuality.x - 18, eggQuality.y + 5);
+
 
 			// Цель
 			const currentMission = this.gameState.currentMission;
@@ -203,8 +185,6 @@ export class AbstractStage extends Stage {
 			context.font = 'bold 12px Arial';
 			context.fillStyle = '#9da8b0';
 
-			context.fillText(this.gameState.frozenEggs + ' шт.', egg.x + 18, egg.y + 6);
-			context.fillText(this.gameState.getEggQualityClass() + ' (+' +  this.gameState.getEggQualityCost() + '₽)' , eggQuality.x + 18, eggQuality.y + 6);
 			context.fillText(this.gameState.chick + ' шт.', chick.x + 18, chick.y + 6);
 			context.fillText(this.gameState.chicken + ' шт.', chicken.x + 18, chicken.y + 6);
 			context.fillText(this.gameState.food.toFixed(1), food.x + 18, food.y + 6);
@@ -299,5 +279,68 @@ export class AbstractStage extends Stage {
 				star.delete()
 			}
 		})
+	}
+
+	showEggQualityInfo() {
+		const nextEggQualityClass = this.gameState.getNextEggQualityClass();
+
+		const header = 'Качество яйца';
+
+		let text = '<table border="0">';
+		const qualityInfo = this.gameState.getEggQualityInfo();
+		text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+		text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
+
+		text += '<tr><td colspan="2"><hr></td></tr>';
+
+		text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
+		text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
+		text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
+		text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
+		text += '</table>';
+		text += '<hr>';
+
+		if (nextEggQualityClass) {
+			text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
+		}
+
+		this.showModal(header, text);
+	}
+
+	showHelpInfo(header, content) {
+		return () => {
+			this.showModal(header, content);
+		};
+	}
+
+	addPlus(value) {
+		return value > 0 ? '+' + value : value;
+	}
+
+	showModal(header, text) {
+		showModal(header, text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
+	}
+
+	showViolationModal(header, message) {
+		const text = '<p>' + message + '</p>';
+
+		this.showModal(header, text);
+	}
+
+	showEventModal(eventId, onButtonClick) {
+		const event = this.gameState.events[eventId];
+		const header = event.name;
+		const description = event.description;
+		const question = event.question;
+		const image = event.image;
+		const buttons = event.variants.map(variant => variant.answer);
+
+		let text = '<p>' + description + '</p>';
+		text += '<p class="accent-color"><strong>' + question + '</strong></p>';
+
+		showEventModal(header, text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
+			this.game.getActiveStage().run();
+			onButtonClick(answer)
+		});
 	}
 }

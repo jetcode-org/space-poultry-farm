@@ -4,7 +4,6 @@ import {GameState} from "../services/game.state";
 import {AbstractStage} from "./abstract.stage";
 import { RobotSprite } from "../sprites/robot.sprite";
 import {MissionStage} from "./mission.stage";
-import {InfoButtonSprite} from "../sprites/info-button.sprite";
 import {RoomFactory} from "../services/room.factory";
 import { ShipSprite } from '../sprites/ship.sprite';
 import {OutroStage} from "./outro.stage";
@@ -117,38 +116,6 @@ export class MonitorStage extends AbstractStage {
         // Создание комнат
         this.createRooms();
 
-        // Info Icon
-        // const eggQualityInfoButton = new InfoButtonSprite(this, 1);
-        // eggQualityInfoButton.x = 550;
-        // eggQualityInfoButton.y = 455;
-        // eggQualityInfoButton.hidden = true;
-        //
-        // eggQualityInfoButton.onClick(() => {
-        //     const nextEggQualityClass = this.gameState.getNextEggQualityClass();
-        //
-        //     const header = 'Качество яйца';
-        //
-        //     let text = '<table border="0">';
-        //     const qualityInfo = this.gameState.getEggQualityInfo();
-        //     text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-        //     text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
-        //
-        //     text += '<tr><td colspan="2"><hr></td></tr>';
-        //
-        //     text += '<tr><td style="text-align: left">Порода "' + this.gameState.getChickenBreedName() + '":</td><td>' + this.addPlus(qualityInfo['chickenBreed']) + '</td></tr>';
-        //     text += '<tr><td style="text-align: left">Условие чистоты:</td><td>' + this.addPlus(qualityInfo['cleanViolation']) + '</td></tr>';
-        //     text += '<tr><td style="text-align: left">Условие кормления:</td><td>' + this.addPlus(qualityInfo['feedingViolation']) + '</td></tr>';
-        //     text += '<tr><td style="text-align: left">Условие содержания:</td><td>' + this.addPlus(qualityInfo['chickenConditionViolation']) + '</td></tr>';
-        //     text += '</table>';
-        //     text += '<hr>';
-        //
-        //     if (nextEggQualityClass) {
-        //         text += '<p>Нужно баллов получения следующей категории "' + nextEggQualityClass + '": ' + this.gameState.getEggQualityPoint(nextEggQualityClass) + '</p>';
-        //     }
-        //
-        //     this.showModal(header, text);
-        // });
-
         this.game.onUserInteracted(() => {
             this.playSound('background_music', {
                 loop: true
@@ -156,10 +123,6 @@ export class MonitorStage extends AbstractStage {
         })
 
         this.forever(this.gameTick, 1000);
-    }
-
-    addPlus(value) {
-        return value > 0 ? '+' + value : value;
     }
 
     resetGame() {
@@ -443,33 +406,6 @@ export class MonitorStage extends AbstractStage {
 
             this.gameState.eventTimer = 0;
         }
-    }
-
-    showModal(header, text) {
-        showModal(header, text, () => this.game.getActiveStage().stop(), () => this.game.getActiveStage().run());
-    }
-
-    showViolationModal(header, message) {
-        const text = '<p>' + message + '</p>';
-
-        this.showModal(header, text);
-    }
-
-    showEventModal(eventId, onButtonClick) {
-        const event = this.gameState.events[eventId];
-        const header = event.name;
-        const description = event.description;
-        const question = event.question;
-        const image = event.image;
-        const buttons = event.variants.map(variant => variant.answer);
-
-        let text = '<p>' + description + '</p>';
-        text += '<p class="accent-color"><strong>' + question + '</strong></p>';
-
-        showEventModal(header, text, image, buttons, () => this.game.getActiveStage().stop(), (answer) => {
-            this.game.getActiveStage().run();
-            onButtonClick(answer)
-        });
     }
 
     helpOnClick(){
