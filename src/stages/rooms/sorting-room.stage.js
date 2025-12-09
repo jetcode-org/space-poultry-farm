@@ -95,7 +95,7 @@ export class SortingRoomStage extends AbstractRootStage {
         ]);
         conveyor.forever(() => {
             conveyor.nextCostume();
-        }, 120);
+        }, 200);
 
         this.forever(this.control());
     }

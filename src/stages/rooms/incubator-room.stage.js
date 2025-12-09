@@ -94,6 +94,15 @@ export class IncubatorRoomStage extends AbstractRootStage {
         this.eggshellSprite = new Sprite(this, 1, [
             'public/images/rooms/backgrounds/details/incubator/eggshell.png',
         ]);
+
+        const conveyor = new Sprite(this, 1, [
+            'public/images/rooms/backgrounds/details/incubator/conveyor_1.png',
+            'public/images/rooms/backgrounds/details/incubator/conveyor_2.png',
+            'public/images/rooms/backgrounds/details/incubator/conveyor_3.png',
+        ]);
+        conveyor.forever(() => {
+            conveyor.nextCostume();
+        }, 200);
     }
 
     control() {
