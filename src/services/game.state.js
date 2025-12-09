@@ -7,7 +7,7 @@ export class GameState {
 
     eggshell = 0;
     manure = 0;
-    food = 500;
+    food = 100;
     chick = 0;
     chicken = 0;
     pollution = 0; // Показатель загрязнения
@@ -38,24 +38,24 @@ export class GameState {
     /**
      * Начальные значения
      */
-    static START_EGG = 20;
+    static START_EGG = 25;
 
     /**
      * Максимальные значения в комнатах
      */
     static SORTING_MAX_QUANTITY = 100;
-    static INCUBATOR_MAX_QUANTITY = 25;
-    static NURSERY_MAX_QUANTITY = 25;
+    static INCUBATOR_MAX_QUANTITY = 28;
+    static NURSERY_MAX_QUANTITY = 28;
     static COOP_MAX_QUANTITY = 50;
     static FARM_MAX_QUANTITY = 100;
 
     /**
      * Другие параметры
      */
-    static EGGSHELL_COEF = 0.5; // Сколько скорлупы получается из одного яйца
-    static INCUBATOR_EFFICIENCY = 0.9; // Эффективность инкубатора - сколько яиц будет переведено в цыплятник
-    static NURSERY_FOOD_CONSUMPTION = 0.25; // Потребление корма в цыплятами
-    static COOP_FOOD_CONSUMPTION = 0.5; // Потребление корма в курицами
+    static EGGSHELL_COEF = 1; // Сколько скорлупы получается из одного яйца
+    static INCUBATOR_EFFICIENCY = 0.85; // Эффективность инкубатора - сколько яиц будет переведено в цыплятник
+    static NURSERY_FOOD_CONSUMPTION = 0.5; // Потребление корма в цыплятами
+    static COOP_FOOD_CONSUMPTION = 1; // Потребление корма в курицами
     static COOP_COMFORT_QUANTITY = 40; // Комфортное количество куриц
     static COOP_MAX_EGGS = 50; // Максимальное количество яиц
 
@@ -221,7 +221,7 @@ export class GameState {
         },
         [GameState.INCUBATOR_ROOM_TYPE]: {
             'name': 'Инкубатор',
-            'cost': 5000,
+            'cost': 500,
             'helpText': 'Инкубатор: отсек для искусственного выведения цыплят из яиц в контролируемых условиях.',
             'instructionText': 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе',
             'backgroundImage': 'public/images/rooms/backgrounds/incubator.png',
@@ -237,7 +237,7 @@ export class GameState {
         },
         [GameState.NURSERY_ROOM_TYPE]: {
             'name': 'Цыплятник',
-            'cost': 9000,
+            'cost': 650,
             'helpText': 'Цыплятник: модуль для выращивания молодняка до взрослых особей.',
             'instructionText': 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета',
             'backgroundImage': 'public/images/rooms/backgrounds/nursery.png',
@@ -253,7 +253,7 @@ export class GameState {
         },
         [GameState.COOP_ROOM_TYPE]: {
             'name': 'Стадо',
-            'cost': 5000,
+            'cost': 500,
             'helpText': 'Стадо: основное помещение содержания взрослых кур-несушек.',
             'instructionText': 'Собирайте яйца по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек',
             'backgroundImage': 'public/images/rooms/backgrounds/coop.png',
@@ -269,7 +269,7 @@ export class GameState {
         },
         [GameState.FARM_ROOM_TYPE]: {
             'name': 'Ферма',
-            'cost': 15000,
+            'cost': 800,
             'helpText': 'Ферма: гидропонный комплекс производства кормовых культур.',
             'instructionText': 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур',
             'backgroundImage': 'public/images/rooms/backgrounds/farm.png',
@@ -308,7 +308,7 @@ export class GameState {
         },
         {
             'name': 'Аквария',
-            'eggQuota': 125,
+            'eggQuota': 100,
             'distance': 200,
             'successChangeRating': 10,
             'failChangeRating': -10,
@@ -323,7 +323,7 @@ export class GameState {
         },
         {
             'name': 'Гелиос-Прайм',
-            'eggQuota': 250,
+            'eggQuota': 160,
             'distance': 300,
             'successChangeRating': 15,
             'failChangeRating': -15,
@@ -337,7 +337,7 @@ export class GameState {
         },
         {
             'name': 'Терра-Нова',
-            'eggQuota': 400,
+            'eggQuota': 200,
             'distance': 400,
             'successChangeRating': 20,
             'failChangeRating': -20,
@@ -561,7 +561,7 @@ export class GameState {
     rating  = 50;
 
     // Деньги - основная игровая валюта
-    money = 20000;
+    money = 500;
 
     /**
      * Породы куриц
@@ -601,10 +601,10 @@ export class GameState {
 
     // Сколько денег дает определенный класс
     eggQualityMoney = {
-        [GameState.EGG_QUALITY_C3]: 50,
-        [GameState.EGG_QUALITY_C2]: 60,
-        [GameState.EGG_QUALITY_C1]: 70,
-        [GameState.EGG_QUALITY_C0]: 80
+        [GameState.EGG_QUALITY_C3]: 10,
+        [GameState.EGG_QUALITY_C2]: 12,
+        [GameState.EGG_QUALITY_C1]: 15,
+        [GameState.EGG_QUALITY_C0]: 20
     };
 
     /**
