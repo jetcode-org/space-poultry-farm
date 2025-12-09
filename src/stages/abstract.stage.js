@@ -77,27 +77,27 @@ export class AbstractStage extends Stage {
 
 	createCounters() {
 		// Деньги
-		const money = new ButtonSprite(this, 3, ['public/images/ui/money.png', 'public/images/ui/money.png']);
+		const money = new ButtonSprite(this, 3, ['public/images/ui/money.png', 'public/images/ui/money_hovered.png']);
 		money.x = 90;
 		money.y = 40;
 		money.help = 'Космические кредиты: валюта для строительства новых модулей и улучшения существующих';
 		money.onClick(this.showHelpInfo('Космические кредиты', '<p>Космические кредиты являются основной валютой вашего космического корабля.</p><p>Эти средства позволяют строить новые модули, улучшать существующее оборудование</p>').bind(this));
 
 		// Рейтинг
-		const rating = new ButtonSprite(this, 3, ['public/images/ui/rating.png', 'public/images/ui/rating.png']);
+		const rating = new ButtonSprite(this, 3, ['public/images/ui/rating.png', 'public/images/ui/rating_hovered.png']);
 		rating.x = 230;
 		rating.y = 40;
 		rating.help = 'Лицензия Таврос: оценивается по эффективности, качеству продукции и выполнению миссий.';
 		rating.onClick(this.showHelpInfo('Лицензия Таврос', '<p>Высший знак качества космического птицеводства.</p><p>Присваивается за безупречное управление фермой, соответствие строгим стандартам и стабильное выполнение миссий.</p>').bind(this));
 
 		// Качество яйца
-		const eggQuality = new ButtonSprite(this, 3, ['public/images/ui/egg_quality.png', 'public/images/ui/egg_quality.png']);
+		const eggQuality = new ButtonSprite(this, 3, ['public/images/ui/egg_quality.png', 'public/images/ui/egg_quality_hovered.png']);
 		eggQuality.x = 370;
 		eggQuality.y = 40;
 		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
 		eggQuality.onClick(this.showEggQualityInfo.bind(this));
 
-		const eggQualityInfo = new ButtonSprite(this, 3, ['public/images/ui/small_help_button/default.png', 'public/images/ui/small_help_button/hovered.png']);
+		const eggQualityInfo = new ButtonSprite(this, 3, ['public/images/ui/info_button/default.png', 'public/images/ui/info_button/hovered.png']);
 		eggQualityInfo.x = 430;
 		eggQualityInfo.y = 40;
 		eggQualityInfo.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
