@@ -61,10 +61,10 @@ export class AbstractStage extends Stage {
 		if (Array.isArray(helpText)) {
 			const yStep = 22;
 			for (const item of helpText) {
-				this.drawMultilineText(context, item, 620, y, 155, 20);
+				const lines = this.drawMultilineText(context, item, 620, y, 155, 20);
 
-				y += yStep;
-			}
+				y += yStep * lines;
+			} 
 		} else {
 			this.drawMultilineText(context, helpText, 620, y, 155, 20);
 		}
@@ -87,20 +87,20 @@ export class AbstractStage extends Stage {
 		const rating = new ButtonSprite(this, 3, ['public/images/ui/rating.png', 'public/images/ui/rating_hovered.png']);
 		rating.x = 230;
 		rating.y = 40;
-		rating.help = 'Лицензия Таврос: оценивается по эффективности, качеству продукции и выполнению миссий.';
-		rating.onClick(this.showHelpInfo('Лицензия Таврос', '<p>Высший знак качества космического птицеводства.</p><p>Присваивается за безупречное управление фермой, соответствие строгим стандартам и стабильное выполнение миссий.</p>').bind(this));
+		rating.help = 'Лицензия ЭГГЛЕНД ГРУПП: оценивается по эффективности, качеству продукции и выполнению миссий.';
+		rating.onClick(this.showHelpInfo('Лицензия ЭГГЛЕНД ГРУПП', '<p>Высший знак качества космического птицеводства.</p><p>Присваивается за безупречное управление фермой, соответствие строгим стандартам и стабильное выполнение миссий.</p>').bind(this));
 
 		// Качество яйца
 		const eggQuality = new ButtonSprite(this, 3, ['public/images/ui/egg_quality.png', 'public/images/ui/egg_quality_hovered.png']);
 		eggQuality.x = 370;
 		eggQuality.y = 40;
-		eggQuality.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQuality.help = 'Качество Ешь Хорошее! яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
 		eggQuality.onClick(this.showEggQualityInfo.bind(this));
 
 		const eggQualityInfo = new ButtonSprite(this, 3, ['public/images/ui/info_button/default.png', 'public/images/ui/info_button/hovered.png']);
 		eggQualityInfo.x = 430;
 		eggQualityInfo.y = 40;
-		eggQualityInfo.help = 'Качество яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQualityInfo.help = 'Качество Ешь Хорошее! яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
 		eggQualityInfo.onClick(this.showEggQualityInfo.bind(this));
 
 		// Панель цель и таймер
@@ -127,7 +127,7 @@ export class AbstractStage extends Stage {
 		const chicken = new HelpSprite(this, 3, ['public/images/ui/resources/chicken.png']);
 		chicken.x = 710;
 		chicken.y = 479;
-		chicken.help = 'Основное стадо: производители яиц';
+		chicken.help = 'Основное стадо: производители Ешь Хорошее! яиц';
 
 		const food = new HelpSprite(this, 3, ['public/images/ui/resources/feed.png']);
 		food.x = 632;
@@ -249,6 +249,7 @@ export class AbstractStage extends Stage {
         for (let i = 0; i < lineArray.length; i++) {
             context.fillText(lineArray[i], x, y + i * lineHeight);
         }
+		return lineArray.length;
     }
 
 	createFpsCounter() {
@@ -285,12 +286,12 @@ export class AbstractStage extends Stage {
 	showEggQualityInfo() {
 		const nextEggQualityClass = this.gameState.getNextEggQualityClass();
 
-		const header = 'Качество яйца';
+		const header = 'Качество Ешь Хорошее! яйца';
 
 		let text = '<table border="0">';
 		const qualityInfo = this.gameState.getEggQualityInfo();
-		text += '<tr><td style="text-align: left">Категория яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-		text += '<tr><td style="text-align: left">Стоимость яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
+		text += '<tr><td style="text-align: left">Категория Ешь Хорошее! яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+		text += '<tr><td style="text-align: left">Стоимость Ешь Хорошее! яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
 
 		text += '<tr><td colspan="2"><hr></td></tr>';
 

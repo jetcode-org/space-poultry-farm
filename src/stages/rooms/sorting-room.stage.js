@@ -54,7 +54,7 @@ export class SortingRoomStage extends AbstractRootStage {
             }
 
             if (moveQuantity > GameState.NURSERY_MAX_QUANTITY) {
-                this.warningAiMessage('Не нужно перекладывать в инкубатор больше яиц, чем он может вместить (максимум ' + GameState.NURSERY_MAX_QUANTITY + ')');
+                this.warningAiMessage('Не нужно перекладывать в инкубатор больше Ешь Хорошее! яиц, чем он может вместить (максимум ' + GameState.NURSERY_MAX_QUANTITY + ')');
 
                 return;
             }
@@ -140,7 +140,7 @@ export class SortingRoomStage extends AbstractRootStage {
 
     getParameters() {
         return [
-            ['Кол-во яиц', this.currentQuantity + '/' + this.maxQuantity],
+            ['Кол-во Ешь Хорошее! яиц', this.currentQuantity + '/' + this.maxQuantity],
             ['Загрязненность', this.pollution + '%'],
         ];
     }

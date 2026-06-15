@@ -173,7 +173,7 @@ export class IncubatorRoomStage extends AbstractRootStage {
 
     getParameters() {
         return [
-            ['Кол-во яиц', this.currentQuantity + '/' + this.maxQuantity],
+            ['Кол-во Ешь Хорошее! яиц', this.currentQuantity + '/' + this.maxQuantity],
             ['Загрязненность', this.pollution + '%'],
             ['Готовность', (this.currentProgress / IncubatorRoomStage.INCUBATOR_CYCLE_TIMER) * 100 + '%'],
         ];
