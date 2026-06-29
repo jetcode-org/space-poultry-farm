@@ -573,7 +573,7 @@ export class GameState {
     rating  = 50;
 
     // Деньги - основная игровая валюта
-    money = 11500;
+    money = 500;
 
     /**
      * Породы куриц
