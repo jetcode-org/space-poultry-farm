@@ -94,13 +94,13 @@ export class AbstractStage extends Stage {
 		const eggQuality = new ButtonSprite(this, 3, ['public/images/ui/egg_quality.png', 'public/images/ui/egg_quality_hovered.png']);
 		eggQuality.x = 370;
 		eggQuality.y = 40;
-		eggQuality.help = 'Качество Ешь Хорошее! яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQuality.help = 'Качество яиц Ешь Хорошее!: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
 		eggQuality.onClick(this.showEggQualityInfo.bind(this));
 
 		const eggQualityInfo = new ButtonSprite(this, 3, ['public/images/ui/info_button/default.png', 'public/images/ui/info_button/hovered.png']);
 		eggQualityInfo.x = 430;
 		eggQualityInfo.y = 40;
-		eggQualityInfo.help = 'Качество Ешь Хорошее! яиц: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
+		eggQualityInfo.help = 'Качество яиц Ешь Хорошее!: зависит от условий содержания кур. Высокое качество увеличивает стоимость.';
 		eggQualityInfo.onClick(this.showEggQualityInfo.bind(this));
 
 		// Панель цель и таймер
@@ -127,7 +127,7 @@ export class AbstractStage extends Stage {
 		const chicken = new HelpSprite(this, 3, ['public/images/ui/resources/chicken.png']);
 		chicken.x = 710;
 		chicken.y = 479;
-		chicken.help = 'Основное стадо: производители Ешь Хорошее! яиц';
+		chicken.help = 'Основное стадо: производители яиц Ешь Хорошее!';
 
 		const food = new HelpSprite(this, 3, ['public/images/ui/resources/feed.png']);
 		food.x = 632;
@@ -286,12 +286,12 @@ export class AbstractStage extends Stage {
 	showEggQualityInfo() {
 		const nextEggQualityClass = this.gameState.getNextEggQualityClass();
 
-		const header = 'Качество Ешь Хорошее! яйца';
+		const header = 'Качество яйца Ешь Хорошее!';
 
 		let text = '<table border="0">';
 		const qualityInfo = this.gameState.getEggQualityInfo();
-		text += '<tr><td style="text-align: left">Категория Ешь Хорошее! яйца:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
-		text += '<tr><td style="text-align: left">Стоимость Ешь Хорошее! яйца:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
+		text += '<tr><td style="text-align: left">Категория яйца Ешь Хорошее!:</td><td>' + this.gameState.getEggQualityClass() + '</td></tr>';
+		text += '<tr><td style="text-align: left">Стоимость яйца Ешь Хорошее!:</td><td>' + this.gameState.getEggQualityCost() + '₽</td></tr>';
 
 		text += '<tr><td colspan="2"><hr></td></tr>';
 

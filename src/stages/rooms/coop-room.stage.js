@@ -23,7 +23,7 @@ export class CoopRoomStage extends AbstractRootStage {
         this.harvestButton.x = 150;
         this.harvestButton.y = 540;
         this.harvestButton.onReady(() => {
-            this.harvestButton.setLabel('Собрать Ешь Хорошее! яйца')
+            this.harvestButton.setLabel('Собрать яйца Ешь Хорошее!')
         });
 
         this.onStart(()=>{
@@ -56,7 +56,7 @@ export class CoopRoomStage extends AbstractRootStage {
                 return true;
             }
 
-            this.dangerAiMessage('Недостаточно места в сортировке, не все Ешь Хорошее! яйца удалось перенести.');
+            this.dangerAiMessage('Недостаточно места в сортировке, не все яйца Ешь Хорошее! удалось перенести.');
 
             return false;
         })
@@ -171,7 +171,7 @@ export class CoopRoomStage extends AbstractRootStage {
         return [
             ['Кол-во куриц', this.currentQuantity + '/' + this.maxQuantity],
             ['Комфорт. кол-во', this.comfortQuantity],
-            ['Кол-во Ешь Хорошее! яиц', this.eggsAmount + '/' + this.maxEggsAmount],
+            ['Кол-во яиц Ешь Хорошее!', this.eggsAmount + '/' + this.maxEggsAmount],
             ['Загрязненность', this.pollution + '%'],
         ];
     }
