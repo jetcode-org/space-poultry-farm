@@ -200,7 +200,7 @@ export class GameState {
             'cost': 0,
             'helpText': 'Незанятый модуль, готовый к преобразованию в любой производственный отсек.',
             'instructionText': 'Изучите доступные варианты и создайте отсек, который максимально соответствует вашим текущим производственным задачам',
-            'backgroundImage': 'public/images/rooms/backgrounds/empty.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/empty.png'],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/empty_default.png',
                 'public/images/rooms/thumbnails/empty_hovered.png'
@@ -212,7 +212,7 @@ export class GameState {
             'cost': 0,
             'helpText': 'Сортировка: отсек для обработки и распределения яиц Ешь Хорошее! между криокамерой и инкубатором.',
             'instructionText': 'Распределяйте яйца Ешь Хорошее! между криокамерой (для выполнения миссии) и инкубатором (для пополнения поголовья)',
-            'backgroundImage': 'public/images/rooms/backgrounds/sorting.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/sorting.png'],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/sorting_room_default.png',
                 'public/images/rooms/thumbnails/sorting_room_hovered.png'
@@ -224,7 +224,19 @@ export class GameState {
             'cost': 500,
             'helpText': 'Инкубатор: отсек для искусственного выведения цыплят из яиц Ешь Хорошее! в контролируемых условиях.',
             'instructionText': 'Следите за вылуплением цыплят и своевременно очищайте аппараты от скорлупы. Не допускайте длительного нахождения цыплят в инкубаторе',
-            'backgroundImage': 'public/images/rooms/backgrounds/incubator.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/incubator_1.png',
+                                'public/images/rooms/backgrounds/incubator_2.png',
+                                'public/images/rooms/backgrounds/incubator_3.png',
+                                'public/images/rooms/backgrounds/incubator_4.png',
+                                'public/images/rooms/backgrounds/incubator_5.png',
+                                'public/images/rooms/backgrounds/incubator_6.png',
+                                'public/images/rooms/backgrounds/incubator_7.png',
+                                'public/images/rooms/backgrounds/incubator_8.png',
+                                'public/images/rooms/backgrounds/incubator_9.png',
+                                'public/images/rooms/backgrounds/incubator_10.png',
+                                'public/images/rooms/backgrounds/incubator_11.png',
+                                'public/images/rooms/backgrounds/incubator_12.png',
+            ],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/incubator_default.png',
                 'public/images/rooms/thumbnails/incubator_hovered.png'
@@ -240,7 +252,7 @@ export class GameState {
             'cost': 650,
             'helpText': 'Цыплятник: модуль для выращивания молодняка до взрослых особей.',
             'instructionText': 'Отслеживайте рост цыплят и переводите их в загон при достижении зрелости. Регулярно очищайте помещение от помета',
-            'backgroundImage': 'public/images/rooms/backgrounds/nursery.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/nursery.png'],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/nursery_default.png',
                 'public/images/rooms/thumbnails/nursery_hovered.png'
@@ -256,7 +268,7 @@ export class GameState {
             'cost': 500,
             'helpText': 'Стадо: основное помещение содержания взрослых кур-несушек.',
             'instructionText': 'Собирайте яйца Ешь Хорошее! по завершении цикла кладки. Поддерживайте чистоту для сохранения продуктивности несушек',
-            'backgroundImage': 'public/images/rooms/backgrounds/coop.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/coop.png'],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/coop_default.png',
                 'public/images/rooms/thumbnails/coop_hovered.png'
@@ -272,7 +284,7 @@ export class GameState {
             'cost': 800,
             'helpText': 'Ферма: гидропонный комплекс производства кормовых культур.',
             'instructionText': 'Используйте помет и скорлупу для производства комбикорма. Своевременно собирайте урожай кормовых культур',
-            'backgroundImage': 'public/images/rooms/backgrounds/farm.png',
+            'backgroundImage': ['public/images/rooms/backgrounds/farm.png'],
             'thumbnailImages': [
                 'public/images/rooms/thumbnails/farm_default.png',
                 'public/images/rooms/thumbnails/farm_hovered.png'
@@ -561,7 +573,7 @@ export class GameState {
     rating  = 50;
 
     // Деньги - основная игровая валюта
-    money = 500;
+    money = 11500;
 
     /**
      * Породы куриц

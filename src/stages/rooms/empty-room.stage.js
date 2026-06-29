@@ -1,8 +1,8 @@
-import {AbstractRootStage} from "./abstract-room.stage";
-import {ThumbnailRoomSprite} from "../../sprites/thumbnail-room.sprite";
-import {GameState} from "../../services/game.state";
-import {MonitorStage} from "../monitor.stage";
-import {LongButtonSprite} from "../../sprites/long-button.sprite";
+import { AbstractRootStage } from "./abstract-room.stage";
+import { ThumbnailRoomSprite } from "../../sprites/thumbnail-room.sprite";
+import { GameState } from "../../services/game.state";
+import { MonitorStage } from "../monitor.stage";
+import { LongButtonSprite } from "../../sprites/long-button.sprite";
 
 export class EmptyRoomStage extends AbstractRootStage {
     init() {
@@ -112,11 +112,11 @@ export class EmptyRoomStage extends AbstractRootStage {
             this.thumbnail.delete();
 
             this.playSound('buy');
-
+            console.log('звук')
+            
             setTimeout(() => { // Костыль, бага ScrubJS - при создании сцены внутри цикла игра останавливается
                 this.game.stop();
                 this.game.run(MonitorStage.getInstance());
-
             }, 100);
         }
     }
@@ -131,7 +131,7 @@ export class EmptyRoomStage extends AbstractRootStage {
         return GameState.EMPTY_ROOM_TYPE;
     }
 
-    roomTick () {}
+    roomTick() { }
 
     getParameters() {
         return [];

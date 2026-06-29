@@ -16,6 +16,8 @@ export class IncubatorRoomStage extends AbstractRootStage {
     visualizerType = GameState.OBJECT_EGG;
     maxQuantity = GameState.INCUBATOR_MAX_QUANTITY;
 
+    sequenseNumber = 0;
+
     init() {
         super.init();
 

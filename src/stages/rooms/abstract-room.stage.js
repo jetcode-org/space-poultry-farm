@@ -43,7 +43,7 @@ export class AbstractRootStage extends AbstractStage {
 		this.createStars()
 
 		const backgroundSprite = new Sprite(this, 1);
-		backgroundSprite.addCostume(this.getBackgroundImage());
+		backgroundSprite.addCostume(this.getBackgroundImage(this.getSequenseNumber()));
 		backgroundSprite.x = 400;
 		backgroundSprite.y = 300
 
@@ -161,8 +161,12 @@ export class AbstractRootStage extends AbstractStage {
 		return this.getRoomConfigParam('instructionText');
 	}
 
-	getBackgroundImage() {
-		return this.getRoomConfigParam('backgroundImage');
+	getBackgroundImage(index) {
+		const hypoterical_index = index;
+		if (hypoterical_index < this.getRoomConfigParam('backgroundImage').length) {
+			return this.getRoomConfigParam('backgroundImage')[hypoterical_index];
+		}
+		return this.getRoomConfigParam('backgroundImage')[0];
 	}
 
 	getThumbnailImages() {
@@ -175,6 +179,10 @@ export class AbstractRootStage extends AbstractStage {
 
 	getCost() {
 		return this.getRoomConfigParam('cost');
+	}
+
+	getSequenseNumber(){
+		return this.gameState.getRoomsByType(this.getRoomType()).length
 	}
 
 	resetRoom() {
